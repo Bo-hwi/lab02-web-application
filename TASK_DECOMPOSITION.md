@@ -719,8 +719,8 @@ Rendering must not accidentally reinitialize hooks.
 - [x] Create an external state array.
 - [x] Create a hook cursor.
 - [x] Implement `resetCursor()`.
-- [ ] Reset cursor before a render pass.
-- [ ] Preserve state values between render passes.
+- [x] Reset cursor before a render pass.
+- [x] Preserve state values between render passes.
 
 **Acceptance Criteria:**
 
@@ -745,15 +745,15 @@ Rendering must not accidentally reinitialize hooks.
 
 **Scope:**
 
-- [ ] Allocate state using the current hook cursor.
-- [ ] Initialize state only when uninitialized.
-- [ ] Preserve existing state values.
-- [ ] Capture the current cursor in a closure.
-- [ ] Return `[state, setState]`.
-- [ ] Increment the cursor after hook registration.
-- [ ] Support direct value updates.
-- [ ] Support functional updates.
-- [ ] Detect changes using `Object.is`.
+- [x] Allocate state using the current hook cursor.
+- [x] Initialize state only when uninitialized.
+- [x] Preserve existing state values.
+- [x] Capture the current cursor in a closure.
+- [x] Return `[state, setState]`.
+- [x] Increment the cursor after hook registration.
+- [x] Support direct value updates.
+- [x] Support functional updates.
+- [x] Detect changes using `Object.is`.
 - [ ] Trigger re-rendering when state changes.
 
 **Acceptance Criteria:**
