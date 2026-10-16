@@ -856,12 +856,12 @@ unless explicitly required by verification.
 
 **Scope:**
 
-- [ ] Create a semantic application structure.
-- [ ] Initialize tasks using `useState`.
-- [ ] Display the task count.
-- [ ] Implement an Add Task button.
-- [ ] Update the interface after adding a task.
-- [ ] Preserve task state across renders.
+- [x] Create a semantic application structure.
+- [x] Initialize tasks using `useState`.
+- [x] Display the task count.
+- [x] Implement an Add Task button.
+- [x] Update the interface after adding a task.
+- [x] Preserve task state across renders.
 
 **Acceptance Criteria:**
 

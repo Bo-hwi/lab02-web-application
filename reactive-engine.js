@@ -97,11 +97,64 @@ export function renderApp(Component, rootContainer) {
         // Execute the component to generate a new VNode tree.
         const vNode = Component();
 
+        
+        // Preserve focus and text selection across DOM replacement.
+        const activeElement = document.activeElement;
+
+        const focusedId =
+            activeElement && rootContainer.contains(activeElement)
+                ? activeElement.id
+                : null;
+
+        let selectionStart = null;
+        let selectionEnd = null;
+
+        // Save caret position for supported text inputs.
+        if (
+            activeElement instanceof HTMLInputElement &&
+            focusedId
+        ) {
+            try {
+                selectionStart = activeElement.selectionStart;
+                selectionEnd = activeElement.selectionEnd;
+            } catch {
+                // Some input types do not support text selection.
+            }
+        }
+
         // Convert the VNode tree into real DOM nodes.
         const domNode = renderToDOM(vNode);
 
         // Replace the previous root content.
         rootContainer.replaceChildren(domNode);
+
+        // Restore focus only when a matching element still exists.
+        if (focusedId) {
+            const nextElement = Array.from(
+                rootContainer.querySelectorAll("[id]")
+            ).find((node) => node.id === focusedId);
+
+            if (
+                nextElement &&
+                typeof nextElement.focus === "function"
+            ) {
+                nextElement.focus({ preventScroll: true });
+
+                // Restore caret position when supported.
+                if (
+                    selectionStart !== null &&
+                    selectionEnd !== null &&
+                    typeof nextElement.setSelectionRange === "function"
+                ) {
+                    nextElement.setSelectionRange(
+                        selectionStart,
+                        selectionEnd
+                    );
+                }
+            }
+        }
+
+
     };
 
     // Connect state updates to this rendering lifecycle.

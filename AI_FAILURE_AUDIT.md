@@ -127,7 +127,29 @@ Pending manual testing after applying the correction.
 
 **Root Cause:** Not yet established.
 
-**Corrective Action:** Not yet established.
+
+**Corrective Action:**
+
+Implemented focus restoration in `renderApp()`.
+
+The renderer records the active element's ID and text
+selection before replacing the DOM tree.
+
+After mounting the new tree, the renderer attempts to
+restore focus and the previous caret position.
+
+**Verification:**
+
+- Before fix: Input lost focus after the first character.
+- After fix: Continuous typing works without re-focusing.
+- Manual test: `Study React today` entered successfully.
+- Task Manager automated tests: 9/9 PASS.
+- Task creation and counter updates remain functional.
+
+**Fix Commit:** Pending
+
+**Status:** Fixed — Verified for the tested input scenario.
+
 
 **Verification:** Pending.
 
@@ -139,7 +161,7 @@ Pending manual testing after applying the correction.
 
 - [x] Record the first verified security failure.
 - [x] Record the second observed accessibility failure.
-- [ ] Verify the corrective action for AF-02.
+- [x] Verify the corrective action for AF-02.
 - [ ] Identify a third genuine AI-related failure or risk.
 - [ ] Document the third finding with evidence.
 - [ ] Verify all applicable corrections.

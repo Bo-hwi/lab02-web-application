@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Reactive Task Manager Test</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <section aria-labelledby="verification-heading">
+        <h2 id="verification-heading">Verification Results</h2>
+        <p id="test-status" role="status" aria-live="polite">
+            Waiting for interaction...
+        </p>
+    </section>
+
+    <script type="module">
+        import { TaskManager } from "./task-manager.js";
+        import { renderApp } from "./reactive-engine.js";
+
+        const root = document.getElementById("app");
+        renderApp(TaskManager, root);
+
+        const input = root.querySelector("#task-input");
+        const button = root.querySelector("button");
+
+        const checks = {
+            semanticMain: root.querySelector("main") !== null,
+            inputExists: input instanceof HTMLInputElement,
+            buttonExists: button instanceof HTMLButtonElement,
+            labelAssociation:
+                root.querySelector("label")?.control === input,
+            initialCount:
+                root.querySelector('[role="status"]')
+                    ?.textContent === "Total tasks: 0"
+        };
+
+        // Simulate user input.
+        input.value = "Study Mini-React";
+        input.dispatchEvent(
+            new Event("input", { bubbles: true })
+        );
+
+        // Inspect focus behavior after reactive rendering.
+        const updatedInput = root.querySelector("#task-input");
+
+        updatedInput.focus();
+
+        checks.inputFocus =
+            document.activeElement === updatedInput;
+
+        checks.inputValue =
+            updatedInput.value === "Study Mini-React";
+
+        // Trigger the Add Task action.
+        root.querySelector("button").click();
+
+        checks.taskAdded =
+            root.querySelectorAll("li").length === 1;
+
+        checks.counterUpdated =
+            root.querySelector('[role="status"]')
+                ?.textContent === "Total tasks: 1";
+
+        const passed = Object.values(checks)
+            .filter(Boolean).length;
+
+        const summary =
+            `${passed}/${Object.keys(checks).length} checks passed`;
+
+        document.getElementById("test-status")
+            .textContent = summary;
+
+        console.table(checks);
+        console.log(summary);
+    </script>
+</body>
+</html>
