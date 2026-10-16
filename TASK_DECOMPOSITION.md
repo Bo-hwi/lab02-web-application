@@ -519,3 +519,377 @@ This deliverable is tracked separately and must not expand the current Exercise 
 **Engineering Standard:** Generate → Understand → Verify → Commit
 
 **WBS Rule:** Never prompt AI with more than one subtask simultaneously.
+
+
+---
+
+# Exercise 2 — Reactive State Machine & Event Delegation
+
+**Course:** Web Application Development — UIT Advanced Program
+**Sprint:** In-Class Sprint 2
+**Duration:** 40 minutes (lecture allocation)
+**Branch:** `ex-2`
+**Status:** Not Started
+
+## 1. Exercise Objective
+
+Implement a custom reactive state management system
+and centralized event delegation architecture.
+
+The implementation must extend the Mini-React engine
+developed in Exercise 1.
+
+### Required Features
+
+- Custom `useState(initialValue)` hook
+- Persistent external state storage
+- Cursor-based hook indexing
+- Closure-based state setters
+- Functional state updates
+- Change detection using `Object.is`
+- Automatic component re-rendering
+- Root-level Event Delegation
+- Reactive Task Manager
+- Dynamic task filtering
+
+### Mandatory Git Milestones
+
+1. `feat(state): implement stateStore and resetCursor engine`
+2. `feat(state): implement reactive useState dispatcher`
+3. `feat(events): attach root event delegation listener`
+4. `feat(ui): assemble reactive todo application`
+
+---
+
+## 2. Engineering Constraints
+
+- [ ] Follow the Anti-Monolithic Coding protocol.
+- [ ] Implement only one atomic subtask per request.
+- [ ] Preserve Exercise 1 functionality.
+- [ ] Do not modify the `ex-1` branch.
+- [ ] Use Modern JavaScript ES Modules.
+- [ ] Preserve WCAG 2.2 AA accessibility requirements.
+- [ ] Prevent XSS and unsafe HTML injection.
+- [ ] Avoid orphan event listeners.
+- [ ] Maintain deterministic hook call order.
+- [ ] Verify every milestone before committing.
+
+---
+
+## 3. Phase 0 — Architecture Contract
+
+### Task 0.1 — Define Reactive Engine Architecture
+
+**Target artifact:** Architecture documentation
+
+- [ ] Identify the external state store.
+- [ ] Define the hook cursor lifecycle.
+- [ ] Define the state setter contract.
+- [ ] Define the root rendering lifecycle.
+- [ ] Define the event delegation architecture.
+- [ ] Identify state and event invariants.
+
+**Acceptance Criteria:**
+
+- State persistence rules are documented.
+- Rendering responsibilities are clearly defined.
+- Hook ordering constraints are identified.
+- Event listener ownership is specified.
+- No runtime code is generated.
+
+**Target Commit:**
+
+`docs(architecture): define reactive engine contracts`
+
+---
+
+## 4. Phase 1 — State Store
+
+### Task 1.1 — Implement stateStore and resetCursor
+
+**Target file:** `reactive-engine.js`
+
+**Scope:**
+
+- [ ] Create an external state array.
+- [ ] Create a hook cursor.
+- [ ] Implement `resetCursor()`.
+- [ ] Reset cursor before a render pass.
+- [ ] Preserve state values between render passes.
+
+**Acceptance Criteria:**
+
+- State storage persists across renders.
+- Cursor resets to zero correctly.
+- Resetting the cursor does not delete state.
+- State slots retain deterministic ordering.
+
+**Target Commit:**
+
+`feat(state): implement stateStore and resetCursor engine`
+
+---
+
+## 5. Phase 2 — Reactive State Dispatcher
+
+### Task 2.1 — Implement useState
+
+**Target file:** `reactive-engine.js`
+
+**Target function:** `useState(initialValue)`
+
+**Scope:**
+
+- [ ] Allocate state using the current hook cursor.
+- [ ] Initialize state only when uninitialized.
+- [ ] Preserve existing state values.
+- [ ] Capture the current cursor in a closure.
+- [ ] Return `[state, setState]`.
+- [ ] Increment the cursor after hook registration.
+- [ ] Support direct value updates.
+- [ ] Support functional updates.
+- [ ] Detect changes using `Object.is`.
+- [ ] Trigger re-rendering when state changes.
+
+**Acceptance Criteria:**
+
+- State persists across component executions.
+- Functional updates receive the previous state.
+- Unchanged state does not trigger a re-render.
+- Multiple hooks retain their correct state slots.
+- Hook ordering remains deterministic.
+- No unrelated UI implementation is introduced.
+
+**Target Commit:**
+
+`feat(state): implement reactive useState dispatcher`
+
+---
+
+## 6. Phase 3 — Rendering Lifecycle
+
+### Task 3.1 — Implement renderApp
+
+**Target file:** `reactive-engine.js`
+
+**Target function:** `renderApp(Component, rootContainer)`
+
+**Scope:**
+
+- [ ] Register the root component.
+- [ ] Register the root DOM container.
+- [ ] Reset the hook cursor before rendering.
+- [ ] Execute the component function.
+- [ ] Convert its VNode tree into browser DOM.
+- [ ] Mount the result in the root container.
+- [ ] Connect state updates to the rendering lifecycle.
+
+**Acceptance Criteria:**
+
+- The initial component renders successfully.
+- State changes trigger rendering.
+- State is preserved across render passes.
+- The container does not accumulate duplicate root nodes.
+- Existing Mini-React behavior remains functional.
+
+**Architecture Note:**
+
+The root rendering implementation must account for
+event handler lifecycle and focus preservation.
+
+A full reconciliation engine is outside this task
+unless explicitly required by verification.
+
+**Target Commit:**
+
+`feat(render): implement reactive application lifecycle`
+
+---
+
+## 7. Phase 4 — Event Delegation Hub
+
+### Task 4.1 — Implement Root Event Delegation
+
+**Target files:**
+
+- `reactive-engine.js`
+- `mini-react.js` (minimal integration changes only)
+
+**Scope:**
+
+- [ ] Register root event listeners.
+- [ ] Support `click`, `input`, and `keydown`.
+- [ ] Attach at most one listener per supported event type.
+- [ ] Identify the original event target.
+- [ ] Traverse the target's ancestor chain.
+- [ ] Resolve the associated VNode handler.
+- [ ] Invoke the correct callback.
+- [ ] Prevent duplicate root listener registration.
+- [ ] Prevent element-level listener duplication.
+- [ ] Ensure re-rendered nodes use current handlers.
+
+**Acceptance Criteria:**
+
+- Clicking a button invokes its handler once.
+- Input events reach the correct handler.
+- Keyboard events work correctly.
+- No duplicate handlers appear after re-rendering.
+- No orphan child event listeners accumulate.
+- Existing XSS protections remain intact.
+
+**Target Commit:**
+
+`feat(events): attach root event delegation listener`
+
+---
+
+## 8. Phase 5 — Reactive Task Manager
+
+### Task 5.1 — Implement Task Manager UI
+
+**Target artifact:** Reactive Task Manager component
+
+**Scope:**
+
+- [ ] Create a semantic application structure.
+- [ ] Initialize tasks using `useState`.
+- [ ] Display the task count.
+- [ ] Implement an Add Task button.
+- [ ] Update the interface after adding a task.
+- [ ] Preserve task state across renders.
+
+**Acceptance Criteria:**
+
+- The application mounts successfully.
+- The task counter displays the correct value.
+- Adding a task updates the counter.
+- Task state persists across renders.
+- Controls remain keyboard accessible.
+
+### Task 5.2 — Implement Dynamic Task Filtering
+
+**Target artifact:** Task Manager component
+
+**Scope:**
+
+- [ ] Define the task filter state.
+- [ ] Implement filter controls.
+- [ ] Update the displayed task list.
+- [ ] Preserve the original task collection.
+- [ ] Reflect the selected filter accessibly.
+
+**Acceptance Criteria:**
+
+- Filter controls update the displayed tasks.
+- Switching filters preserves task data.
+- Filter state persists correctly.
+- Dynamic UI updates remain accessible.
+
+**Mandatory Milestone Commit:**
+
+`feat(ui): assemble reactive todo application`
+
+**Commit Handling:**
+
+Tasks 5.1 and 5.2 must be implemented and
+verified separately.
+
+The milestone commit is created only after the
+combined Task Manager functionality passes verification.
+
+---
+
+## 9. Phase 6 — Independent Verification
+
+### Task 6.1 — State Engine Verification
+
+- [ ] Verify initial state values.
+- [ ] Verify state persistence.
+- [ ] Verify closure-bound setters.
+- [ ] Verify multiple hook slots.
+- [ ] Verify functional updates.
+- [ ] Verify `Object.is` change detection.
+- [ ] Verify no redundant renders for unchanged state.
+
+**Target Commit:**
+
+`test(state): verify reactive state invariants`
+
+### Task 6.2 — Event Delegation Verification
+
+- [ ] Verify root listener registration.
+- [ ] Verify click event delegation.
+- [ ] Verify input event delegation.
+- [ ] Verify keydown event delegation.
+- [ ] Verify handlers after re-rendering.
+- [ ] Verify no duplicate event invocation.
+- [ ] Inspect listener behavior using DevTools.
+
+**Target Commit:**
+
+`test(events): verify delegation integrity`
+
+### Task 6.3 — Accessibility & Security Verification
+
+- [ ] Verify semantic HTML structure.
+- [ ] Verify keyboard accessibility.
+- [ ] Verify accessible input labels.
+- [ ] Verify focus behavior after state updates.
+- [ ] Verify required ARIA attributes.
+- [ ] Verify XSS-safe text rendering.
+- [ ] Confirm no inline event attributes are created.
+
+**Target Commit:**
+
+`test(a11y): verify reactive ui accessibility`
+
+### Task 6.4 — Final Verification Report
+
+- [ ] Record executed tests.
+- [ ] Record observed results.
+- [ ] Document architectural limitations.
+- [ ] Review Git history.
+- [ ] Review the final Git diff.
+- [ ] Update the WBS completion status.
+
+**Target Commit:**
+
+`docs(verification): record exercise 2 results`
+
+---
+
+## 10. Definition of Done
+
+Exercise 2 is complete only when:
+
+- [ ] Reactive state engine works correctly.
+- [ ] Hook cursor ordering remains deterministic.
+- [ ] Functional state updates are supported.
+- [ ] Unchanged state does not trigger rendering.
+- [ ] Root Event Delegation is operational.
+- [ ] Event listeners do not accumulate.
+- [ ] Reactive Task Manager is functional.
+- [ ] Dynamic filtering works.
+- [ ] Security tests pass.
+- [ ] Applicable WCAG 2.2 AA checks pass.
+- [ ] All four mandatory milestone commits exist.
+- [ ] Verification evidence is documented.
+- [ ] No unfinished implementation is marked complete.
+
+---
+
+## 11. Execution Gate
+
+**Current Phase:** Stage 1 — Functional Slicing
+
+**Next Task:** Task 0.1 — Define Reactive Engine Architecture
+
+Do not generate runtime implementation until
+the architecture contract has been reviewed.
+
+Do not combine multiple implementation tasks
+in a single AI request.
+
+**Engineering Standard:**
+
+Contract → Implement → Test → Verify → Update WBS → Commit
