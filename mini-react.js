@@ -88,11 +88,18 @@ export function renderToDOM(vNode) {
         }
 
         // Attach event listeners without inline HTML handlers.
-        if (key.startsWith("on")) {
-            if (typeof value === "function" && key.length > 2) {
+                // Block all case variations of inline event attributes.
+        if (/^on/i.test(key)) {
+            // Register only valid function-based event handlers.
+            if (
+                /^on[A-Z]/.test(key) &&
+                typeof value === "function"
+            ) {
                 const eventName = key.slice(2).toLowerCase();
                 element.addEventListener(eventName, value);
             }
+
+            // Never serialize event handlers into HTML attributes.
             continue;
         }
 

@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Mini-React XSS Security Tests</title>
+</head>
+<body>
+    <main>
+        <h1>Mini-React XSS Security Verification</h1>
+        <p id="summary" role="status" aria-live="polite">
+            Running security checks...
+        </p>
+        <pre id="results"></pre>
+        <section aria-label="Test output" id="test-root"></section>
+    </main>
+
+    <script type="module">
+        import {
+            createElement,
+            renderToDOM
+        } from "./mini-react.js";
+
+        const root = document.getElementById("test-root");
+        const results = [];
+        let unexpectedExecution = 0;
+
+        window.__xssProbe = () => {
+            unexpectedExecution++;
+        };
+
+        function check(name, condition) {
+            results.push({
+                name,
+                passed: Boolean(condition)
+            });
+        }
+
+        // Test 1: HTML-like text must remain plain text.
+        const payload1 = "<img src=x onerror=alert(1)> Safe Text";
+        const node1 = renderToDOM(
+            createElement("p", null, payload1)
+        );
+
+        root.appendChild(node1);
+
+        check(
+            "HTML payload remains a text node",
+            node1.firstChild?.nodeType === Node.TEXT_NODE &&
+            node1.textContent === payload1 &&
+            node1.querySelector("img") === null
+        );
+
+        // Test 2: Script markup must not become an element.
+        const payload2 = "<script>window.__xssProbe()<\/script>";
+        const node2 = renderToDOM(
+            createElement("p", null, payload2)
+        );
+
+        root.appendChild(node2);
+
+        check(
+            "Script payload remains inert text",
+            node2.textContent === payload2 &&
+            node2.querySelector("script") === null &&
+            unexpectedExecution === 0
+        );
+
+        // Test 3: A normal event handler must use addEventListener.
+        let clickCount = 0;
+
+        const node3 = renderToDOM(
+            createElement(
+                "button",
+                {
+                    type: "button",
+                    onClick: () => clickCount++
+                },
+                "Safe button"
+            )
+        );
+
+        root.appendChild(node3);
+        node3.click();
+
+        check(
+            "Function event handler works without inline HTML",
+            clickCount === 1 &&
+            !node3.hasAttribute("onclick")
+        );
+
+        // Test 4: JavaScript URLs must be rejected.
+        const node4 = renderToDOM(
+            createElement(
+                "a",
+                {
+                    href: "javascript:window.__xssProbe()"
+                },
+                "Unsafe link"
+            )
+        );
+
+        root.appendChild(node4);
+
+        check(
+            "javascript: URL is blocked",
+            !node4.hasAttribute("href")
+        );
+
+        // Test 5: Mixed-case dangerous URL is rejected.
+        const node5 = renderToDOM(
+            createElement(
+                "a",
+                {
+                    href: " JaVaScRiPt:window.__xssProbe()"
+                },
+                "Unsafe mixed-case link"
+            )
+        );
+
+        root.appendChild(node5);
+
+        check(
+            "Mixed-case javascript: URL is blocked",
+            !node5.hasAttribute("href")
+        );
+
+        // Test 6: srcdoc HTML injection must be rejected.
+        const node6 = renderToDOM(
+            createElement(
+                "iframe",
+                {
+                    title: "Security test frame",
+                    srcdoc: "<script>parent.__xssProbe()<\/script>"
+                }
+            )
+        );
+
+        check(
+            "iframe srcdoc injection is blocked",
+            !node6.hasAttribute("srcdoc")
+        );
+
+        // Test 7: Uppercase event attributes must be rejected.
+        const node7 = renderToDOM(
+            createElement(
+                "button",
+                {
+                    type: "button",
+                    ONCLICK: "window.__xssProbe()"
+                },
+                "Unsafe event attribute"
+            )
+        );
+
+        // Do not click the button: inspect the dangerous attribute.
+        check(
+            "Uppercase inline event attribute is blocked",
+            !node7.hasAttribute("onclick")
+        );
+
+        // Test 8: Accessibility attributes remain intact.
+        const node8 = renderToDOM(
+            createElement(
+                "button",
+                {
+                    type: "button",
+                    "aria-label": "Accessible action",
+                    tabIndex: 0
+                },
+                "Action"
+            )
+        );
+
+        check(
+            "Security filtering preserves accessibility props",
+            node8.getAttribute("aria-label") ===
+                "Accessible action" &&
+            node8.tabIndex === 0
+        );
+
+        // Display test results safely.
+        const passed = results.filter(
+            result => result.passed
+        ).length;
+
+        const summary =
+            `${passed}/${results.length} security checks passed`;
+
+        document.getElementById("summary").textContent =
+            summary;
+
+        document.getElementById("results").textContent =
+            results.map(result =>
+                `${result.passed ? "PASS" : "FAIL"}: ${result.name}`
+            ).join("\n");
+
+        console.log(summary);
+        console.table(results);
+
+        delete window.__xssProbe;
+    </script>
+</body>
+</html>

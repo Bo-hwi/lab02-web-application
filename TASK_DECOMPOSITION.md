@@ -311,12 +311,12 @@ The function must handle:
 
 **Target artifact:** Security verification tests
 
-- [ ] Test a script-tag string as a text child.
-- [ ] Test an image-tag string with an `onerror` payload.
-- [ ] Verify that both strings render literally.
-- [ ] Verify that no payload executes.
-- [ ] Verify that no injected script or image element appears.
-- [ ] Inspect relevant DOM output in DevTools.
+- [x] Test a script-tag string as a text child.
+- [x] Test an image-tag string with an `onerror` payload.
+- [x] Verify that both strings render literally.
+- [x] Verify that no payload executes.
+- [x] Verify that no injected script or image element appears.
+- [x] Inspect relevant DOM output in DevTools.
 
 **Acceptance Criteria:**
 
