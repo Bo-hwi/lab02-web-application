@@ -221,15 +221,15 @@ Implement one recursive function that converts a VNode tree into real DOM nodes.
 
 The function must handle:
 
-- [ ] Identification of `TEXT_ELEMENT` nodes.
-- [ ] Safe creation of native text nodes.
-- [ ] Creation of standard HTML elements.
-- [ ] Safe assignment of supported props.
-- [ ] Mapping `className` to HTML `class`.
-- [ ] Exclusion of reserved VNode properties.
-- [ ] Prevention of inline HTML event attributes.
-- [ ] Recursive mounting of child VNodes.
-- [ ] Returning the completed DOM node.
+- [x] Identification of `TEXT_ELEMENT` nodes.
+- [x] Safe creation of native text nodes.
+- [x] Creation of standard HTML elements.
+- [x] Safe assignment of supported props.
+- [x] Mapping `className` to HTML `class`.
+- [x] Exclusion of reserved VNode properties.
+- [x] Prevention of inline HTML event attributes.
+- [x] Recursive mounting of child VNodes.
+- [x] Returning the completed DOM node.
 
 **Security Requirements:**
 
@@ -333,11 +333,11 @@ The function must handle:
 
 **Target artifact:** Verification notes in the project documentation
 
-- [ ] Record the tests executed.
-- [ ] Record observed pass/fail results.
-- [ ] Record DOM inspection findings.
-- [ ] Record any architectural exceptions.
-- [ ] Review the final implementation diff.
+- [x] Record the tests executed.
+- [x] Record observed pass/fail results.
+- [x] Record DOM inspection findings.
+- [x] Record any architectural exceptions.
+- [x] Review the final implementation diff.
 
 **Acceptance Criteria:**
 
@@ -474,11 +474,11 @@ Exercise 1 is complete when:
 - [x] Required semantic HTML is present.
 - [x] Required property mapping is correct.
 - [x] All mandatory XSS checks pass.
-- [ ] No unexpected orphan DOM nodes remain.
-- [ ] Browser DevTools inspection is complete.
+- [x] No unexpected orphan DOM nodes remain.
+- [x] Browser DevTools inspection is complete.
 - [x] Both mandatory Git milestone commits exist.
-- [ ] All completed subtasks have verification evidence.
-- [ ] The repository contains no unrelated exercise implementation.
+- [x] All completed subtasks have verification evidence.
+- [x] The repository contains no unrelated exercise implementation.
 
 ---
 
@@ -563,16 +563,16 @@ developed in Exercise 1.
 
 ## 2. Engineering Constraints
 
-- [ ] Follow the Anti-Monolithic Coding protocol.
-- [ ] Implement only one atomic subtask per request.
-- [ ] Preserve Exercise 1 functionality.
-- [ ] Do not modify the `ex-1` branch.
-- [ ] Use Modern JavaScript ES Modules.
-- [ ] Preserve WCAG 2.2 AA accessibility requirements.
-- [ ] Prevent XSS and unsafe HTML injection.
-- [ ] Avoid orphan event listeners.
-- [ ] Maintain deterministic hook call order.
-- [ ] Verify every milestone before committing.
+- [x] Follow the Anti-Monolithic Coding protocol.
+- [x] Implement only one atomic subtask per request.
+- [x] Preserve Exercise 1 functionality.
+- [x] Do not modify the `ex-1` branch.
+- [x] Use Modern JavaScript ES Modules.
+- [x] Preserve WCAG 2.2 AA accessibility requirements.
+- [x] Prevent XSS and unsafe HTML injection.
+- [x] Avoid orphan event listeners.
+- [x] Maintain deterministic hook call order.
+- [x] Verify every milestone before committing.
 
 ---
 
@@ -582,12 +582,12 @@ developed in Exercise 1.
 
 **Target artifact:** Architecture documentation
 
-- [ ] Identify the external state store.
-- [ ] Define the hook cursor lifecycle.
-- [ ] Define the state setter contract.
-- [ ] Define the root rendering lifecycle.
-- [ ] Define the event delegation architecture.
-- [ ] Identify state and event invariants.
+- [x] Identify the external state store.
+- [x] Define the hook cursor lifecycle.
+- [x] Define the state setter contract.
+- [x] Define the root rendering lifecycle.
+- [x] Define the event delegation architecture.
+- [x] Identify state and event invariants.
 
 **Acceptance Criteria:**
 
@@ -699,14 +699,14 @@ Rendering must not accidentally reinitialize hooks.
 
 #### I. Architecture Acceptance Criteria
 
-- [ ] Module responsibilities are reviewed.
-- [ ] State lifecycle invariants are reviewed.
-- [ ] Setter behavior is specified.
-- [ ] Rendering lifecycle is specified.
-- [ ] Hook ordering requirements are documented.
-- [ ] Event listener ownership is documented.
-- [ ] Security and accessibility requirements are included.
-- [ ] No implementation code has been generated.
+- [x] Module responsibilities are reviewed.
+- [x] State lifecycle invariants are reviewed.
+- [x] Setter behavior is specified.
+- [x] Rendering lifecycle is specified.
+- [x] Hook ordering requirements are documented.
+- [x] Event listener ownership is documented.
+- [x] Security and accessibility requirements are included.
+- [x] No implementation code has been generated.
 
 
 ## 4. Phase 1 — State Store
@@ -1038,9 +1038,9 @@ Contract → Implement → Test → Verify → Update WBS → Commit
 
 ## Task 3.4 — Independent Verification
 
-- [ ] Test all four states.
-- [ ] Test successful and failed requests.
-- [ ] Test retry behavior.
-- [ ] Verify race-condition handling.
-- [ ] Verify applicable accessibility requirements.
-- [ ] Commit and push the completed exercise.
+- [x] Test all four states.
+- [x] Test successful and failed requests.
+- [x] Test retry behavior.
+- [x] Verify race-condition handling.
+- [x] Verify applicable accessibility requirements.
+- [x] Commit and push the completed exercise.

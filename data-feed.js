@@ -14,7 +14,26 @@ import { useState } from "./reactive-engine.js";
  * Tracks the latest request.
  * Older requests cannot overwrite newer results.
  */
-let latestRequestId = 0;
+
+/**
+ * Keeps only the latest asynchronous request valid.
+ */
+export function createRequestGuard() {
+    let latestRequestId = 0;
+
+    return {
+        start() {
+            return ++latestRequestId;
+        },
+
+        isCurrent(requestId) {
+            return requestId === latestRequestId;
+        }
+    };
+}
+
+const requestGuard = createRequestGuard();
+
 
 /**
  * Simulates an asynchronous data request.
@@ -64,7 +83,7 @@ export function DataFeed() {
     
     const loadData = async () => {
         // Assign a unique identity to this request.
-        const requestId = ++latestRequestId;
+        const requestId = requestGuard.start();
 
         setState({ status: "LOADING" });
 
@@ -72,7 +91,7 @@ export function DataFeed() {
             const items = await fetchFeed();
 
             // Ignore outdated responses.
-            if (requestId !== latestRequestId) {
+            if (!requestGuard.isCurrent(requestId)) {
                 return;
             }
 
@@ -82,7 +101,7 @@ export function DataFeed() {
             });
         } catch (error) {
             // Ignore outdated failures.
-            if (requestId !== latestRequestId) {
+            if (!requestGuard.isCurrent(requestId)) {
                 return;
             }
 
