@@ -529,7 +529,7 @@ This deliverable is tracked separately and must not expand the current Exercise 
 **Sprint:** In-Class Sprint 2
 **Duration:** 40 minutes (lecture allocation)
 **Branch:** `ex-2`
-**Status:** Not Started
+**Status:** In Progress
 
 ## 1. Exercise Objective
 
@@ -716,10 +716,9 @@ Rendering must not accidentally reinitialize hooks.
 **Target file:** `reactive-engine.js`
 
 **Scope:**
-
-- [ ] Create an external state array.
-- [ ] Create a hook cursor.
-- [ ] Implement `resetCursor()`.
+- [x] Create an external state array.
+- [x] Create a hook cursor.
+- [x] Implement `resetCursor()`.
 - [ ] Reset cursor before a render pass.
 - [ ] Preserve state values between render passes.
 
