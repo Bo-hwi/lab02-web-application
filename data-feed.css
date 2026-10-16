@@ -1,0 +1,41 @@
+
+/* Exercise 3 — Accessible Skeleton Loader */
+
+.skeleton {
+    width: 100%;
+    max-width: 360px;
+    padding: 12px 0;
+}
+
+.skeleton-line {
+    height: 18px;
+    margin-bottom: 14px;
+    border-radius: 6px;
+    background-color: #e5e7eb;
+    animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.skeleton-line:nth-child(2) {
+    width: 85%;
+}
+
+.skeleton-line:nth-child(3) {
+    width: 65%;
+}
+
+@keyframes skeleton-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+    .skeleton-line {
+        animation: none;
+    }
+}
