@@ -117,7 +117,57 @@ Pending manual testing after applying the correction.
 
 ---
 
-### AF-03 — Pending Verified Finding
+
+### AF-03 — Stale DOM Reference in AI-Generated Test Harness
+
+**Category:** Testing / DOM Lifecycle
+
+**Affected File:** task-manager-test.html
+
+**Original Issue:**
+
+The AI-generated test harness stored a reference to the
+Add Task button before triggering a reactive state update.
+
+The input event caused the rendering engine to replace
+the DOM tree, detaching the original button.
+
+The test then called `.click()` on the detached button.
+
+**Detection Method:**
+
+Browser-based functional regression testing.
+
+**Observed Result:**
+
+- Before correction: 7/9 checks passed.
+- Task creation assertion failed.
+- Task counter assertion failed.
+- After correction: 9/9 checks passed.
+
+**Root Cause:**
+
+The test harness retained a stale DOM element reference
+after `replaceChildren()` replaced the application subtree.
+
+Because the button was detached, its click event did not
+bubble to the active root event delegation listener.
+
+**Corrective Action:**
+
+Re-query the current Add Task button after the input event
+and before invoking `.click()`.
+
+**Verification:**
+
+- Task successfully created.
+- Task counter updated.
+- Browser test restored to 9/9 PASS.
+
+**Fix Commit:** Pending
+
+**Status:** Fixed and verified.
+
 
 **Category:** To be determined
 
