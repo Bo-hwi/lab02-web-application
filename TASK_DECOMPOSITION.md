@@ -1006,3 +1006,41 @@ in a single AI request.
 **Engineering Standard:**
 
 Contract → Implement → Test → Verify → Update WBS → Commit
+
+---
+
+# Exercise 3 — Resilient State Machine & Skeleton Loader
+
+**Branch:** `ex-3`
+**Status:** In Progress
+
+## Task 3.1 — Define State Machine Contract
+
+- [x] Define IDLE state.
+- [x] Define LOADING state.
+- [x] Define SUCCESS state with data.
+- [x] Define ERROR state with error message.
+- [x] Verify TypeScript contract.
+
+## Task 3.2 — Implement DataFeed Component
+
+- [ ] Build an asynchronous data-loading component.
+- [ ] Integrate with the existing reactive engine.
+- [ ] Handle lifecycle transitions.
+- [ ] Prevent stale async responses.
+
+## Task 3.3 — Implement State-Specific UI
+
+- [ ] Render an animated skeleton while loading.
+- [ ] Render fetched data on success.
+- [ ] Display a human-readable error message.
+- [ ] Implement Retry Connection.
+
+## Task 3.4 — Independent Verification
+
+- [ ] Test all four states.
+- [ ] Test successful and failed requests.
+- [ ] Test retry behavior.
+- [ ] Verify race-condition handling.
+- [ ] Verify applicable accessibility requirements.
+- [ ] Commit and push the completed exercise.
