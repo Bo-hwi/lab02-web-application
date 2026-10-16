@@ -21,6 +21,10 @@ import { useState } from "./reactive-engine.js";
 export function TaskManager() {
     const [tasks, setTasks] = useState([]);
     const [taskInput, setTaskInput] = useState("");
+    
+    // Current task filter: all, active, or completed.
+    const [filter, setFilter] = useState("all");
+
 
     // Add a task without mutating the existing state array.
     const addTask = () => {
@@ -43,6 +47,37 @@ export function TaskManager() {
 
         setTaskInput("");
     };
+    
+    /**
+     * Toggles the completion status of a task.
+     * Uses immutable updates to preserve state integrity.
+     */
+    const toggleTask = (taskId) => {
+        setTasks((previousTasks) =>
+            previousTasks.map((task) =>
+                task.id === taskId
+                    ? { ...task, completed: !task.completed }
+                    : task
+            )
+        );
+    };
+    
+    /**
+     * Select tasks based on the active filter.
+     * Keep the original tasks array unchanged.
+     */
+    const filteredTasks = tasks.filter((task) => {
+        if (filter === "active") {
+            return !task.completed;
+        }
+
+        if (filter === "completed") {
+            return task.completed;
+        }
+
+        return true;
+    });
+
 
     return createElement(
         "main",
@@ -64,8 +99,30 @@ export function TaskManager() {
 
             createElement(
                 "h2",
+
                 { id: "task-heading" },
                 "Manage your tasks"
+            ),
+
+            createElement(
+                "nav",
+                { "aria-label": "Task filters" },
+
+                ...[
+                    { value: "all", label: "All" },
+                    { value: "active", label: "Active" },
+                    { value: "completed", label: "Completed" }
+                ].map((option) =>
+                    createElement(
+                        "button",
+                        {
+                            type: "button",
+                            "aria-pressed": filter === option.value,
+                            onClick: () => setFilter(option.value)
+                        },
+                        option.label
+                    )
+                )
             ),
 
             createElement(
@@ -119,11 +176,35 @@ export function TaskManager() {
             createElement(
                 "ul",
                 null,
-                tasks.map((task) =>
+                
+                filteredTasks.map((task) =>
                     createElement(
                         "li",
                         { "data-task-id": task.id },
-                        task.title
+
+                        createElement(
+                            "span",
+                            null,
+                            task.completed
+                                ? `${task.title} (Completed)`
+                                : `${task.title} (Active)`
+                        ),
+
+                        " ",
+
+                        createElement(
+                            "button",
+                            {
+                                id: `task-toggle-${task.id}`,
+                                type: "button",
+                                "aria-pressed": task.completed,
+                                "aria-label": task.completed
+                                    ? `Mark ${task.title} as active`
+                                    : `Mark ${task.title} as completed`,
+                                onClick: () => toggleTask(task.id)
+                            },
+                            task.completed ? "Undo" : "Complete"
+                        )
                     )
                 )
             )

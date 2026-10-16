@@ -877,11 +877,11 @@ unless explicitly required by verification.
 
 **Scope:**
 
-- [ ] Define the task filter state.
-- [ ] Implement filter controls.
-- [ ] Update the displayed task list.
-- [ ] Preserve the original task collection.
-- [ ] Reflect the selected filter accessibly.
+- [x] Define the task filter state.
+- [x] Implement filter controls.
+- [x] Update the displayed task list.
+- [x] Preserve the original task collection.
+- [x] Reflect the selected filter accessibly.
 
 **Acceptance Criteria:**
 

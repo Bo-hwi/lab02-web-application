@@ -25,7 +25,9 @@
         renderApp(TaskManager, root);
 
         const input = root.querySelector("#task-input");
-        const button = root.querySelector("button");
+        // Select the Add Task button, not a filter button.
+        const button = [...root.querySelectorAll("button")]
+            .find((element) => element.textContent.trim() === "Add Task");
 
         const checks = {
             semanticMain: root.querySelector("main") !== null,
@@ -56,7 +58,11 @@
             updatedInput.value === "Study Mini-React";
 
         // Trigger the Add Task action.
-        root.querySelector("button").click();
+        // Find the current button after reactive DOM replacement.
+        const currentAddButton = [...root.querySelectorAll("button")]
+            .find((element) => element.textContent.trim() === "Add Task");
+
+        currentAddButton.click();
 
         checks.taskAdded =
             root.querySelectorAll("li").length === 1;
@@ -73,7 +79,12 @@
 
         document.getElementById("test-status")
             .textContent = summary;
-
+        
+        console.table(
+            Object.entries(checks)
+                .filter(([, passed]) => !passed)
+                .map(([name]) => ({ failedCheck: name }))
+        );
         console.table(checks);
         console.log(summary);
     </script>
