@@ -908,13 +908,13 @@ combined Task Manager functionality passes verification.
 
 ### Task 6.1 — State Engine Verification
 
-- [ ] Verify initial state values.
-- [ ] Verify state persistence.
-- [ ] Verify closure-bound setters.
-- [ ] Verify multiple hook slots.
-- [ ] Verify functional updates.
-- [ ] Verify `Object.is` change detection.
-- [ ] Verify no redundant renders for unchanged state.
+- [x] Verify initial state values.
+- [x] Verify state persistence.
+- [x] Verify closure-bound setters.
+- [x] Verify multiple hook slots.
+- [x] Verify functional updates.
+- [x] Verify `Object.is` change detection.
+- [x] Verify no redundant renders for unchanged state.
 
 **Target Commit:**
 
@@ -922,13 +922,13 @@ combined Task Manager functionality passes verification.
 
 ### Task 6.2 — Event Delegation Verification
 
-- [ ] Verify root listener registration.
-- [ ] Verify click event delegation.
-- [ ] Verify input event delegation.
-- [ ] Verify keydown event delegation.
-- [ ] Verify handlers after re-rendering.
-- [ ] Verify no duplicate event invocation.
-- [ ] Inspect listener behavior using DevTools.
+- [x] Verify root listener registration.
+- [x] Verify click event delegation.
+- [x] Verify input event delegation.
+- [x] Verify keydown event delegation.
+- [x] Verify handlers after re-rendering.
+- [x] Verify no duplicate event invocation.
+- [x] Inspect listener behavior using DevTools.
 
 **Target Commit:**
 
@@ -936,13 +936,13 @@ combined Task Manager functionality passes verification.
 
 ### Task 6.3 — Accessibility & Security Verification
 
-- [ ] Verify semantic HTML structure.
-- [ ] Verify keyboard accessibility.
-- [ ] Verify accessible input labels.
-- [ ] Verify focus behavior after state updates.
-- [ ] Verify required ARIA attributes.
-- [ ] Verify XSS-safe text rendering.
-- [ ] Confirm no inline event attributes are created.
+- [x] Verify semantic HTML structure.
+- [x] Verify keyboard accessibility.
+- [x] Verify accessible input labels.
+- [x] Verify focus behavior after state updates.
+- [x] Verify required ARIA attributes.
+- [x] Verify XSS-safe text rendering.
+- [x] Confirm no inline event attributes are created.
 
 **Target Commit:**
 
@@ -950,12 +950,12 @@ combined Task Manager functionality passes verification.
 
 ### Task 6.4 — Final Verification Report
 
-- [ ] Record executed tests.
-- [ ] Record observed results.
-- [ ] Document architectural limitations.
-- [ ] Review Git history.
-- [ ] Review the final Git diff.
-- [ ] Update the WBS completion status.
+- [x] Record executed tests.
+- [x] Record observed results.
+- [x] Document architectural limitations.
+- [x] Review Git history.
+- [x] Review the final Git diff.
+- [x] Update the WBS completion status.
 
 **Target Commit:**
 
@@ -967,19 +967,19 @@ combined Task Manager functionality passes verification.
 
 Exercise 2 is complete only when:
 
-- [ ] Reactive state engine works correctly.
-- [ ] Hook cursor ordering remains deterministic.
-- [ ] Functional state updates are supported.
-- [ ] Unchanged state does not trigger rendering.
-- [ ] Root Event Delegation is operational.
-- [ ] Event listeners do not accumulate.
-- [ ] Reactive Task Manager is functional.
-- [ ] Dynamic filtering works.
-- [ ] Security tests pass.
-- [ ] Applicable WCAG 2.2 AA checks pass.
-- [ ] All four mandatory milestone commits exist.
-- [ ] Verification evidence is documented.
-- [ ] No unfinished implementation is marked complete.
+- [x] Reactive state engine works correctly.
+- [x] Hook cursor ordering remains deterministic.
+- [x] Functional state updates are supported.
+- [x] Unchanged state does not trigger rendering.
+- [x] Root Event Delegation is operational.
+- [x] Event listeners do not accumulate.
+- [x] Reactive Task Manager is functional.
+- [x] Dynamic filtering works.
+- [x] Security tests pass.
+- [x] Applicable WCAG 2.2 AA checks pass.
+- [x] All four mandatory milestone commits exist.
+- [x] Verification evidence is documented.
+- [x] No unfinished implementation is marked complete.
 
 ---
 
