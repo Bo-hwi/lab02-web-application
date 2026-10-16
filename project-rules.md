@@ -240,6 +240,176 @@ Use native interactive elements instead of generic containers when possible.
 
 Maintain a valid document hierarchy.
 
+## 6.1 WCAG 2.2 AA Accessibility Protocol
+
+**Compliance Level:** WCAG 2.2 Level AA
+
+**Enforcement:** Mandatory for all UI components, HTML structures,
+Virtual DOM rendering, and future application features.
+
+Accessibility is a non-negotiable engineering requirement.
+
+### Rule A — Semantic HTML
+
+- Use native semantic HTML elements whenever possible.
+- Use `<main>` for primary page content.
+- Use `<nav>` for navigation regions.
+- Use `<header>` for introductory content.
+- Use `<section>` for logically grouped content.
+- Use `<button>` for clickable actions.
+- Use `<a href="...">` for navigation.
+- Never use generic `<div>` or `<span>` elements as substitutes
+  for native interactive elements without a valid reason.
+- Preserve logical heading hierarchy.
+- Avoid redundant ARIA roles on native semantic elements.
+
+### Rule B — Accessible Forms and Inputs
+
+Every form control must have an accessible name.
+
+Mandatory requirements:
+
+- Use explicit `<label>` elements for standard form fields.
+- Associate each label with its input using matching IDs.
+- In JSX, use `htmlFor`.
+- In native HTML, use `for`.
+- Map `htmlFor` to `for` in the custom DOM rendering engine.
+- Ensure every input ID is unique within the document.
+- Do not rely on placeholders as replacements for labels.
+- Associate validation errors with the appropriate input.
+- Use `aria-describedby` when additional descriptions are needed.
+- Communicate required fields and validation errors accessibly.
+
+### Rule C — Keyboard Navigation and Focus Management
+
+All interactive components must be keyboard accessible.
+
+- Native buttons must be reachable using the Tab key.
+- Native controls must preserve their built-in keyboard behavior.
+- Never create keyboard traps.
+- Never remove visible focus indicators without an
+  accessible replacement.
+- Preserve logical keyboard focus order.
+- Maintain predictable focus during dynamic UI updates.
+
+If a custom interactive element is unavoidable:
+
+- Provide the appropriate interactive role.
+- Provide `tabIndex={0}` when the element must enter the Tab order.
+- Implement both Enter and Space activation where button
+  semantics are required.
+- Provide an accessible name.
+- Manage focus correctly.
+
+**Important:** `role="button"` and `tabIndex={0}` alone do
+not guarantee full keyboard accessibility.
+
+Native `<button>` elements are strongly preferred.
+
+### Rule D — ARIA Attributes
+
+Use ARIA only when necessary to communicate information
+that native HTML semantics cannot express.
+
+Examples:
+
+- `aria-label`: Accessible names when no visible label exists.
+- `aria-labelledby`: Association with visible labeling content.
+- `aria-describedby`: Additional descriptions and error messages.
+- `aria-expanded`: Expanded or collapsed disclosure state.
+- `aria-controls`: Association with controlled content.
+- `aria-live`: Announcements of dynamic content changes.
+- `aria-invalid`: Invalid form input state.
+
+Dynamic status announcements should use appropriate live regions.
+
+- Use `aria-live="polite"` for non-urgent updates.
+- Use `aria-live="assertive"` only for urgent announcements.
+- Update ARIA values whenever the corresponding UI state changes.
+- Do not add unnecessary or misleading ARIA attributes.
+
+### Rule E — Image Accessibility
+
+Every `<img>` element must explicitly include an `alt` attribute.
+
+- Informative images require meaningful alternative text.
+- Decorative images must use `alt=""`.
+- Avoid redundant phrases such as "image of" or "picture of".
+- Never use arbitrary filenames as alternative text.
+- Functional images must describe the action or purpose.
+
+### Rule F — Visual Accessibility
+
+All UI styling must meet applicable WCAG 2.2 AA requirements.
+
+- Normal text contrast ratio: at least 4.5:1.
+- Large text contrast ratio: at least 3:1.
+- Provide visible keyboard focus indicators.
+- Maintain sufficient non-text contrast where applicable.
+- Do not communicate information using color alone.
+- Support text resizing and responsive reflow.
+- Respect reduced-motion preferences when appropriate.
+- Meet WCAG 2.2 AA target-size requirements and exceptions.
+
+### Rule G — Virtual DOM Accessibility Contract
+
+The custom Mini-React renderer must preserve accessibility
+semantics during VNode-to-DOM conversion.
+
+Required checks:
+
+- `className` maps to HTML `class`.
+- `htmlFor` maps to HTML `for`.
+- `tabIndex` produces correct keyboard focus behavior.
+- `role` is preserved when appropriate.
+- Valid `aria-*` attributes are correctly assigned.
+- Accessible input-label associations remain intact.
+- Image `alt` attributes are preserved.
+- Native element semantics are not overwritten unnecessarily.
+- Accessibility attributes must never bypass XSS protections.
+
+Accessibility properties must be handled safely without
+using `innerHTML` or inline HTML event handlers.
+
+### Rule H — Accessibility Verification
+
+Every UI-related implementation task must be independently
+reviewed for accessibility.
+
+Mandatory verification checklist:
+
+- [ ] Semantic HTML is used appropriately.
+- [ ] Interactive controls are keyboard accessible.
+- [ ] Keyboard focus is visible.
+- [ ] No keyboard traps exist.
+- [ ] Form labels correctly reference their inputs.
+- [ ] Dynamic state changes are announced when necessary.
+- [ ] ARIA attributes reflect actual UI states.
+- [ ] Every image has an appropriate `alt` attribute.
+- [ ] Text contrast meets WCAG 2.2 AA.
+- [ ] Screen reader behavior is manually reviewed where applicable.
+- [ ] Automated accessibility checks are completed.
+- [ ] No known WCAG 2.2 AA violations remain.
+
+Recommended verification tools:
+
+- Chrome DevTools Accessibility panel
+- Lighthouse Accessibility audit
+- axe DevTools
+- Keyboard-only navigation testing
+- Screen reader testing (NVDA or VoiceOver)
+
+Automated accessibility scores alone are not sufficient
+to demonstrate complete WCAG 2.2 AA compliance.
+
+### Final Accessibility Rule
+
+No UI implementation may be considered complete until its
+applicable accessibility acceptance criteria have been verified.
+
+Accessibility must be designed into components from the
+beginning, not added as an afterthought.
+
 ---
 
 ## 7. Performance & Memory Safety
