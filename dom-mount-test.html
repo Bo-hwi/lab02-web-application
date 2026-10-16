@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini-React — DOM Mounting Verification</title>
+</head>
+<body>
+  <!-- Non-interactive mount point; the actual UI uses semantic elements. -->
+  <div id="app"></div>
+  <section aria-labelledby="verification-heading">
+    <h2 id="verification-heading">DOM mounting verification</h2>
+    <pre id="verification-report" aria-live="polite">Running checks...</pre>
+  </section>
+
+  <script type="module">
+    import { createElement, renderToDOM } from "./mini-react.js";
+
+    let activationCount = 0;
+
+    const vnode = createElement(
+      "main",
+      { id: "root-view", className: "app-container" },
+      createElement("header", null,
+        createElement("h1", null, "Mini-React Engine")
+      ),
+      createElement("section", { "aria-label": "Task controls" },
+        createElement("label", { htmlFor: "task-name" }, "Task name"),
+        createElement("input", { id: "task-name", type: "text" }),
+        createElement("button", {
+          id: "add-button",
+          type: "button",
+          onClick: () => {
+            activationCount += 1;
+            document.getElementById("feedback").textContent = `Button activated ${activationCount} time(s)`;
+          }
+        }, "Add task"),
+        createElement("p", {
+          id: "feedback", role: "status", "aria-live": "polite"
+        }, "Ready")
+      )
+    );
+
+    const root = document.getElementById("app");
+    const checks = [];
+    const check = (name, condition) => {
+      checks.push({ name, passed: Boolean(condition) });
+      console.assert(condition, `FAIL: ${name}`);
+    };
+
+    root.replaceChildren(renderToDOM(vnode));
+    const input = root.querySelector("#task-name");
+    const button = root.querySelector("#add-button");
+    const feedback = root.querySelector("#feedback");
+
+    check("Semantic HTML hierarchy", root.querySelector("main > header > h1")?.textContent === "Mini-React Engine");
+    check("className maps to class", root.firstElementChild?.getAttribute("class") === "app-container");
+    check("Label is associated with input", root.querySelector("label")?.control === input);
+    check("Input is a native form control", input instanceof HTMLInputElement);
+    check("Button is a native button", button instanceof HTMLButtonElement);
+    check("ARIA live region is preserved", feedback?.getAttribute("aria-live") === "polite");
+    check("Single mounted main and no orphan UI", root.children.length === 1 && root.querySelectorAll("main").length === 1);
+    check("Text child is a real Text node", root.querySelector("h1")?.firstChild?.nodeType === Node.TEXT_NODE);
+
+    button?.click();
+    check("Event handler updates feedback", feedback?.textContent === "Button activated 1 time(s)");
+
+    const passed = checks.filter((item) => item.passed).length;
+    const report = `${passed}/${checks.length} checks passed\n` +
+      checks.map((item) => `${item.passed ? "PASS" : "FAIL"}: ${item.name}`).join("\n");
+    document.getElementById("verification-report").textContent = report;
+    document.getElementById("verification-report").dataset.result = passed === checks.length ? "PASS" : "FAIL";
+    console.log(report);
+  </script>
+</body>
+</html>
