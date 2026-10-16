@@ -603,6 +603,112 @@ developed in Exercise 1.
 
 ---
 
+### Reactive Engine Architecture Contract
+
+**Status:** Proposed — Pending Review
+
+#### A. Module Responsibilities
+
+`mini-react.js`:
+- Creates Virtual DOM nodes.
+- Converts VNodes into browser DOM nodes.
+- Provides the mounting functionality from Exercise 1.
+- Requires minimal integration changes for Event Delegation.
+
+`reactive-engine.js`:
+- Owns the external state store.
+- Manages the hook cursor.
+- Implements the state dispatcher.
+- Coordinates the root rendering lifecycle.
+- Owns the centralized event delegation hub.
+
+#### B. State Store Invariants
+
+- State values are stored outside function components.
+- Each hook receives a deterministic array index.
+- The hook cursor starts at zero for every render pass.
+- Cursor reset must not clear existing state.
+- State initialization occurs only for uninitialized slots.
+- Valid stored values include null and undefined.
+- State must persist between render passes.
+
+#### C. State Setter Contract
+
+Each state setter must:
+- Capture its assigned hook index using a closure.
+- Accept direct replacement values.
+- Accept functional updater callbacks.
+- Read the current previous state when updating.
+- Use Object.is() to detect state changes.
+- Avoid triggering rendering for unchanged values.
+- Trigger the registered rendering lifecycle when changed.
+
+#### D. Root Rendering Lifecycle
+
+The renderer must:
+1. Register the root component and container.
+2. Reset the hook cursor before each render.
+3. Execute the root component.
+4. Obtain its Virtual DOM representation.
+5. Convert the VNode tree into browser DOM.
+6. Mount the result without duplicate root nodes.
+7. Preserve state between render passes.
+
+Rendering must not accidentally reinitialize hooks.
+
+#### E. Hook Ordering Invariants
+
+- Hooks must execute in a consistent order.
+- Hooks must not be called conditionally.
+- Hooks must not be called inside loops.
+- Hooks must not be called inside nested callbacks.
+- Each state slot must retain its logical identity.
+
+#### F. Event Delegation Contract
+
+- One root listener per supported event type.
+- Supported types: click, input, keydown.
+- Events are dispatched through bubbling.
+- The dispatcher resolves the current VNode handler.
+- Child DOM nodes must not accumulate direct listeners.
+- Re-rendered nodes must use current handler references.
+- Repeated rendering must not duplicate root listeners.
+
+#### G. Security & Accessibility Invariants
+
+- Never use innerHTML for untrusted content.
+- Render text through createTextNode().
+- Preserve semantic native HTML elements.
+- Map className to class.
+- Map htmlFor to for.
+- Preserve valid ARIA attributes.
+- Preserve native keyboard interactions.
+- Maintain predictable focus behavior.
+- Prevent inline event attribute injection.
+
+#### H. Known Architectural Risks
+
+1. Conditional hooks can corrupt state slot ordering.
+2. Nullish coalescing is insufficient for detecting
+   uninitialized state slots.
+3. Incorrect closure capture can update the wrong slot.
+4. Direct child listeners conflict with root delegation.
+5. Full DOM replacement may cause focus loss.
+6. Repeated root listener installation can cause
+   duplicate event handling.
+
+#### I. Architecture Acceptance Criteria
+
+- [ ] Module responsibilities are reviewed.
+- [ ] State lifecycle invariants are reviewed.
+- [ ] Setter behavior is specified.
+- [ ] Rendering lifecycle is specified.
+- [ ] Hook ordering requirements are documented.
+- [ ] Event listener ownership is documented.
+- [ ] Security and accessibility requirements are included.
+- [ ] No implementation code has been generated.
+
+
 ## 4. Phase 1 — State Store
 
 ### Task 1.1 — Implement stateStore and resetCursor
