@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Reactive Engine Render Test</title>
+</head>
+<body>
+    <main>
+        <h1>Reactive Engine Verification</h1>
+        <div id="app"></div>
+        <p id="test-result" role="status" aria-live="polite">
+            Waiting for verification...
+        </p>
+    </main>
+
+    <script type="module">
+        import { createElement } from "./mini-react.js";
+        import {
+            useState,
+            renderApp
+        } from "./reactive-engine.js";
+
+        let renderCount = 0;
+
+        function Counter() {
+            const [count, setCount] = useState(0);
+
+            renderCount++;
+
+            return createElement(
+                "section",
+                { "aria-label": "Counter test" },
+
+                createElement(
+                    "h2",
+                    { id: "count-value" },
+                    `Count: ${count}`
+                ),
+
+                createElement(
+                    "button",
+                    {
+                        type: "button",
+                        onClick: () => setCount(
+                            previous => previous + 1
+                        )
+                    },
+                    "Increment"
+                )
+            );
+        }
+
+        const root = document.getElementById("app");
+
+        renderApp(Counter, root);
+
+        const button = root.querySelector("button");
+
+        const initialCorrect =
+            root.querySelector("#count-value")
+                ?.textContent === "Count: 0";
+
+        button.click();
+
+        const updatedCorrect =
+            root.querySelector("#count-value")
+                ?.textContent === "Count: 1";
+
+        const noDuplicateRoots =
+            root.children.length === 1;
+
+        const renderedTwice =
+            renderCount === 2;
+
+        const passed = [
+            initialCorrect,
+            updatedCorrect,
+            noDuplicateRoots,
+            renderedTwice
+        ].filter(Boolean).length;
+
+        const summary = `${passed}/4 render checks passed`;
+
+        document.getElementById("test-result")
+            .textContent = summary;
+
+        console.log(summary);
+        console.table({
+            initialCorrect,
+            updatedCorrect,
+            noDuplicateRoots,
+            renderedTwice
+        });
+    </script>
+</body>
+</html>

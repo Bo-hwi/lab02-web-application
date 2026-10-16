@@ -8,7 +8,7 @@
 
 // Persistent state storage across render passes.
 const stateStore = [];
-
+import { renderToDOM } from "./mini-react.js";
 // Tracks the current hook position during rendering.
 let cursor = 0;
 // Re-render callback, registered by renderApp in a later task.
@@ -67,4 +67,46 @@ export function useState(initialValue) {
     cursor++;
 
     return [currentState, setState];
+}
+
+    
+/**
+ * Initializes and manages the root component lifecycle.
+ *
+ * @param {Function} Component - Root functional component.
+ * @param {Element} rootContainer - Browser DOM container.
+ */
+export function renderApp(Component, rootContainer) {
+    // Validate the root component and mounting container.
+    if (typeof Component !== "function") {
+        throw new TypeError("Component must be a function.");
+    }
+
+    if (
+        !rootContainer ||
+        typeof rootContainer.replaceChildren !== "function"
+    ) {
+        throw new TypeError("Invalid root container.");
+    }
+
+    // Define the rendering lifecycle.
+    const rerender = () => {
+        // Reset hook ordering without clearing stored state.
+        resetCursor();
+
+        // Execute the component to generate a new VNode tree.
+        const vNode = Component();
+
+        // Convert the VNode tree into real DOM nodes.
+        const domNode = renderToDOM(vNode);
+
+        // Replace the previous root content.
+        rootContainer.replaceChildren(domNode);
+    };
+
+    // Connect state updates to this rendering lifecycle.
+    triggerRender = rerender;
+
+    // Perform the initial render.
+    rerender();
 }

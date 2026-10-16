@@ -754,7 +754,7 @@ Rendering must not accidentally reinitialize hooks.
 - [x] Support direct value updates.
 - [x] Support functional updates.
 - [x] Detect changes using `Object.is`.
-- [ ] Trigger re-rendering when state changes.
+- [x] Trigger re-rendering when state changes.
 
 **Acceptance Criteria:**
 
@@ -781,13 +781,13 @@ Rendering must not accidentally reinitialize hooks.
 
 **Scope:**
 
-- [ ] Register the root component.
-- [ ] Register the root DOM container.
-- [ ] Reset the hook cursor before rendering.
-- [ ] Execute the component function.
-- [ ] Convert its VNode tree into browser DOM.
-- [ ] Mount the result in the root container.
-- [ ] Connect state updates to the rendering lifecycle.
+- [x] Register the root component.
+- [x] Register the root DOM container.
+- [x] Reset the hook cursor before rendering.
+- [x] Execute the component function.
+- [x] Convert its VNode tree into browser DOM.
+- [x] Mount the result in the root container.
+- [x] Connect state updates to the rendering lifecycle.
 
 **Acceptance Criteria:**
 
