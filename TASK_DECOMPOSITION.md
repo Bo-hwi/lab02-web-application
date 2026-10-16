@@ -351,6 +351,76 @@ The function must handle:
 
 ---
 
+
+### Exercise 1 — Final Verification Report
+
+**Verification Date:** 2026-10-16
+**Scope:** Mini-React VNode & Mounting Engine
+**Status:** Functional checkpoints passed; final review pending
+
+#### Test Results
+
+| Checkpoint | Result | Evidence |
+|---|---|---|
+| VNode Normalization | 6/6 PASS | Node.js test runner |
+| Recursive DOM Mounting | 9/9 PASS | Chrome browser test |
+| XSS Security Verification | 8/8 PASS | Chrome browser test |
+| Total | 23/23 PASS | Test execution screenshots |
+
+#### Verified Requirements
+
+- VNode factories generate normalized tree structures.
+- Recursive mounting creates native DOM elements.
+- Plain text is rendered using safe Text nodes.
+- `className` is mapped to `class`.
+- `htmlFor` is mapped to `for`.
+- Tested accessibility attributes are preserved.
+- Semantic HTML elements are successfully mounted.
+- The tested XSS payloads remain inert.
+- Case-insensitive inline event attributes are blocked.
+
+#### Security Finding
+
+**Issue:** Uppercase inline event attributes bypassed
+the original event handler detection logic.
+
+**Before fix:** 7/8 security checks passed.
+
+**Correction:** Case-insensitive event attribute filtering.
+
+**After fix:** 8/8 security checks passed.
+
+**Fix commit:** `78bcc14`
+
+#### Architectural Limitations
+
+- Exercise 1 uses element-level event listeners.
+- Root Event Delegation belongs to Sprint 2.
+- Full WCAG 2.2 AA conformance has not been audited.
+- The passing security tests do not prove complete XSS immunity.
+- Object freezing and deeper immutability guarantees
+  require further verification.
+- The text element factory was included in the
+  createElement milestone commit.
+
+#### Git Verification
+
+- Required createElement milestone commit: Verified.
+- Required renderToDOM milestone commit: Verified.
+- Conventional Commit history: Verified.
+- Local branch synchronized with origin/main: Verified.
+
+#### Final Review
+
+- [x] Record executed tests.
+- [x] Record observed test results.
+- [x] Record available browser verification findings.
+- [x] Record architectural exceptions.
+- [x] Complete final Git diff review.
+- [ ] Commit final verification documentation.
+
+**Status:** Verification passed; documentation commit pending
+
 ## 8. Technical Trap Register
 
 | ID | Technical Trap | Required Check |
@@ -400,10 +470,10 @@ Exercise 1 is complete when:
 - [x] VNode and Props contracts are defined.
 - [x] Text element factory passes verification.
 - [x] Element factory passes verification.
-- [ ] Recursive DOM mounting passes verification.
-- [ ] Required semantic HTML is present.
-- [ ] Required property mapping is correct.
-- [ ] All mandatory XSS checks pass.
+- [x] Recursive DOM mounting passes verification.
+- [x] Required semantic HTML is present.
+- [x] Required property mapping is correct.
+- [x] All mandatory XSS checks pass.
 - [ ] No unexpected orphan DOM nodes remain.
 - [ ] Browser DevTools inspection is complete.
 - [x] Both mandatory Git milestone commits exist.
