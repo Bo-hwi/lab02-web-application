@@ -822,16 +822,16 @@ unless explicitly required by verification.
 
 **Scope:**
 
-- [ ] Register root event listeners.
-- [ ] Support `click`, `input`, and `keydown`.
-- [ ] Attach at most one listener per supported event type.
-- [ ] Identify the original event target.
-- [ ] Traverse the target's ancestor chain.
-- [ ] Resolve the associated VNode handler.
-- [ ] Invoke the correct callback.
-- [ ] Prevent duplicate root listener registration.
-- [ ] Prevent element-level listener duplication.
-- [ ] Ensure re-rendered nodes use current handlers.
+- [x] Register root event listeners.
+- [x] Support `click`, `input`, and `keydown`.
+- [x] Attach at most one listener per supported event type.
+- [x] Identify the original event target.
+- [x] Traverse the target's ancestor chain.
+- [x] Resolve the associated VNode handler.
+- [x] Invoke the correct callback.
+- [x] Prevent duplicate root listener registration.
+- [x] Prevent element-level listener duplication.
+- [x] Ensure re-rendered nodes use current handlers.
 
 **Acceptance Criteria:**
 

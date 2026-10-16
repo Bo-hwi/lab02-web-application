@@ -96,7 +96,14 @@ export function renderToDOM(vNode) {
                 typeof value === "function"
             ) {
                 const eventName = key.slice(2).toLowerCase();
-                element.addEventListener(eventName, value);
+
+                // Store the event handler on the DOM node.
+                // The root delegation hub will dispatch events later.
+                if (!element.__handlers) {
+                    element.__handlers = Object.create(null);
+                }
+
+                element.__handlers[eventName] = value;
             }
 
             // Never serialize event handlers into HTML attributes.

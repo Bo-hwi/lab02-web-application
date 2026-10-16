@@ -109,4 +109,52 @@ export function renderApp(Component, rootContainer) {
 
     // Perform the initial render.
     rerender();
+
+    
+    /**
+     * Register one delegated listener per supported event type.
+     * Events bubble from child elements to the root container.
+     */
+    // Track delegated event types already installed on this root.
+    if (!rootContainer.__delegatedEvents) {
+        rootContainer.__delegatedEvents = new Set();
+    }
+
+    const supportedEvents = ["click", "input", "keydown"];
+
+    // Track delegated event types already installed on this root.
+    if (!rootContainer.__delegatedEvents) {
+        rootContainer.__delegatedEvents = new Set();
+    }
+
+    for (const eventType of supportedEvents) {
+        // Prevent duplicate listener registration on the same root.
+        if (rootContainer.__delegatedEvents.has(eventType)) {
+            continue;
+        }
+
+        rootContainer.__delegatedEvents.add(eventType);
+        rootContainer.addEventListener(eventType, (event) => {
+            let target = event.target;
+
+            // Walk from the event target toward the root.
+            while (target && target !== rootContainer) {
+                const handler = target.__handlers?.[eventType];
+
+                if (typeof handler === "function") {
+                    handler(event);
+                }
+
+                // Respect propagation cancellation.
+                if (event.cancelBubble) {
+                    break;
+                }
+
+                target = target.parentNode;
+            }
+        });
+    }
+
+
+
 }

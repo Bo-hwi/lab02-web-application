@@ -17,7 +17,10 @@
     </main>
 
     <script type="module">
-        import { createElement } from "./mini-react.js";
+        import {
+            createElement,
+            renderToDOM
+        } from "./mini-react.js";
         import {
             useState,
             renderApp
@@ -57,6 +60,8 @@
 
         renderApp(Counter, root);
 
+        // Test repeated initialization on the same root container.  
+
         const button = root.querySelector("button");
 
         const initialCorrect =
@@ -88,6 +93,56 @@
             .textContent = summary;
 
         console.log(summary);
+        
+        
+        // Verify delegated input and keydown events.
+        const eventTestRoot = document.createElement("section");
+        root.appendChild(eventTestRoot);
+
+        const eventResults = {
+            input: 0,
+            keydown: 0
+        };
+
+        const inputNode = createElement(
+            "input",
+            {
+                id: "event-test-input",
+                type: "text",
+                "aria-label": "Event delegation test",
+                onInput: () => eventResults.input++,
+                onKeyDown: (event) => {
+                eventResults.keydown++;
+                console.log(
+                    "Keydown callback:",
+                    event.key,
+                    "Count:",
+                    eventResults.keydown
+                );
+            }
+            }
+        );
+
+        // Render the input node with stored handlers.
+        const testInput = renderToDOM(inputNode);
+        eventTestRoot.appendChild(testInput);
+
+        // Dispatch synthetic bubbling events.
+        testInput.dispatchEvent(
+            new Event("input", { bubbles: true })
+        );
+
+        testInput.dispatchEvent(
+            new KeyboardEvent("keydown", {
+                key: "Enter",
+                bubbles: true
+            })
+        );
+
+        console.table(eventResults);
+
+    
+
         console.table({
             initialCorrect,
             updatedCorrect,
