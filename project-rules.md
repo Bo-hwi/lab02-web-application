@@ -6,6 +6,10 @@
 **Current Scope:** HW1 — Accessible Data-Grid
 **Target Branch:** `hw1/data-grid`
 **Technology:** HTML, CSS, Vanilla JavaScript, native browser APIs
+**Submission Language:** English.
+
+All submitted documentation, UI text, sample product names and
+categories, code comments, and commit messages must be in English.
 
 ## 1. Engineering Philosophy
 

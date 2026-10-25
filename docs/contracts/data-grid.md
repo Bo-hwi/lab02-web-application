@@ -15,7 +15,7 @@ Each product contains:
 | price | number | Non-negative finite number, in VND |
 | stock | number | Non-negative integer |
 
-The application uses approximately 100 deterministic sample products.
+The application uses approximately 100 deterministic sample products with English names and categories. All UI labels, messages and documentation must be in English. Prices remain denominated in VND.
 
 Product IDs identify rows across filtering, sorting and pagination.
 Array positions must not be used as product identity.
@@ -66,7 +66,7 @@ original data -> filtering -> sorting -> pagination
 - Search matches product ID or name.
 - Trim leading and trailing whitespace.
 - Search is case-insensitive.
-- Vietnamese accents remain significant.
+- Search preserves diacritics; it does not perform accent folding.
 - Category filtering uses exact category values.
 - Search and category conditions are combined with AND.
 - Changing a filter resets page to 1.
@@ -78,7 +78,7 @@ original data -> filtering -> sorting -> pagination
 - First activation of a different column sorts ascending.
 - Repeated activation of that column toggles asc/desc.
 - Price and stock use numeric comparison.
-- Text uses Vietnamese locale-aware comparison.
+- Text uses English locale-aware comparison with locale `en`.
 - Equal values retain their original dataset order.
 - Sorting applies to all filtered rows before pagination.
 - Changing sorting resets page to 1.
@@ -90,7 +90,7 @@ original data -> filtering -> sorting -> pagination
 - For non-empty results, page is clamped to 1..pageCount.
 - Changing pageSize resets page to 1.
 - Empty results keep internal page at 1 and pageCount at 0.
-- Empty UI shows "Không có kết quả", not "Trang 1/0".
+- Empty UI shows "No results found", not "Page 1/0".
 - Previous/next controls are disabled when unavailable.
 - Displayed row ranges and totals must match actual results.
 
