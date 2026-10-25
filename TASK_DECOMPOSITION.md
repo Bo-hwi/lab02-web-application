@@ -144,8 +144,8 @@ Commit: `feat(grid): render semantic configurable data table`
 ### T05 - Establish State and Delegated Events
 
 - [ ] Implement the flow: update state -> derive displayed data -> update the UI.
-- [ ] Delegate appropriate events at the root and map keydown correctly.
-- [ ] Ensure rerendering does not register duplicate listeners.
+- [x] Delegate appropriate events at the root and map keydown correctly.
+- [x] Ensure rerendering does not register duplicate listeners.
 - [ ] Avoid replacing the entire root during interactions in ways that lose focus or caret position.
 - [ ] Define focus restoration using row ID and column key when nodes must be replaced.
 
@@ -155,11 +155,11 @@ Commit: `feat(grid): add state updates and delegated events`
 
 ### T06 - Filter Data
 
-- [ ] Search by ID/name, trim surrounding whitespace and ignore case.
-- [ ] Combine search with category filtering.
-- [ ] Reset the page to 1 when filter conditions change.
-- [ ] Display an empty state and the matching result count.
-- [ ] Test empty filters, unmatched queries, mixed-case English text and combined filters.
+- [x] Search by ID/name, trim surrounding whitespace and ignore case.
+- [x] Combine search with category filtering.
+- [x] Reset the page to 1 when filter conditions change.
+- [x] Display an empty state and the matching result count.
+- [x] Test empty filters, unmatched queries, mixed-case English text and combined filters.
 
 Acceptance: results are correct and the original dataset remains unchanged.
 
@@ -303,8 +303,10 @@ Update this section after actual work. A planned check is not completion evidenc
 |---|---|---|---|
 | T01 | Complete | Baseline 2b6135f; tested checkout 8a54ae3; VNode 6/6, DOM 9/9 and XSS 8/8 PASS; observations recorded in docs/verification/HW1_VERIFICATION.md | 2e7837b, 9cdf270 |
 | T02 | Specification complete | Contract reviewed against all six T02 items; implementation and runtime verification remain pending | d6cc8d9 |
-| T03 | Implementation verified; commit pending | node --test tests/products.test.js: 4/4 PASS; product fields, unique IDs, fixture coverage and source immutability verified | Pending |
-| T04 | Browser checks passed; commit pending | Main page rendered 100 products in five columns; tests/grid-render-test.html reported 8/8 PASS; no test failures | Pending |
+| T03 | Complete | node --test tests/products.test.js: 4/4 PASS; product fields, unique IDs, fixture coverage and source immutability verified | b27cd5f |
+| T04 | Complete | Main page rendered 100 products in five columns; tests/grid-render-test.html reported 8/8 PASS | 817e8aa |
+| T05 | In progress | tests/grid-state.test.js: 6/6 PASS; tests/grid-event-test.html: 6/6 PASS; UI update and focus restoration remain pending | 133490c |
+| T06 | Complete | node --test tests/grid-model.test.js tests/grid-state.test.js: 12/12 PASS; browser verified SP010 returns 1, SP010 + Displays returns 0 with empty state, and Displays alone returns 20 | Pending |
 
 ## 9. Definition of Done
 

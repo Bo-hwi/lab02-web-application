@@ -1,3 +1,4 @@
+import { filterProducts } from "./model.js";
 import { renderToDOM } from "../../mini-react.js";
 import { products } from "../data/products.js";
 import { createGridView } from "./view.js";
@@ -15,13 +16,40 @@ const columns = [
 const state = createInitialGridState();
 const root = document.getElementById("grid-root");
 const status = document.getElementById("grid-status");
+const categoryFilter = document.getElementById("category-filter");
 
-root.replaceChildren(renderToDOM(createGridView({
-  data: products,
-  columns,
-  ariaLabel: "Product inventory",
-})));
-status.textContent = `${products.length} products`;
+for (const category of new Set(products.map((product) => product.category))) {
+  const option = document.createElement("option");
+  option.value = category;
+  option.textContent = category;
+  categoryFilter.append(option);
+}
+
+function render() {
+  const visibleProducts = filterProducts(products, {
+    query: state.query,
+    category: state.category,
+  });
+  const focusedSortKey = root.contains(document.activeElement)
+    ? document.activeElement.dataset.sortKey
+    : undefined;
+  root.replaceChildren(renderToDOM(createGridView({
+    data: visibleProducts,
+    columns,
+    ariaLabel: "Product inventory",
+  })));
+
+  if (focusedSortKey) {
+  const replacementButton = [...root.querySelectorAll("[data-sort-key]")]
+    .find((button) => button.dataset.sortKey === focusedSortKey);
+
+  replacementButton?.focus({ preventScroll: true });
+}
+
+  status.textContent = `${visibleProducts.length} products`;
+}
+
+render();
 
 setupGridEventHub(document.querySelector("main"), {
   onAction(action) {
@@ -56,6 +84,7 @@ setupGridEventHub(document.querySelector("main"), {
         return;
     }
     Object.assign(state, transitionGridState(state, stateEvent));
+    render();
   },
   onKeydown() {
     // Keyboard navigation will be connected in its dedicated task.
