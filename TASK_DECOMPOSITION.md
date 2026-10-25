@@ -107,12 +107,12 @@ Commit: `docs(hw1): define data-grid scope and task decomposition`
 
 ### T02 - Define Contracts and Invariants
 
-- [ ] Describe Product, ColumnDef, GridOptions and GridState in docs/contracts/data-grid.md.
-- [ ] Define minimum state: filters, sort column/direction, page, page size, selected IDs and active cell.
-- [ ] Specify the pipeline: original data -> filtering -> sorting -> pagination.
-- [ ] Define Enter, Space, arrow and Tab behavior; distinguish focus from selection.
-- [ ] Define empty-data handling, out-of-range pages, invalid IDs and removal of the active cell by filtering.
-- [ ] Require immutable source data, stable IDs and counts/ARIA states consistent with the displayed data.
+- [x] Describe Product, ColumnDef, GridOptions and GridState in docs/contracts/data-grid.md.
+- [x] Define minimum state: filters, sort column/direction, page, page size, selected IDs and active cell.
+- [x] Specify the pipeline: original data -> filtering -> sorting -> pagination.
+- [x] Define Enter, Space, arrow and Tab behavior; distinguish focus from selection.
+- [x] Define empty-data handling, out-of-range pages, invalid IDs and removal of the active cell by filtering.
+- [x] Require immutable source data, stable IDs and counts/ARIA states consistent with the displayed data.
 
 Acceptance: behaviors can be translated into concrete tests, with no contradictions between keyboard interaction and row selection.
 
