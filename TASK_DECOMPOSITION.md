@@ -302,8 +302,8 @@ Update this section after actual work. A planned check is not completion evidenc
 | Task | Status | Verification evidence | Commit |
 |---|---|---|---|
 | T01 | In progress | WBS added and project-rules scope updated to HW1; baseline tests have not been rerun | 2e7837b, 9cdf270 |
-| T02-T15 | Completion not yet recorded | Not yet recorded | Not yet recorded |
-
+| T02 | Specification complete | Contract reviewed against all six T02 items; implementation and runtime verification remain pending | d6cc8d9 |
+| T03-T15 | Not started | Not yet recorded | Not yet recorded |
 ## 9. Definition of Done
 
 - [ ] R01-R07 have acceptance evidence.
