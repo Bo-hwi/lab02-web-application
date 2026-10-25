@@ -130,12 +130,12 @@ Commit: `feat(grid): add deterministic product fixtures`
 
 ### T04 - Build the Semantic Table and UI Structure
 
-- [ ] Create index.html with a heading, controls, table, status messages and pagination.
-- [ ] Render columns from configuration using table, thead, tbody, th scope="col" and button.
-- [ ] Provide an accessible table name and appropriate grid, row, columnheader and gridcell roles.
-- [ ] Label inputs/selects; render text through safe DOM APIs.
-- [ ] Keep data and behavior separate from view construction.
-- [ ] Verify that HTML-like strings render as text without creating injected elements or executing code.
+- [x] Create index.html with a heading, controls, table, status messages and pagination.
+- [x] Render columns from configuration using table, thead, tbody, th scope="col" and button.
+- [x] Provide an accessible table name and appropriate grid, row, columnheader and gridcell roles.
+- [x] Label inputs/selects; render text through safe DOM APIs.
+- [x] Keep data and behavior separate from view construction.
+- [x] Verify that HTML-like strings render as text without creating injected elements or executing code.
 
 Acceptance: DOM structure is correct, data and headers match the contract, and the console has no errors.
 
@@ -304,7 +304,8 @@ Update this section after actual work. A planned check is not completion evidenc
 | T01 | Complete | Baseline 2b6135f; tested checkout 8a54ae3; VNode 6/6, DOM 9/9 and XSS 8/8 PASS; observations recorded in docs/verification/HW1_VERIFICATION.md | 2e7837b, 9cdf270 |
 | T02 | Specification complete | Contract reviewed against all six T02 items; implementation and runtime verification remain pending | d6cc8d9 |
 | T03 | Implementation verified; commit pending | node --test tests/products.test.js: 4/4 PASS; product fields, unique IDs, fixture coverage and source immutability verified | Pending |
-| T04-T15 | Not started | Not yet recorded | Not yet recorded |
+| T04 | Browser checks passed; commit pending | Main page rendered 100 products in five columns; tests/grid-render-test.html reported 8/8 PASS; no test failures | Pending |
+
 ## 9. Definition of Done
 
 - [ ] R01-R07 have acceptance evidence.

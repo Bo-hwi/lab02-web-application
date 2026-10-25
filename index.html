@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Data Grid</title>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Product Data Grid</h1>
+      <p>Browse product categories, prices and stock levels.</p>
+    </header>
+
+    <section aria-labelledby="filters-heading">
+      <h2 id="filters-heading">Product filters</h2>
+      <!-- Controls remain disabled until their behavior is implemented. -->
+      <fieldset disabled>
+        <legend>Search and category</legend>
+        <label for="product-search">Search by ID or name</label>
+        <input id="product-search" type="search" name="query">
+        <label for="category-filter">Category</label>
+        <select id="category-filter" name="category">
+          <option value="">All categories</option>
+        </select>
+      </fieldset>
+    </section>
+
+    <section aria-labelledby="products-heading">
+      <h2 id="products-heading">Products</h2>
+      <p id="grid-status" role="status" aria-live="polite"></p>
+      <div id="grid-root"></div>
+      <nav aria-label="Product pagination">
+        <button id="previous-page" type="button" disabled>Previous</button>
+        <button id="next-page" type="button" disabled>Next</button>
+        <label for="page-size">Rows per page</label>
+        <select id="page-size" disabled>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+        </select>
+      </nav>
+    </section>
+  </main>
+  <script type="module" src="./js/grid/main.js"></script>
+</body>
+</html>
