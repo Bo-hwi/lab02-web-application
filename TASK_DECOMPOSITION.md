@@ -94,10 +94,10 @@ Commit messages below are proposed messages. Do not create empty commits, fabric
 
 ### T01 - Confirm the Baseline and Update Documentation Scope
 
-- [ ] Confirm hw1/data-grid is checked out and record the actual baseline commit.
-- [ ] Read existing code, documentation and tests; rerun available baseline checks.
-- [ ] Record tests that have not run or are failing; do not infer current results from old reports.
-- [ ] Preserve the previous Exercise 1 WBS in docs/ before replacement if an in-branch archive is needed.
+- [x] Confirm hw1/data-grid is checked out and record the actual baseline commit.
+- [x] Read existing code, documentation and tests; rerun available baseline checks.
+- [x] Record tests that have not run or are failing; do not infer current results from old reports.
+- [x] Record that the previous Exercise 1 WBS is preserved in Git history at 2b6135f; no separate in-branch archive is needed.
 - [x] Update project-rules.md from Exercise 1 to HW1 while retaining applicable safety and verification rules.
 - [x] Add this task decomposition document.
 
@@ -301,7 +301,7 @@ Update this section after actual work. A planned check is not completion evidenc
 
 | Task | Status | Verification evidence | Commit |
 |---|---|---|---|
-| T01 | In progress | WBS added and project-rules scope updated to HW1; baseline tests have not been rerun | 2e7837b, 9cdf270 |
+| T01 | Complete | Baseline 2b6135f; tested checkout 8a54ae3; VNode 6/6, DOM 9/9 and XSS 8/8 PASS; observations recorded in docs/verification/HW1_VERIFICATION.md | 2e7837b, 9cdf270 |
 | T02 | Specification complete | Contract reviewed against all six T02 items; implementation and runtime verification remain pending | d6cc8d9 |
 | T03-T15 | Not started | Not yet recorded | Not yet recorded |
 ## 9. Definition of Done
