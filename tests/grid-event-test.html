@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid Event Delegation Tests</title>
+</head>
+<body>
+  <main>
+    <h1>Grid Event Delegation Tests</h1>
+    <p id="summary" role="status">Running checks...</p>
+    <pre id="results"></pre>
+    <section id="test-root" aria-label="Event delegation test controls">
+      <label for="test-search">Search test</label>
+      <input id="test-search" data-grid-action="query" value="keyboard">
+      <button type="button" data-grid-action="sort" data-test-id="action"><span>Sort test</span></button>
+      <button type="button" data-grid-action="ignored" disabled>Disabled test</button>
+    </section>
+  </main>
+  <script type="module" src="./grid-event.test.js"></script>
+</body>
+</html>

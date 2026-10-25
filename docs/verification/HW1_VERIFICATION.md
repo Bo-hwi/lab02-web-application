@@ -45,3 +45,16 @@ A separate in-branch archive is not required for this project.
 - Verified multiple categories, equal prices and zero-stock products.
 - Verified that source fixtures reject in-place sorting and editing.
 - Data-Grid rendering and interactions are not yet implemented.
+
+## T05 - State and Delegated Events
+
+- State tests: 6 passed, 0 failed.
+- Browser event delegation checks: 6/6 passed.
+- Verified repeated hub setup reuses four listeners, actions bubble
+  to the root, disabled controls are ignored, keydown is forwarded,
+  and disposal removes listeners.
+- The application entry point loaded successfully in the browser.
+- State changes do not yet update displayed data.
+- Focus restoration after rendering remains pending.
+- A Summarizer API warning appeared in the browser console;
+  no JavaScript test failed.

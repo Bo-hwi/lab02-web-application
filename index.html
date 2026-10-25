@@ -11,30 +11,27 @@
       <h1>Product Data Grid</h1>
       <p>Browse product categories, prices and stock levels.</p>
     </header>
-
     <section aria-labelledby="filters-heading">
       <h2 id="filters-heading">Product filters</h2>
-      <!-- Controls remain disabled until their behavior is implemented. -->
       <fieldset disabled>
         <legend>Search and category</legend>
         <label for="product-search">Search by ID or name</label>
-        <input id="product-search" type="search" name="query">
+        <input id="product-search" type="search" name="query" data-grid-action="query">
         <label for="category-filter">Category</label>
-        <select id="category-filter" name="category">
+        <select id="category-filter" name="category" data-grid-action="category">
           <option value="">All categories</option>
         </select>
       </fieldset>
     </section>
-
     <section aria-labelledby="products-heading">
       <h2 id="products-heading">Products</h2>
       <p id="grid-status" role="status" aria-live="polite"></p>
       <div id="grid-root"></div>
       <nav aria-label="Product pagination">
-        <button id="previous-page" type="button" disabled>Previous</button>
-        <button id="next-page" type="button" disabled>Next</button>
+        <button id="previous-page" type="button" data-grid-action="previous-page" disabled>Previous</button>
+        <button id="next-page" type="button" data-grid-action="next-page" disabled>Next</button>
         <label for="page-size">Rows per page</label>
-        <select id="page-size" disabled>
+        <select id="page-size" data-grid-action="page-size" disabled>
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="50">50</option>

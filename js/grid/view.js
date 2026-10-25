@@ -1,8 +1,6 @@
 import { createElement } from "../../mini-react.js";
 
-const numberFormatter = new Intl.NumberFormat("en", {
-  maximumFractionDigits: 0,
-});
+const numberFormatter = new Intl.NumberFormat("en", { maximumFractionDigits: 0 });
 
 /** Build a table VNode without changing data or registering listeners. */
 export function createGridView({ data, columns, ariaLabel }) {
@@ -15,6 +13,7 @@ export function createGridView({ data, columns, ariaLabel }) {
       ? createElement("button", {
         type: "button",
         disabled: true,
+        "data-grid-action": "sort",
         "data-sort-key": column.accessorKey,
       }, column.header)
       : column.header),
@@ -30,7 +29,6 @@ export function createGridView({ data, columns, ariaLabel }) {
       const text = typeof value === "number"
         ? numberFormatter.format(value)
         : String(value ?? "");
-
       return createElement("td", {
         role: "gridcell",
         "data-column-key": column.accessorKey,
@@ -47,10 +45,7 @@ export function createGridView({ data, columns, ariaLabel }) {
     ));
   }
 
-  return createElement("table", {
-    role: "grid",
-    "aria-label": ariaLabel,
-  },
-  createElement("thead", null, createElement("tr", { role: "row" }, headers)),
-  createElement("tbody", null, rows));
+  return createElement("table", { role: "grid", "aria-label": ariaLabel },
+    createElement("thead", null, createElement("tr", { role: "row" }, headers)),
+    createElement("tbody", null, rows));
 }
