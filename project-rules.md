@@ -3,7 +3,9 @@
 
 **Course:** Web Application Development — UIT Advanced Program  
 **Lab:** Modern React Architecture, Virtual DOM & State Machines  
-**Current Scope:** Exercise 1 — Mini-React VNode & Mounting Engine
+**Current Scope:** HW1 — Accessible Data-Grid
+**Target Branch:** `hw1/data-grid`
+**Technology:** HTML, CSS, Vanilla JavaScript, native browser APIs
 
 ## 1. Engineering Philosophy
 
@@ -539,23 +541,41 @@ Exercise 1 is considered complete only when:
 
 ## 11. Scope Isolation
 
-The current active scope is Exercise 1 only.
+The current implementation scope is HW1 — Accessible Data-Grid.
 
-Do not implement the following without explicit authorization:
+### Required Features
 
-- Custom `useState`
-- Reactive state dispatcher
-- Hook cursor lifecycle
-- Full root Event Delegation hub
-- Virtual DOM reconciliation
-- Memoization
-- Virtual scrolling
-- Async finite state machines
-- Homework Data-Grid
-- Audio queue engine
-- Flash-sale engine
+- Configurable semantic data table.
+- Filtering, sorting, and pagination.
+- Row selection using stable product IDs.
+- Arrow-key navigation, Enter selection, and Space toggling.
+- Predictable focus management and accessible status feedback.
+- WCAG 2.2 AA verification.
+- Verified Lighthouse scores of 100 for Accessibility and Best Practices.
 
-These belong to later exercises or additional assignments.
+### Implementation Boundaries
+
+- Use HTML, CSS, and vanilla JavaScript.
+- Do not introduce external frameworks or libraries.
+- Reuse existing repository code where useful.
+- Changes to the existing renderer and event handling are allowed
+  when required for HW1 and independently verified.
+- Completing all in-class exercises is not a prerequisite.
+- A complete custom React implementation is not required.
+- HW2 and HW3 must remain on their own branches.
+
+### Planning and Verification
+
+- Follow the HW1 tasks in TASK_DECOMPOSITION.md.
+- Define contracts before implementing each task.
+- Implement and verify one isolated task at a time.
+- Treat slide code as reference material, not verified implementation.
+- Distinguish assignment requirements from implementation choices.
+- Record actual test results and AI-related findings honestly.
+- Never claim that a Lighthouse score alone proves WCAG compliance.
+
+Earlier Exercise 1 scope restrictions apply to the historical exercise.
+They do not prohibit the HW1 changes explicitly allowed in this section.
 
 ---
 
