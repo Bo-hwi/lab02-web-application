@@ -120,9 +120,9 @@ Commit: `docs(grid): define data and interaction contracts`
 
 ### T03 - Prepare Sample Data
 
-- [ ] Create approximately 100 deterministic products with unique IDs.
-- [ ] Include multiple categories, English names, equal prices and zero stock.
-- [ ] Validate data types, duplicate IDs and invalid values.
+- [x] Create approximately 100 deterministic products with unique IDs.
+- [x] Include multiple categories, English names, equal prices and zero stock.
+- [x] Validate data types, duplicate IDs and invalid values.
 
 Acceptance: data spans multiple pages and produces reproducible results across runs.
 
@@ -303,7 +303,8 @@ Update this section after actual work. A planned check is not completion evidenc
 |---|---|---|---|
 | T01 | Complete | Baseline 2b6135f; tested checkout 8a54ae3; VNode 6/6, DOM 9/9 and XSS 8/8 PASS; observations recorded in docs/verification/HW1_VERIFICATION.md | 2e7837b, 9cdf270 |
 | T02 | Specification complete | Contract reviewed against all six T02 items; implementation and runtime verification remain pending | d6cc8d9 |
-| T03-T15 | Not started | Not yet recorded | Not yet recorded |
+| T03 | Implementation verified; commit pending | node --test tests/products.test.js: 4/4 PASS; product fields, unique IDs, fixture coverage and source immutability verified | Pending |
+| T04-T15 | Not started | Not yet recorded | Not yet recorded |
 ## 9. Definition of Done
 
 - [ ] R01-R07 have acceptance evidence.

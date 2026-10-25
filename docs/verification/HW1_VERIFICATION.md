@@ -35,3 +35,13 @@
 The previous Exercise 1 task decomposition remains available
 in Git history at commit 2b6135f.
 A separate in-branch archive is not required for this project.
+
+## T03 - Product Fixtures
+
+- Command: node --test tests/products.test.js
+- Result: 4 tests passed, 0 failed.
+- Verified 100 products with unique, non-empty IDs.
+- Verified required field types and valid price/stock values.
+- Verified multiple categories, equal prices and zero-stock products.
+- Verified that source fixtures reject in-place sorting and editing.
+- Data-Grid rendering and interactions are not yet implemented.
