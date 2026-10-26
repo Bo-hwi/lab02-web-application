@@ -6,7 +6,7 @@
 - Branch: `hw2/audio-queue`
 - Baseline commit: `2b6135f`
 - Assignment source: Lab 02, slide 31.
-- Status: T01-T08 complete, including browser audio decoding, queue cancellation, playback lifecycle, visualizer and accessible application controls; local audio fixtures remain for T09.
+- Status: T01-T09 complete, including browser audio decoding, queue cancellation, playback lifecycle, visualizer, accessible application controls and reproducible local audio fixtures.
 - Technology: HTML, CSS and vanilla JavaScript with native browser APIs.
 - Submission language: English.
 - HW1 and HW3 remain on separate branches.
@@ -191,11 +191,11 @@ Acceptance: users can operate the queue and understand its current state.
 
 ### T09 - Prepare Reproducible Audio Fixtures
 
-- [ ] Add small audio samples permitted for redistribution.
-- [ ] Record sources and licenses.
-- [ ] Include a documented failure scenario.
-- [ ] Avoid dependence on unrelated remote servers.
-- [ ] Verify sample URLs over the local HTTP server.
+- [x] Add small audio samples permitted for redistribution.
+- [x] Record sources and licenses.
+- [x] Include a documented failure scenario.
+- [x] Avoid dependence on unrelated remote servers.
+- [x] Verify sample URLs over the local HTTP server.
 
 Acceptance: another person can reproduce playback and queue tests.
 
@@ -278,7 +278,8 @@ Acceptance: GitHub contains the verified source and matching documentation.
 | T06 | Complete | Player lifecycle tests 7/7 PASS; native browser playback checks 6/6 PASS using a user click, AudioContext and 256-bin analyser; prior queue/loader/cancellation suite 37/37 PASS. See HW2_VERIFICATION.md. | Included in this commit |
 | T07 | Complete | Visualizer Node tests 5/5 PASS; native browser Canvas and analyser checks 7/7 PASS with a silent frame and a muted oscillator signal. The combined audio suite passed 49/49; baseline engine suite passed 6/6. See HW2_VERIFICATION.md. | Included in this commit |
 | T08 | Complete | Queue and player subscriptions drive the HTML controls and live status; 51/51 audio Node tests PASS. Browser HTTP check confirmed Enter enqueues, a failed URL reports HTTP 404, Remove restores focus to the URL field and the empty state. Local playable samples follow in T09. See HW2_VERIFICATION.md. | Included in this commit |
-| T09-T13 | Not started | Not yet recorded | Not yet recorded |
+| T09 | Complete | Two generated 0.75-second mono PCM WAV fixtures and CC0-1.0/source notes committed. Both served locally as audio/wav HTTP 200 at 24,044 bytes; missing fixture returned HTTP 404. Browser queue decoded both to Ready and Play announced each track. Fixture format tests 2/2 PASS. See HW2_VERIFICATION.md. | Included in this commit |
+| T10-T13 | Not started | Not yet recorded | Not yet recorded |
 
 
 ## 9. Definition of Done

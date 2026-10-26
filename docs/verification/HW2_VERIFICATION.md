@@ -126,3 +126,13 @@ References:
 - Browser check over local HTTP on port 8765: the empty state appeared; pressing Enter on Add to queue created audio-1. The not-yet-added fixture URL returned HTTP 404 and the page announced the failed state and reason. Remove cleared the entry, showed the empty state and returned focus to the URL field.
 - Native buttons and form controls retain keyboard activation and visible focus. Queue/player changes update the live text region; Canvas animation does not update the DOM on each frame.
 - Successful checked-in fixture playback and local sample URL verification remain for T09. This is not a screen-reader audit or a frame-rate measurement.
+
+## T09 - Reproducible Local Audio Fixtures
+
+- Date: 2026-10-27.
+- Files: \`audio/fixtures/tone-a.wav\` and \`tone-b.wav\` are original generated 440 Hz and 660 Hz signals. The generator is \`scripts/generate-audio-fixtures.js\`; source, CC0-1.0 license, format and reproduction steps are recorded in \`audio/fixtures/README.md\`.
+- Command: \`node --test tests/audio-fixtures.test.js\` — 2 passed, 0 failed. Each file has a valid RIFF/WAVE PCM header, mono 16-bit 16 kHz samples, a non-silent signal and size below 30 KB.
+- Combined command: \`node --test tests/audio-*.test.js\` — 53 passed, 0 failed.
+- Local HTTP check on port 8765: both fixture URLs returned HTTP 200, \`audio/wav\`, 24,044 bytes. \`./audio/fixtures/missing.wav\` returned HTTP 404.
+- Browser page: the queue decoded both checked-in WAV files to Ready. Clicking Play for each displayed \`Playing audio-2\` and \`Playing audio-3\` respectively. The missing-file failure and Remove/empty-state behavior were observed in T08 before the fixtures were added.
+- Audio was not instrumentally measured from the speaker output. T10 lifecycle and memory assessment remains pending.

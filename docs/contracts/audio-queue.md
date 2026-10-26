@@ -7,8 +7,8 @@ its controlled-loader tests are recorded in HW2_VERIFICATION.md. T04 provides th
 real download/decode adapter with browser verification. T05 implements queue
 cancellation, terminal-entry removal and disposal. T06 implements the playback
 lifecycle with an injected AudioContext and AnalyserNode. T08 adds queue/player
-subscriptions and accessible application controls; checked-in playable fixtures
-remain for T09.
+subscriptions and accessible application controls. T09 adds checked-in,
+reproducible WAV fixtures and their source/license notes.
 FIFO start order and a default concurrency limit of 2 are project decisions.
 
 ## 2. Task Identity and State
