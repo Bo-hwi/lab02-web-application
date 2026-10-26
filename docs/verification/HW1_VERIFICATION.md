@@ -84,4 +84,4 @@ A separate in-branch archive is not required for this project.
   placed 850,000 before 1,200,000; descending price reversed the groups.
 - The browser console showed a Summarizer API warning; no grid JavaScript
   error was visible.
-- Commit: pending.
+- Commit: 758e9a5 (feat(grid): implement stable column sorting).
