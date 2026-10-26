@@ -99,4 +99,4 @@ A separate in-branch archive is not required for this project.
   page 5 reset to page 1 of 1 with 20 products; an unmatched query showed
   0 products and the empty state with both page buttons disabled.
 - No Page 1/0 was displayed for empty results.
-- Commit: pending.
+- Commit: 259ee18 (feat(grid): implement pagination and page size controls).
