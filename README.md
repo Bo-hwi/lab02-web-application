@@ -257,7 +257,7 @@ docs/verification/HW1_VERIFICATION.md
 ```text
 .
 |-- css/
-|   `-- styles.css
+|   `-- grid.css
 |-- docs/
 |   |-- contracts/
 |   |   `-- data-grid.md
