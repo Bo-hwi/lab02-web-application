@@ -85,3 +85,18 @@ A separate in-branch archive is not required for this project.
 - The browser console showed a Summarizer API warning; no grid JavaScript
   error was visible.
 - Commit: 758e9a5 (feat(grid): implement stable column sorting).
+
+## T08 - Pagination and Page Size
+
+- Command: node --test tests/grid-pagination.test.js tests/grid-model.test.js
+  tests/grid-state.test.js
+- Result: 24 tests passed, 0 failed.
+- Verified empty results, one page, a partially filled final page, clamping
+  after the result count shrinks, supported page sizes and complete traversal
+  without duplicated or omitted rows.
+- Browser checks: page 1 showed rows 1-10; Next showed rows 11-20;
+  changing page size to 20 reset to page 1 of 5; filtering Displays from
+  page 5 reset to page 1 of 1 with 20 products; an unmatched query showed
+  0 products and the empty state with both page buttons disabled.
+- No Page 1/0 was displayed for empty results.
+- Commit: pending.

@@ -37,3 +37,24 @@ export function sortProducts(products, { key = null, direction = "asc", columns 
     })
     .map(({ product }) => product);
 }
+
+/** Return one valid page slice and its derived row/page counts. */
+export function paginateProducts(products, { page = 1, pageSize = 10 } = {}) {
+  const normalizedPageSize = [10, 20, 50].includes(pageSize) ? pageSize : 10;
+  const requestedPage = Number.isInteger(page) && page >= 1 ? page : 1;
+  const totalRows = products.length;
+  const pageCount = Math.ceil(totalRows / normalizedPageSize);
+  const currentPage = pageCount === 0 ? 1 : Math.min(requestedPage, pageCount);
+  const startIndex = (currentPage - 1) * normalizedPageSize;
+  const endIndex = Math.min(startIndex + normalizedPageSize, totalRows);
+
+  return {
+    items: products.slice(startIndex, endIndex),
+    page: currentPage,
+    pageSize: normalizedPageSize,
+    pageCount,
+    totalRows,
+    startRow: totalRows === 0 ? 0 : startIndex + 1,
+    endRow: endIndex,
+  };
+}

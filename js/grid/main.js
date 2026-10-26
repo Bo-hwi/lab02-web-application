@@ -1,4 +1,4 @@
-import { filterProducts, sortProducts } from "./model.js";
+import { filterProducts, paginateProducts, sortProducts } from "./model.js";
 import { renderToDOM } from "../../mini-react.js";
 import { products } from "../data/products.js";
 import { createGridView } from "./view.js";
@@ -17,6 +17,9 @@ const state = createInitialGridState();
 const root = document.getElementById("grid-root");
 const status = document.getElementById("grid-status");
 const categoryFilter = document.getElementById("category-filter");
+const previousPageButton = document.getElementById("previous-page");
+const nextPageButton = document.getElementById("next-page");
+const pageSizeControl = document.getElementById("page-size");
 
 for (const category of new Set(products.map((product) => product.category))) {
   const option = document.createElement("option");
@@ -35,11 +38,16 @@ function render() {
     direction: state.sortDirection,
     columns,
   });
+  const pageResult = paginateProducts(sortedProducts, {
+    page: state.page,
+    pageSize: state.pageSize,
+  });
+  state.page = pageResult.page;
   const focusedSortKey = root.contains(document.activeElement)
     ? document.activeElement.dataset.sortKey
     : undefined;
   root.replaceChildren(renderToDOM(createGridView({
-    data: sortedProducts,
+    data: pageResult.items,
     columns,
     ariaLabel: "Product inventory",
     sortKey: state.sortKey,
@@ -53,7 +61,13 @@ function render() {
   replacementButton?.focus({ preventScroll: true });
 }
 
-  status.textContent = `${visibleProducts.length} products`;
+  status.textContent = pageResult.totalRows === 0
+    ? "0 products"
+    : `${pageResult.totalRows} products · Showing ${pageResult.startRow}-${pageResult.endRow}` +
+      ` (Page ${pageResult.page} of ${pageResult.pageCount})`;
+  previousPageButton.disabled = pageResult.pageCount === 0 || pageResult.page === 1;
+  nextPageButton.disabled = pageResult.pageCount === 0 || pageResult.page === pageResult.pageCount;
+  pageSizeControl.value = String(pageResult.pageSize);
 }
 
 render();

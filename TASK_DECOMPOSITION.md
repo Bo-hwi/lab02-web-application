@@ -179,11 +179,11 @@ Commit: `feat(grid): implement stable column sorting`
 
 ### T08 - Paginate Data
 
-- [ ] Calculate page counts and slices from the filtered/sorted results.
-- [ ] Add previous/next controls and a page-size selector.
-- [ ] Disable unavailable actions and clearly communicate the current page.
-- [ ] Handle zero rows, one page, partially filled final pages and fewer pages after filtering.
-- [ ] Verify that traversing pages does not duplicate or omit rows.
+- [x] Calculate page counts and slices from the filtered/sorted results.
+- [x] Add previous/next controls and a page-size selector.
+- [x] Disable unavailable actions and clearly communicate the current page.
+- [x] Handle zero rows, one page, partially filled final pages and fewer pages after filtering.
+- [x] Verify that traversing pages does not duplicate or omit rows.
 
 Acceptance: pages remain valid; no Page 1/0, negative counts or NaN values are displayed.
 
@@ -308,6 +308,7 @@ Update this section after actual work. A planned check is not completion evidenc
 | T05 | In progress | tests/grid-state.test.js: 6/6 PASS; tests/grid-event-test.html: 6/6 PASS; filter state updates the rendered table; focus behavior for remaining grid interactions is pending | 133490c |
 | T06 | Complete | node --test tests/grid-model.test.js tests/grid-state.test.js: 12/12 PASS; browser verified live search (SP010 returns 1), SP010 + Displays returns 0 with empty state, and Displays alone returns 20 | 375e510 |
 | T07 | Complete | node --test tests/grid-model.test.js tests/grid-state.test.js: 17/17 PASS; tests/grid-render-test.html: 10/10 PASS; browser verified ascending/descending sorting on filtered Audio results | 758e9a5 |
+| T08 | Complete | node --test tests/grid-pagination.test.js tests/grid-model.test.js tests/grid-state.test.js: 24/24 PASS; browser verified page navigation, page-size reset, final-page filter clamp and empty state without Page 1/0 | Pending |
 
 ## 9. Definition of Done
 
