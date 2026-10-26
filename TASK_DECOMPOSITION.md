@@ -6,7 +6,7 @@
 - Branch: `hw2/audio-queue`
 - Baseline commit: `2b6135f`
 - Assignment source: Lab 02, slide 31.
-- Status: planning; implementation and verification are pending.
+- Status: T01 baseline verified and T02 contracts specified; HW2 implementation and runtime verification are pending.
 - Technology: HTML, CSS and vanilla JavaScript with native browser APIs.
 - Submission language: English.
 - HW1 and HW3 remain on separate branches.
@@ -25,7 +25,7 @@
 
 The slide's code is reference material and must be independently verified.
 
-## 3. Design Decisions to Confirm in T02
+## 3. Design Decisions Confirmed in T02
 
 These are implementation choices, not additional instructor requirements.
 
@@ -38,10 +38,11 @@ These are implementation choices, not additional instructor requirements.
 - Tasks may finish in a different order.
 - Keep displayed queue entries in enqueue order.
 - Play one decoded track at a time.
-- Define the difference between task cancellation and playback stopping.
-- Verify the relationship between fftSize and frequencyBinCount.
+- Cancellation rejects unfinished queue work; playback stop leaves ready tasks available.
+- Use fftSize 512 for 256 frequency bins; 512 bins would require fftSize 1024.
 - Distinguish abortable downloads from non-abortable decoding.
 - Discard late decode results after cancellation or disposal.
+- Keep a cancelled operation's concurrency slot until its loader actually settles.
 - Release retained audio buffers when entries are removed.
 - Avoid recreating application state on each animation frame.
 - Use meaningful commits after verified work.
@@ -107,14 +108,14 @@ Acceptance: HW2 has a clear scope and a verified starting point.
 
 ### T02 - Define Contracts and State Transitions
 
-- [ ] Define task IDs, queue entries and public queue methods.
-- [ ] Define pending, downloading, decoding, ready, failed and cancelled states.
-- [ ] Define FIFO start order and the concurrency limit.
-- [ ] Define cancellation before starting, during download and during decoding.
-- [ ] Specify exactly when task promises resolve or reject.
-- [ ] Define playback, stop, removal and disposal behavior.
-- [ ] Specify fftSize and expected frequencyBinCount.
-- [ ] Document ownership and cleanup of audio and animation resources.
+- [x] Define task IDs, queue entries and public queue methods.
+- [x] Define pending, downloading, decoding, ready, failed and cancelled states.
+- [x] Define FIFO start order and the concurrency limit.
+- [x] Define cancellation before starting, during download and during decoding.
+- [x] Specify exactly when task promises resolve or reject.
+- [x] Define playback, stop, removal and disposal behavior.
+- [x] Specify fftSize and expected frequencyBinCount.
+- [x] Document ownership and cleanup of audio and animation resources.
 
 Acceptance: behavior can be tested without ambiguity.
 
@@ -146,7 +147,7 @@ Acceptance: valid audio becomes an AudioBuffer and failures do not stall the que
 - [ ] Abort an active download.
 - [ ] Ignore late decode results after cancellation.
 - [ ] Prevent cancelled tasks from becoming ready.
-- [ ] Release scheduler slots after cancellation.
+- [ ] Release cancelled operations' scheduler slots only after their loaders settle.
 - [ ] Cancel or reject unfinished tasks during disposal.
 - [ ] Test repeated cancellation and disposal.
 
@@ -270,7 +271,8 @@ Acceptance: GitHub contains the verified source and matching documentation.
 | Task | Status | Evidence | Commit |
 |---|---|---|---|
 | T01 | Complete | HW2 scope and rules recorded; baseline 2b6135f verified: Node 6/6, browser DOM 9/9 and XSS 8/8 PASS. Details in docs/verification/HW2_VERIFICATION.md. | c954fa7; scope and baseline documentation commits |
-| T02-T13 | Not started | Not yet recorded | Not yet recorded |
+| T02 | Specification complete | All eight contract items reviewed; FIFO, bounded concurrency, cancellation races, promise settlement, playback, FFT and ownership specified in docs/contracts/audio-queue.md. Specification review recorded in HW2_VERIFICATION.md; runtime checks pending. | Included in this commit |
+| T03-T13 | Not started | Not yet recorded | Not yet recorded |
 
 
 ## 9. Definition of Done
