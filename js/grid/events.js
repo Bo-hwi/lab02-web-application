@@ -1,8 +1,8 @@
 const hubs = new WeakMap();
-const delegatedTypes = ["click", "input", "change", "keydown"];
+const delegatedTypes = ["click", "input", "change", "keydown", "focusin"];
 
 /** Install one delegated listener per supported event on a stable root. */
-export function setupGridEventHub(root, { onAction, onKeydown } = {}) {
+export function setupGridEventHub(root, { onAction, onKeydown, onFocusin } = {}) {
   if (!(root instanceof Element)) {
     throw new TypeError("A DOM Element is required as the event root.");
   }
@@ -26,6 +26,11 @@ export function setupGridEventHub(root, { onAction, onKeydown } = {}) {
     const listener = (event) => {
       if (type === "keydown") {
         onKeydown?.({ key: event.key, target: event.target, event });
+        return;
+      }
+
+      if (type === "focusin") {
+        onFocusin?.({ target: event.target, event });
         return;
       }
 

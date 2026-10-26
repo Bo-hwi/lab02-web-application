@@ -10,6 +10,7 @@ const root = document.getElementById("test-root");
 const actions = [];
 const keys = [];
 let addCount = 0;
+let focusinCount = 0;
 const originalAdd = root.addEventListener.bind(root);
 root.addEventListener = (...args) => {
   addCount += 1;
@@ -18,12 +19,13 @@ root.addEventListener = (...args) => {
 const handlers = {
   onAction: (action) => actions.push(action),
   onKeydown: (key) => keys.push(key),
+  onFocusin: () => focusinCount += 1,
 };
 const hub = setupGridEventHub(root, handlers);
 const repeatedHub = setupGridEventHub(root, handlers);
 
-check("Repeated setup reuses the same four delegated listeners",
-  hub === repeatedHub && addCount === 4);
+check("Repeated setup reuses the same five delegated listeners",
+  hub === repeatedHub && addCount === 5);
 root.querySelector("#test-search").dispatchEvent(new Event("input", { bubbles: true }));
 check("Input action is delegated with its current value",
   actions.length === 1 && actions[0].action === "query" && actions[0].value === "keyboard");
@@ -49,9 +51,11 @@ root.querySelector("#test-search").dispatchEvent(
 );
 check("Keyboard events reach the delegated keyboard handler",
   keys.length === 1 && keys[0].key === "Enter");
+root.querySelector("#test-search").dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+check("Focus events reach the delegated focus handler", focusinCount === 1);
 hub.dispose();
 root.querySelector("#test-search").dispatchEvent(new Event("input", { bubbles: true }));
-check("Disposal removes delegated listeners", actions.length === 3);
+check("Disposal removes delegated listeners", actions.length === 3 && focusinCount === 1);
 
 const passed = checks.filter((item) => item.passed).length;
 document.getElementById("summary").textContent = `${passed}/${checks.length} checks passed`;

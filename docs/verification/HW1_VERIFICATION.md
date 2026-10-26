@@ -100,3 +100,19 @@ A separate in-branch archive is not required for this project.
   0 products and the empty state with both page buttons disabled.
 - No Page 1/0 was displayed for empty results.
 - Commit: 259ee18 (feat(grid): implement pagination and page size controls).
+
+## T10 - Keyboard Navigation and Focus Management
+
+- Logic tests: 36 passed, 0 failed across products, model, state,
+  pagination, selection and keyboard suites.
+- Browser checks: tests/grid-render-test.html reported 12/12 checks passed;
+  tests/grid-event-test.html reported 8/8 checks passed, including delegated
+  focus handling and single checkbox action dispatch.
+- Syntax checks passed for js/grid/main.js, js/grid/view.js,
+  js/grid/events.js and js/grid/keyboard.js; `git diff --check` passed.
+- Manual keyboard checks verified Tab entry and exit, arrow-key cell
+  navigation, Enter selection, Space toggle, and focus retention through
+  filtering, sorting and pagination. Selection remained attached to the
+  same product ID across page changes.
+- Visual focus indication is present. Contrast, full WCAG conformance,
+  screen-reader behavior and Lighthouse scores remain for T11-T13.

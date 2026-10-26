@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Data Grid</title>
+  <link rel="stylesheet" href="./css/grid.css">
 </head>
 <body>
   <main>
@@ -27,6 +28,7 @@
       <h2 id="products-heading">Products</h2>
       <p id="grid-status" role="status" aria-live="polite"></p>
       <p id="selection-status" role="status" aria-live="polite"></p>
+      <p id="keyboard-help">Keyboard: Tab to enter or leave the grid; use arrow keys to move between cells; press Enter to select a row or Space to toggle selection.</p>
       <div id="grid-root"></div>
       <nav aria-label="Product pagination">
         <button id="previous-page" type="button" data-grid-action="previous-page" disabled>Previous</button>

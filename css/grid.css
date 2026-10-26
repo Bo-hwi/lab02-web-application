@@ -1,0 +1,5 @@
+#grid-root [role="gridcell"]:focus-visible,
+#grid-root [role="grid"]:focus-visible {
+  outline: 3px solid #005fcc;
+  outline-offset: 2px;
+}

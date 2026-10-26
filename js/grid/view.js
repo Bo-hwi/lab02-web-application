@@ -7,9 +7,11 @@ export function createGridView({
   data,
   columns,
   ariaLabel,
+  ariaDescribedBy = null,
   sortKey = null,
   sortDirection = "asc",
   selectedIds = new Set(),
+  activeCell = null,
 }) {
   const headers = [
     createElement("th", { scope: "col", role: "columnheader" }, "Selection"),
@@ -42,10 +44,16 @@ export function createGridView({
       "data-product-id": product.id,
       "aria-selected": selectedIds.has(product.id) ? "true" : "false",
     }, [
-      createElement("td", { role: "gridcell" },
+      createElement("td", {
+        role: "gridcell",
+        "data-column-key": "selection",
+        "data-product-id": product.id,
+        tabIndex: activeCell?.productId === product.id && activeCell?.columnKey === "selection" ? 0 : -1,
+      },
         createElement("input", {
           type: "checkbox",
           checked: selectedIds.has(product.id),
+          tabIndex: -1,
           "data-grid-action": "row-selection",
           "data-product-id": product.id,
           "aria-label": `Select ${product.id}: ${product.name}`,
@@ -58,6 +66,8 @@ export function createGridView({
       return createElement("td", {
         role: "gridcell",
         "data-column-key": column.accessorKey,
+        "data-product-id": product.id,
+        tabIndex: activeCell?.productId === product.id && activeCell?.columnKey === column.accessorKey ? 0 : -1,
       }, text);
     })]),
   );
@@ -71,7 +81,12 @@ export function createGridView({
     ));
   }
 
-  return createElement("table", { role: "grid", "aria-label": ariaLabel },
+  return createElement("table", {
+    role: "grid",
+    "aria-label": ariaLabel,
+    ...(ariaDescribedBy ? { "aria-describedby": ariaDescribedBy } : {}),
+    ...(rows.length === 0 ? { tabIndex: -1 } : {}),
+  },
     createElement("thead", null, createElement("tr", { role: "row" }, headers)),
     createElement("tbody", null, rows));
 }

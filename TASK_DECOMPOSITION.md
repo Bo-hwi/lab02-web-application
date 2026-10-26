@@ -203,12 +203,12 @@ Commit: `feat(grid): add persistent row selection by product id`
 
 ### T10 - Implement Keyboard Navigation and Focus Management
 
-- [ ] Use four arrow keys to move focus between cells and handle row/column boundaries.
-- [ ] Make Enter select and Space toggle according to the contract.
-- [ ] Handle focused checkboxes/buttons without triggering the same action twice.
-- [ ] Use preventDefault selectively without blocking search input or necessary native behavior.
-- [ ] Allow Tab/Shift+Tab to enter and leave the grid without a keyboard trap.
-- [ ] Preserve or reset focus appropriately after filtering, sorting and pagination.
+- [x] Use four arrow keys to move focus between cells and handle row/column boundaries.
+- [x] Make Enter select and Space toggle according to the contract.
+- [x] Handle focused checkboxes/buttons without triggering the same action twice.
+- [x] Use preventDefault selectively without blocking search input or necessary native behavior.
+- [x] Allow Tab/Shift+Tab to enter and leave the grid without a keyboard trap.
+- [x] Preserve or reset focus appropriately after filtering, sorting and pagination.
 
 Acceptance: all features work without a mouse and focus remains visible and predictable.
 
@@ -309,7 +309,8 @@ Update this section after actual work. A planned check is not completion evidenc
 | T06 | Complete | node --test tests/grid-model.test.js tests/grid-state.test.js: 12/12 PASS; browser verified live search (SP010 returns 1), SP010 + Displays returns 0 with empty state, and Displays alone returns 20 | 375e510 |
 | T07 | Complete | node --test tests/grid-model.test.js tests/grid-state.test.js: 17/17 PASS; tests/grid-render-test.html: 10/10 PASS; browser verified ascending/descending sorting on filtered Audio results | 758e9a5 |
 | T08 | Complete | node --test tests/grid-pagination.test.js tests/grid-model.test.js tests/grid-state.test.js: 24/24 PASS; browser verified page navigation, page-size reset, final-page filter clamp and empty state without Page 1/0 | 259ee18 |
-| T09 | Complete | Selection/state tests: 11/11 PASS; render tests: 11/11 PASS; event tests: 7/7 PASS. Browser check: SP001 remained selected after pagination and filtering; deselecting it changed the count to 0. | Pending commit |
+| T09 | Complete | Selection/state tests: 11/11 PASS; render tests: 11/11 PASS; event tests: 7/7 PASS. Browser check: SP001 remained selected after pagination and filtering; deselecting it changed the count to 0. | c9faf2a |
+| T10 | Complete | Logic suite: 36/36 PASS across product, model, state, pagination, selection and keyboard tests; syntax checks and `git diff --check` passed. Browser: `grid-render-test.html` 12/12 and `grid-event-test.html` 8/8 PASS. Manual keyboard checks verified Tab entry/exit, arrow movement, Enter selection, Space toggle, and focus/selection behavior through filtering, sorting and pagination. | Included in this commit |
 ## 9. Definition of Done
 
 - [ ] R01-R07 have acceptance evidence.

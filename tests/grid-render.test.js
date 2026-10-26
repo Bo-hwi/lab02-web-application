@@ -20,6 +20,7 @@ const table = renderToDOM(createGridView({
   columns,
   ariaLabel: "Rendering test inventory",
   selectedIds: new Set(["SP001"]),
+  activeCell: { productId: "SP001", columnKey: "selection" },
 }));
 document.getElementById("test-root").appendChild(table);
 
@@ -48,6 +49,11 @@ check("Named row checkboxes agree with aria-selected", firstCheckbox.checked &&
   firstCheckbox.getAttribute("aria-label") === "Select SP001: Mechanical Keyboard - Series 1" &&
   rows[0].getAttribute("aria-selected") === "true" && !secondCheckbox.checked &&
   rows[1].getAttribute("aria-selected") === "false");
+check("Only the active data cell is tabbable and row checkboxes do not add Tab stops",
+  table.querySelectorAll('tbody td[tabindex="0"]').length === 1 &&
+  table.querySelector('tbody td[tabindex="0"]').dataset.productId === "SP001" &&
+  [...table.querySelectorAll('tbody td:not([tabindex="0"])')].every((cell) => cell.tabIndex === -1) &&
+  [...table.querySelectorAll('input[type="checkbox"]')].every((checkbox) => checkbox.tabIndex === -1));
 
 check("Numeric values are formatted in English and zero stock is retained",
   rows[0].cells[2].textContent === "850,000" && rows[0].cells[3].textContent === "0");
