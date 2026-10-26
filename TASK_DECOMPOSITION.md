@@ -1,5 +1,5 @@
 # HW1 - Accessible Data-Grid: Task Decomposition
-
+- Status: implementation and verification completed; final submission review in progress.
 ## 1. Scope and Status
 
 - Repository: https://github.com/Bo-hwi/lab02-web-application
@@ -143,11 +143,11 @@ Commit: `feat(grid): render semantic configurable data table`
 
 ### T05 - Establish State and Delegated Events
 
-- [ ] Implement the flow: update state -> derive displayed data -> update the UI.
+- [x] Implement the flow: update state -> derive displayed data -> update the UI.
 - [x] Delegate appropriate events at the root and map keydown correctly.
 - [x] Ensure rerendering does not register duplicate listeners.
-- [ ] Avoid replacing the entire root during interactions in ways that lose focus or caret position.
-- [ ] Define focus restoration using row ID and column key when nodes must be replaced.
+- [x] Avoid replacing the entire root during interactions in ways that lose focus or caret position.
+- [x] Define focus restoration using row ID and column key when nodes must be replaced.
 
 Acceptance: repeated updates do not duplicate handlers, lose input content or unexpectedly move focus.
 
@@ -270,10 +270,10 @@ Commit: `docs(hw1): add run instructions and AI failure audit`
 
 ### T15 - Review and Submit the Branch
 
-- [ ] Review R01-R07 and all tasks without skipping unmet requirements.
-- [ ] Inspect diffs, Git status and commit history; include only relevant files.
-- [ ] Ensure secrets, temporary files and reports containing private information are not committed.
-- [ ] Verify the README procedure using committed source files.
+- [x] Review R01-R07 and all tasks without skipping unmet requirements.
+- [x] Inspect diffs, Git status and commit history; include only relevant files.
+- [x] Ensure secrets, temporary files and reports containing private information are not committed.
+- [x] Verify the README procedure using committed source files.
 - [ ] Push using git push -u origin hw1/data-grid.
 - [ ] Confirm the latest GitHub commit matches the submission and record the branch URL.
 
@@ -317,6 +317,7 @@ Update this section after actual work. A planned check is not completion evidenc
 | T12 | Complete | Logic 36/36 and baseline 6/6 PASS; browser workflow and edge cases PASS; event 8/8 and render 12/12 PASS; no browser console/page errors after favicon fix. Details in docs/verification/HW1_VERIFICATION.md. | 652ee84; T12 verification commit |
 | T13 | Complete | Lighthouse Accessibility 100/100 and Best Practices 100/100; keyboard, focus and screen-reader workflow manually verified; details recorded in docs/verification/HW1_VERIFICATION.md | 2409617 |
 | T14 | Complete | AI failures and risks documented in AI_FAILURE_AUDIT.md; README covers setup, features, architecture, keyboard controls, tests and limitations. README commands rerun: HW1 logic 36/36 PASS, baseline 6/6 PASS; browser rendering 12/12 PASS and event delegation 8/8 PASS. | 615c50f, b9959c6 |
+| T05 | Complete | State updates derive and render the displayed data; delegated events and listener disposal verified; focus and caret behavior verified during filtering, sorting, selection and pagination. See T10-T12 verification evidence. | 133490c; see T10-T12 |
 ## 9. Definition of Done
 
 - [ ] R01-R07 have acceptance evidence.
