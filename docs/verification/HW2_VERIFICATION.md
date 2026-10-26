@@ -108,3 +108,12 @@ References:
 - An initial browser run waited only 250 ms for `ended` and reported 5/6. The same check passed after increasing the wait to 1000 ms to allow browser audio scheduling; the controlled lifecycle test also verifies natural-end cleanup.
 - Existing scheduler, loader and cancellation suite: 37 passed, 0 failed. Baseline engine suite: 6 passed, 0 failed.
 - This checks Web Audio playback lifecycle with a silent buffer. Audible music, application playback controls, visualizer behavior, subscriptions and performance remain for later tasks.
+
+## T07 - Frequency Visualizer
+
+- Date: 2026-10-26.
+- Implementation: `js/audio/visualizer.js` draws analyser frequency data on Canvas. The caller owns the audio graph and context; connecting the visualizer to the application interface remains for T08.
+- Focused Node tests: `node --test tests/audio-visualizer.test.js` — 5 passed, 0 failed. These cover FFT configuration and reusable frequency data, silent and active frames, one animation loop across repeated starts, stop/dispose and stale callbacks, Canvas resizing and device pixel ratio changes, bin count changes, and dependency validation.
+- Combined audio suite: `node --test tests/audio-cancellation.test.js tests/audio-loader.test.js tests/audio-player.test.js tests/audio-queue.test.js tests/audio-visualizer.test.js` — 49 passed, 0 failed. Baseline engine suite: `node --test test-runner.js` — 6 passed, 0 failed.
+- Browser page: `http://127.0.0.1:5500/tests/audio-visualizer-test.html` — 7/7 checks passed after a user click. The page used a native `AudioContext` and `AnalyserNode` configured with `fftSize = 512` and 256 frequency bins. A muted 440 Hz oscillator produced visible frequency bars; silence left the Canvas empty. Repeated start did not add a loop; stop cleared the Canvas; dispose prevented restart. The test closed its owned audio context.
+- This verifies the standalone visualizer and native signal handling. Application queue/player integration, accessible controls and a recorded frame-rate assessment remain for later tasks; no 60 fps result is claimed here.

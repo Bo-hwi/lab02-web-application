@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Frequency Visualizer Tests</title>
+  <style>canvas { display: block; width: min(100%, 640px); height: 180px; border: 1px solid #777; }</style>
+</head>
+<body>
+  <main>
+    <h1>Frequency Visualizer Tests</h1>
+    <p>Click to test a native analyser and Canvas. The generated tone is muted after analysis.</p>
+    <button id="run" type="button">Run visualizer tests</button>
+    <p id="summary" role="status">Not run</p>
+    <canvas id="visualizer" aria-label="Test frequency visualizer"></canvas>
+    <pre id="results"></pre>
+  </main>
+  <script type="module" src="./audio-visualizer.browser.js"></script>
+</body>
+</html>
