@@ -37,3 +37,24 @@ References:
 
 - https://webaudio.github.io/web-audio-api/#dom-baseaudiocontext-decodeaudiodata
 - https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode/frequencyBinCount
+
+## T03 - Bounded FIFO Scheduler
+
+- Date: 2026-10-26.
+- Implementation: js/audio/queue.js.
+- Test file: tests/audio-queue.test.js; Node built-in test runner, no dependencies added.
+- Syntax command: node --check js/audio/queue.js - PASS.
+- Test command: node --test tests/audio-queue.test.js - 12 passed, 0 failed.
+- Baseline regression: node --test test-runner.js - 6 passed, 0 failed.
+- Git whitespace validation: git diff --check - PASS.
+- Controlled loaders verified actual in-flight limits of 1, 2 and 3 over nine tasks each.
+- Verified A/B start before C, B can finish before A, and results match their IDs.
+- Verified rejected tasks release a slot and preserve the original failure.
+- Verified 1,000 synchronous loader failures complete without recursive stack overflow.
+- Verified unique IDs for duplicate URLs and detached snapshots, including error metadata.
+- Verified repeated thenable settlement attempts do not overwrite results or duplicate work.
+- Verified invalid options/URLs, decoding phase reporting, late phase guards and idle restart.
+- Clarified in the contract that missing a decoding phase report is a loader violation.
+- These tests use synthetic buffers and controlled operations, not real Web Audio decoding.
+- T04 real downloads/decoding, T05 cancellation/disposal and T08 subscriptions remain pending.
+- No browser playback, memory or performance result is claimed for T03.

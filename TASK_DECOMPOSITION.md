@@ -6,7 +6,7 @@
 - Branch: `hw2/audio-queue`
 - Baseline commit: `2b6135f`
 - Assignment source: Lab 02, slide 31.
-- Status: T01 baseline verified and T02 contracts specified; HW2 implementation and runtime verification are pending.
+- Status: T01 baseline verified, T02 specified and T03 scheduler verified with controlled loaders; real audio and lifecycle integration remain pending.
 - Technology: HTML, CSS and vanilla JavaScript with native browser APIs.
 - Submission language: English.
 - HW1 and HW3 remain on separate branches.
@@ -121,12 +121,12 @@ Acceptance: behavior can be tested without ambiguity.
 
 ### T03 - Implement the Bounded FIFO Scheduler
 
-- [ ] Assign stable task IDs.
-- [ ] Start pending tasks in FIFO order.
-- [ ] Enforce the concurrency limit.
-- [ ] Continue processing after a task fails.
-- [ ] Settle each task promise exactly once.
-- [ ] Test ordering, concurrency and out-of-order completion.
+- [x] Assign stable task IDs.
+- [x] Start pending tasks in FIFO order.
+- [x] Enforce the concurrency limit.
+- [x] Continue processing after a task fails.
+- [x] Settle each task promise exactly once.
+- [x] Test ordering, concurrency and out-of-order completion.
 
 Acceptance: concurrent execution never exceeds the configured limit.
 
@@ -272,7 +272,8 @@ Acceptance: GitHub contains the verified source and matching documentation.
 |---|---|---|---|
 | T01 | Complete | HW2 scope and rules recorded; baseline 2b6135f verified: Node 6/6, browser DOM 9/9 and XSS 8/8 PASS. Details in docs/verification/HW2_VERIFICATION.md. | c954fa7; scope and baseline documentation commits |
 | T02 | Specification complete | All eight contract items reviewed; FIFO, bounded concurrency, cancellation races, promise settlement, playback, FFT and ownership specified in docs/contracts/audio-queue.md. Specification review recorded in HW2_VERIFICATION.md; runtime checks pending. | Included in this commit |
-| T03-T13 | Not started | Not yet recorded | Not yet recorded |
+| T03 | Complete | Scheduler syntax check and 12/12 controlled-loader tests PASS: FIFO starts, limits 1/2/3, out-of-order results, failure recovery, stable IDs, exactly-once settlement and detached snapshots. Real audio and cancellation remain for T04-T05. | Included in this commit |
+| T04-T13 | Not started | Not yet recorded | Not yet recorded |
 
 
 ## 9. Definition of Done
