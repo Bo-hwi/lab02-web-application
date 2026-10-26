@@ -1,5 +1,5 @@
 # HW1 - Accessible Data-Grid: Task Decomposition
-- Status: implementation and verification completed; final submission review in progress.
+- Status: implementation, verification and submission review completed.
 ## 1. Scope and Status
 
 - Repository: https://github.com/Bo-hwi/lab02-web-application
@@ -318,12 +318,13 @@ Update this section after actual work. A planned check is not completion evidenc
 | T13 | Complete | Lighthouse Accessibility 100/100 and Best Practices 100/100; keyboard, focus and screen-reader workflow manually verified; details recorded in docs/verification/HW1_VERIFICATION.md | 2409617 |
 | T14 | Complete | AI failures and risks documented in AI_FAILURE_AUDIT.md; README covers setup, features, architecture, keyboard controls, tests and limitations. README commands rerun: HW1 logic 36/36 PASS, baseline 6/6 PASS; browser rendering 12/12 PASS and event delegation 8/8 PASS. | 615c50f, b9959c6 |
 | T05 | Complete | State updates derive and render the displayed data; delegated events and listener disposal verified; focus and caret behavior verified during filtering, sorting, selection and pagination. See T10-T12 verification evidence. | 133490c; see T10-T12 |
+| T15 | Complete | Requirements, tracked files, README procedure and commit history reviewed. Remote source commit b3a4e54 verified against local HEAD. Submission branch: https://github.com/Bo-hwi/lab02-web-application/tree/hw1/data-grid. | b3a4e54; final documentation included in this commit |
 ## 9. Definition of Done
 
-- [ ] R01-R07 have acceptance evidence.
-- [ ] Required tasks are complete and no blocking usability defects remain.
-- [ ] Actual logic, browser, keyboard and screen reader checks have been performed.
-- [ ] Lighthouse reports show the required scores for the submitted version.
-- [ ] Workflow documentation, README and audit are truthful and consistent with the code.
-- [ ] Commits are clear, do not mix HW2/HW3 and do not fabricate history.
-- [ ] The hw1/data-grid branch has been pushed and verified on GitHub.
+- [x] R01-R07 have acceptance evidence.
+- [x] Required tasks are complete and no blocking usability defects remain.
+- [x] Actual logic, browser, keyboard and screen reader checks have been performed.
+- [x] Lighthouse reports show the required scores for the submitted version.
+- [x] Workflow documentation, README and audit are truthful and consistent with the code.
+- [x] Commits are clear, do not mix HW2/HW3 and do not fabricate history.
+- [x] The hw1/data-grid branch has been pushed and verified on GitHub.
