@@ -274,8 +274,8 @@ Commit: `docs(hw1): add run instructions and AI failure audit`
 - [x] Inspect diffs, Git status and commit history; include only relevant files.
 - [x] Ensure secrets, temporary files and reports containing private information are not committed.
 - [x] Verify the README procedure using committed source files.
-- [ ] Push using git push -u origin hw1/data-grid.
-- [ ] Confirm the latest GitHub commit matches the submission and record the branch URL.
+- [x] Push using git push -u origin hw1/data-grid.
+- [x] Confirm the latest GitHub commit matches the submission and record the branch URL.
 
 Acceptance: GitHub contains the verified version and matching documentation. Do not create a commit solely to record a push.
 
