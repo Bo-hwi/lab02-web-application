@@ -150,7 +150,12 @@ A separate in-branch archive is not required for this project.
   filter, sort, page and selection updates; runtime screen-reader announcement
   behavior has not yet been manually confirmed.
 
-## T12 - Integration and Regression Checks (In Progress)
+## T12 - Integration and Regression Checks (Complete)
 
 - Logic suite, 2026-10-26: `node --test tests/products.test.js tests/grid-model.test.js tests/grid-state.test.js tests/grid-pagination.test.js tests/grid-selection.test.js tests/grid-keyboard.test.js` — 36 passed, 0 failed.
-- Browser workflow and regression checks remain pending.
+- Baseline engine suite: `node --test test-runner.js` — 6 passed, 0 failed.
+- Browser workflow, Chrome 155.0.8059.85 over Live Server at `http://127.0.0.1:5500/index.html`: exercised filtering, sorting by price, pagination, selecting a row, then changing to an unmatched query. The empty state appeared, selection remained counted outside the filtered results, and focus stayed in search. Cleared filters and changed page size to 50; page 2 showed rows 51-100 of 100, with Next disabled.
+- Regression pages in Chrome: `tests/grid-event-test.html` — 8/8 passed; `tests/grid-render-test.html` — 12/12 passed. These cover repeated event-hub setup, delegated checkbox actions, listener disposal, accessible table rendering, and rendering without source mutation.
+- Browser checks recorded no console errors or uncaught page errors after adding a data-URI favicon to the main and test pages. The initial run exposed a favicon 404; it was fixed and the affected pages were rerun successfully.
+- No changes were made to `mini-react.js`; the baseline engine suite was rerun as an additional regression check.
+- `git diff --check` passed. No new test library or framework was added.
