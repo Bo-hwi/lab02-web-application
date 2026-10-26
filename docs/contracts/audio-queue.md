@@ -5,7 +5,9 @@
 This is the T02 specification. T03 implements the scheduler, enqueue and snapshots;
 its controlled-loader tests are recorded in HW2_VERIFICATION.md. T04 provides the
 real download/decode adapter with browser verification. T05 implements queue
-cancellation, terminal-entry removal and disposal. Subscription and playback remain pending.
+cancellation, terminal-entry removal and disposal. T06 implements the playback
+lifecycle with an injected AudioContext and AnalyserNode. Queue subscription and
+application controls remain pending for later tasks.
 FIFO start order and a default concurrency limit of 2 are project decisions.
 
 ## 2. Task Identity and State

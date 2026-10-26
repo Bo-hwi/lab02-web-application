@@ -6,7 +6,7 @@
 - Branch: `hw2/audio-queue`
 - Baseline commit: `2b6135f`
 - Assignment source: Lab 02, slide 31.
-- Status: T01-T05 complete, including browser audio decoding and queue cancellation; playback, visualization and final integration remain pending.
+- Status: T01-T06 complete, including browser audio decoding, queue cancellation and playback lifecycle; visualization and final integration remain pending.
 - Technology: HTML, CSS and vanilla JavaScript with native browser APIs.
 - Submission language: English.
 - HW1 and HW3 remain on separate branches.
@@ -155,13 +155,13 @@ Acceptance: cancellation is predictable and the queue continues safely.
 
 ### T06 - Implement Audio Playback
 
-- [ ] Create or resume AudioContext after a user gesture.
-- [ ] Create a new AudioBufferSourceNode for each playback.
-- [ ] Connect the playback graph through AnalyserNode.
-- [ ] Implement play and stop behavior.
-- [ ] Stop and disconnect old source nodes.
-- [ ] Clear ended handlers and retained source references.
-- [ ] Verify repeated play and stop interactions.
+- [x] Create or resume AudioContext after a user gesture.
+- [x] Create a new AudioBufferSourceNode for each playback.
+- [x] Connect the playback graph through AnalyserNode.
+- [x] Implement play and stop behavior.
+- [x] Stop and disconnect old source nodes.
+- [x] Clear ended handlers and retained source references.
+- [x] Verify repeated play and stop interactions.
 
 Acceptance: playback does not overlap unintentionally or reuse a started source node.
 
@@ -275,7 +275,8 @@ Acceptance: GitHub contains the verified source and matching documentation.
 | T03 | Complete | Scheduler syntax check and 12/12 controlled-loader tests PASS: FIFO starts, limits 1/2/3, out-of-order results, failure recovery, stable IDs, exactly-once settlement and detached snapshots. Real audio and cancellation remain for T04-T05. | Included in this commit |
 | T04 | Complete | Loader and scheduler Node tests 23/23 PASS; browser real WAV decode, invalid audio, abort guard, queue recovery and context cleanup 5/5 PASS. See HW2_VERIFICATION.md. | Included in this commit |
 | T05 | Complete | 14 cancellation and disposal tests PASS; combined queue, loader and cancellation suite 37/37 PASS. Pending and active cancellation, fetch abort, late decode results, slot retention, removal, disposal and reentrancy verified. See HW2_VERIFICATION.md. | Included in this commit |
-| T06-T13 | Not started | Not yet recorded | Not yet recorded |
+| T06 | Complete | Player lifecycle tests 7/7 PASS; native browser playback checks 6/6 PASS using a user click, AudioContext and 256-bin analyser; prior queue/loader/cancellation suite 37/37 PASS. See HW2_VERIFICATION.md. | Included in this commit |
+| T07-T13 | Not started | Not yet recorded | Not yet recorded |
 
 
 ## 9. Definition of Done

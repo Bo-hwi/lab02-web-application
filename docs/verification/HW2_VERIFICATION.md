@@ -96,3 +96,15 @@ References:
 - Terminal-only removal releases retained buffer references; IDs are not reused. Disposal rejects unfinished work, aborts active signals, prevents new enqueue and ignores late results.
 - Repeated cancellation, disposal before/after scheduling and abort-handler reentrancy were checked.
 - These are controlled lifecycle tests, not browser playback, memory profiling or performance measurements. T06-T13 and final Definition of Done remain pending.
+
+## T06 - Audio Playback Lifecycle
+
+- Date: 2026-10-26.
+- Implementation: `js/audio/player.js` accepts a caller-owned `AudioContext` and `AnalyserNode`; it does not close the context or alter queue tasks.
+- Syntax checks: `node --check js/audio/player.js` and `node --check tests/audio-player.browser.js` passed.
+- Command: `node --test tests/audio-player.test.js` - 7 passed, 0 failed.
+- Controlled tests cover fresh sources, graph connections, replacement, natural end, repeated stop/dispose, asynchronous resume races, late callbacks, start/resume errors and invalid input.
+- Browser page: `http://127.0.0.1:5500/tests/audio-player-test.html`. A click constructs the native context, configures `fftSize = 512`, plays a short silent buffer, replaces and stops sources, waits for a natural end, then disposes the player and closes the test-owned context. Final result: 6/6 checks passed.
+- An initial browser run waited only 250 ms for `ended` and reported 5/6. The same check passed after increasing the wait to 1000 ms to allow browser audio scheduling; the controlled lifecycle test also verifies natural-end cleanup.
+- Existing scheduler, loader and cancellation suite: 37 passed, 0 failed. Baseline engine suite: 6 passed, 0 failed.
+- This checks Web Audio playback lifecycle with a silent buffer. Audible music, application playback controls, visualizer behavior, subscriptions and performance remain for later tasks.
