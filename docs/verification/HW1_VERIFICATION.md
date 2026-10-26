@@ -71,3 +71,17 @@ A separate in-branch archive is not required for this project.
   0 products and the empty state; Displays alone returned 20 products.
 - Search updates while typing; Enter is not required.
 - Commit: 375e510 (feat(grid): implement search and category filtering).
+
+## T07 - Stable Column Sorting
+
+- Command: node --test tests/grid-model.test.js tests/grid-state.test.js
+- Result: 17 tests passed, 0 failed; node --check passed for
+  js/grid/main.js and js/grid/view.js.
+- Browser rendering checks: tests/grid-render-test.html reported
+  10/10 checks passed, including enabled sortable headers and ascending/
+  descending aria-sort values with visible direction indicators.
+- Manual browser check: with query "1" and category Audio, ascending price
+  placed 850,000 before 1,200,000; descending price reversed the groups.
+- The browser console showed a Summarizer API warning; no grid JavaScript
+  error was visible.
+- Commit: pending.

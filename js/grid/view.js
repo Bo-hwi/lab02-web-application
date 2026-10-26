@@ -3,19 +3,26 @@ import { createElement } from "../../mini-react.js";
 const numberFormatter = new Intl.NumberFormat("en", { maximumFractionDigits: 0 });
 
 /** Build a table VNode without changing data or registering listeners. */
-export function createGridView({ data, columns, ariaLabel }) {
+export function createGridView({ data, columns, ariaLabel, sortKey = null, sortDirection = "asc" }) {
   const headers = columns.map((column) =>
     createElement("th", {
       scope: "col",
       role: "columnheader",
       "data-column-key": column.accessorKey,
+      ...(sortKey === column.accessorKey
+        ? { "aria-sort": sortDirection === "desc" ? "descending" : "ascending" }
+        : {}),
     }, column.sortable
       ? createElement("button", {
         type: "button",
-        disabled: true,
         "data-grid-action": "sort",
         "data-sort-key": column.accessorKey,
-      }, column.header)
+        "aria-label": sortKey === column.accessorKey
+          ? `${column.header}, sorted ${sortDirection === "desc" ? "descending" : "ascending"}; activate to reverse`
+          : `Sort by ${column.header} ascending`,
+      }, `${column.header}${sortKey === column.accessorKey
+        ? sortDirection === "desc" ? " ▼" : " ▲"
+        : ""}`)
       : column.header),
   );
 

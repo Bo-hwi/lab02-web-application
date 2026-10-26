@@ -1,4 +1,4 @@
-import { filterProducts } from "./model.js";
+import { filterProducts, sortProducts } from "./model.js";
 import { renderToDOM } from "../../mini-react.js";
 import { products } from "../data/products.js";
 import { createGridView } from "./view.js";
@@ -30,13 +30,20 @@ function render() {
     query: state.query,
     category: state.category,
   });
+  const sortedProducts = sortProducts(visibleProducts, {
+    key: state.sortKey,
+    direction: state.sortDirection,
+    columns,
+  });
   const focusedSortKey = root.contains(document.activeElement)
     ? document.activeElement.dataset.sortKey
     : undefined;
   root.replaceChildren(renderToDOM(createGridView({
-    data: visibleProducts,
+    data: sortedProducts,
     columns,
     ariaLabel: "Product inventory",
+    sortKey: state.sortKey,
+    sortDirection: state.sortDirection,
   })));
 
   if (focusedSortKey) {

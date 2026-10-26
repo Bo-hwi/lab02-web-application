@@ -44,8 +44,37 @@ check("Numeric values are formatted in English and zero stock is retained",
   rows[0].cells[1].textContent === "850,000" && rows[0].cells[2].textContent === "0");
 
 const headerButtons = [...table.querySelectorAll("thead button")];
-check("Only sortable headers contain native disabled buttons",
-  headerButtons.length === 2 && headerButtons.every((button) => button.disabled));
+check("Only sortable headers contain enabled native buttons",
+  headerButtons.length === 2 && headerButtons.every((button) => !button.disabled) &&
+  !headers[2].querySelector("button"));
+
+const ascendingSort = renderToDOM(createGridView({
+  data: products.slice(0, 1),
+  columns,
+  ariaLabel: "Ascending sort test",
+  sortKey: "price",
+  sortDirection: "asc",
+}));
+const ascendingHeader = ascendingSort.querySelector('th[data-column-key="price"]');
+const ascendingButton = ascendingHeader.querySelector("button");
+check("Ascending sort state exposes aria-sort and a visible direction",
+  ascendingHeader.getAttribute("aria-sort") === "ascending" &&
+  ascendingButton.textContent.endsWith("▲") &&
+  ascendingButton.getAttribute("aria-label").includes("sorted ascending"));
+
+const descendingSort = renderToDOM(createGridView({
+  data: products.slice(0, 1),
+  columns,
+  ariaLabel: "Descending sort test",
+  sortKey: "price",
+  sortDirection: "desc",
+}));
+const descendingHeader = descendingSort.querySelector('th[data-column-key="price"]');
+const descendingButton = descendingHeader.querySelector("button");
+check("Descending sort state exposes aria-sort and a visible direction",
+  descendingHeader.getAttribute("aria-sort") === "descending" &&
+  descendingButton.textContent.endsWith("▼") &&
+  descendingButton.getAttribute("aria-label").includes("sorted descending"));
 
 const empty = renderToDOM(createGridView({ data: [], columns, ariaLabel: "Empty inventory" }));
 check("Empty data produces a full-width empty state",
