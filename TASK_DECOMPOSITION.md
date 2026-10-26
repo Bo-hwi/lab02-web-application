@@ -221,9 +221,9 @@ Commit: `feat(a11y): implement grid keyboard navigation and focus management`
 - [x] Provide visible focus and communicate selection/sort direction through more than color alone.
 - [x] Check reflow at a 320 CSS-pixel viewport; keep horizontal table scrolling inside the grid.
 - [x] Confirm control sizes: row checkboxes 24 by 24 CSS pixels, sort buttons 32 pixels tall, and other controls 40 pixels tall.
-- [ ] Verify the page at 200% browser zoom.
+- [x] Verify the page at 200% browser zoom.
 - [x] Add a dedicated polite live region for result/page/selection changes without repeatedly reading the entire table.
-- [ ] Check focus obscuration and other applicable WCAG 2.2 AA requirements.
+- [x] Check focus obscuration and other applicable WCAG 2.2 AA requirements.
 
 Acceptance: the interface remains readable and operable at tested sizes and communicates its states clearly.
 
@@ -313,7 +313,7 @@ Update this section after actual work. A planned check is not completion evidenc
 | T08 | Complete | node --test tests/grid-pagination.test.js tests/grid-model.test.js tests/grid-state.test.js: 24/24 PASS; browser verified page navigation, page-size reset, final-page filter clamp and empty state without Page 1/0 | 259ee18 |
 | T09 | Complete | Selection/state tests: 11/11 PASS; render tests: 11/11 PASS; event tests: 7/7 PASS. Browser check: SP001 remained selected after pagination and filtering; deselecting it changed the count to 0. | c9faf2a |
 | T10 | Complete | Logic suite: 36/36 PASS across product, model, state, pagination, selection and keyboard tests; syntax checks and `git diff --check` passed. Browser: `grid-render-test.html` 12/12 and `grid-event-test.html` 8/8 PASS. Manual keyboard checks verified Tab entry/exit, arrow movement, Enter selection, Space toggle, and focus/selection behavior through filtering, sorting and pagination. | Included in this commit |
-| T11 | In progress | Styling and live feedback added. Logic suite 36/36 PASS; render page 12/12 PASS; main page loads with semantic labels and a named grid. Contrast ratios and responsive table behavior recorded in docs/verification/HW1_VERIFICATION.md. 200% zoom, focus obscuration and screen-reader announcement behavior remain for manual verification; measured targets are recorded in docs/verification/HW1_VERIFICATION.md. | Pending |
+| T11 | Complete | Styling and live feedback verified. Logic suite 36/36 PASS; render page 12/12 PASS; 200% zoom and keyboard focus verified manually; Lighthouse Accessibility 100 and all 10 additional manual checks reviewed and passed, as confirmed by the user. Runtime screen-reader announcement behavior remains for the dedicated T13 assistive-technology audit. | ebf3fc3 |
 ## 9. Definition of Done
 
 - [ ] R01-R07 have acceptance evidence.

@@ -116,7 +116,7 @@ A separate in-branch archive is not required for this project.
   same product ID across page changes.
 - Commit: b8e1f94 (feat(a11y): implement grid keyboard navigation and focus management).
 
-## T11 - Styling and Accessible Feedback (In Progress)
+## T11 - Styling and Accessible Feedback (Complete)
 
 - `node --test tests/products.test.js tests/grid-model.test.js
   tests/grid-state.test.js tests/grid-pagination.test.js
@@ -136,9 +136,10 @@ A separate in-branch archive is not required for this project.
   12/12 checks passed. Browser interactions updated the polite live region for
   filtering, sorting and selection. No browser JavaScript errors were logged
   on the render test page.
-- A 200% browser-zoom check was not performed. Focus obscuration, screen-reader
-  announcement behavior, full WCAG conformance and Lighthouse scores remain
-  unverified and must not be inferred from automated checks.
+- Manual verification: the page remained usable at 200% browser zoom and
+  keyboard focus was visible and unobscured. Lighthouse Accessibility scored
+  100; the user reviewed all 10 additional Lighthouse manual checks and
+  confirmed they passed. This does not establish complete WCAG conformance.
 - Calculated WCAG contrast ratios from the stylesheet colors:
   `#172033` on `#f5f7fb`: 15.17:1; `#38465c` on `#f5f7fb`: 8.90:1;
   `#38465c` on white: 9.55:1; disabled text `#475569` on `#e9edf2`: 6.44:1;
