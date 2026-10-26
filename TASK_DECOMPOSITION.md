@@ -98,10 +98,10 @@ Do not create empty commits or fabricate findings.
 
 - [x] Create `hw2/audio-queue` from the main baseline.
 - [x] Record baseline commit `2b6135f`.
-- [ ] Add the HW2 task decomposition.
-- [ ] Update project-rules.md for HW2.
-- [ ] Rerun available baseline tests.
-- [ ] Record actual baseline results.
+- [x] Add the HW2 task decomposition.
+- [x] Update project-rules.md for HW2.
+- [x] Rerun available baseline tests.
+- [x] Record actual baseline results.
 
 Acceptance: HW2 has a clear scope and a verified starting point.
 
@@ -269,8 +269,9 @@ Acceptance: GitHub contains the verified source and matching documentation.
 
 | Task | Status | Evidence | Commit |
 |---|---|---|---|
-| T01 | In progress | Branch created from baseline 2b6135f; baseline tests pending | Not yet recorded |
+| T01 | Complete | HW2 scope and rules recorded; baseline 2b6135f verified: Node 6/6, browser DOM 9/9 and XSS 8/8 PASS. Details in docs/verification/HW2_VERIFICATION.md. | c954fa7; scope and baseline documentation commits |
 | T02-T13 | Not started | Not yet recorded | Not yet recorded |
+
 
 ## 9. Definition of Done
 
