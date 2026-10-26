@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FIFO Audio Queue</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./css/audio.css">
+</head>
+<body>
+  <main class="page">
+    <h1>FIFO Audio Queue</h1>
+    <p>Add a same-origin audio URL. Up to two tracks download and decode at a time; playback starts when you choose Play.</p>
+    <form id="enqueue-form">
+      <label for="audio-url">Audio URL</label>
+      <div class="form-row">
+        <input id="audio-url" name="audio-url" type="text" inputmode="url" required placeholder="audio/fixtures/tone-a.wav" value="./audio/fixtures/tone-a.wav" autocomplete="off">
+        <button type="submit">Add to queue</button>
+      </div>
+    </form>
+    <p id="announcements" role="status" aria-live="polite" aria-atomic="true">Queue is empty.</p>
+    <section aria-labelledby="queue-heading">
+      <div class="section-heading">
+        <h2 id="queue-heading">Queue</h2>
+        <button id="stop-playback" type="button" disabled>Stop playback</button>
+      </div>
+      <p id="queue-empty">No audio tasks yet.</p>
+      <ol id="queue-list" aria-label="Audio tasks"></ol>
+    </section>
+    <section aria-labelledby="visualizer-heading">
+      <h2 id="visualizer-heading">Frequency visualizer</h2>
+      <canvas id="frequency-canvas" width="640" height="160" role="img" aria-label="Frequency bars while audio plays"></canvas>
+      <p>Visualization is decorative; playback state is announced in text above.</p>
+    </section>
+  </main>
+  <script type="module" src="./js/audio/main.js"></script>
+</body>
+</html>

@@ -117,3 +117,12 @@ References:
 - Combined audio suite: `node --test tests/audio-cancellation.test.js tests/audio-loader.test.js tests/audio-player.test.js tests/audio-queue.test.js tests/audio-visualizer.test.js` — 49 passed, 0 failed. Baseline engine suite: `node --test test-runner.js` — 6 passed, 0 failed.
 - Browser page: `http://127.0.0.1:5500/tests/audio-visualizer-test.html` — 7/7 checks passed after a user click. The page used a native `AudioContext` and `AnalyserNode` configured with `fftSize = 512` and 256 frequency bins. A muted 440 Hz oscillator produced visible frequency bars; silence left the Canvas empty. Repeated start did not add a loop; stop cleared the Canvas; dispose prevented restart. The test closed its owned audio context.
 - This verifies the standalone visualizer and native signal handling. Application queue/player integration, accessible controls and a recorded frame-rate assessment remain for later tasks; no 60 fps result is claimed here.
+
+## T08 - Queue Controls and Accessible Feedback
+
+- Date: 2026-10-27.
+- Implementation: \`index.html\`, \`css/audio.css\`, and \`js/audio/main.js\` connect the queue, loader, player and visualizer. The queue and player expose subscriptions. The page creates the AudioContext in the submit gesture and disposes owned resources on pagehide.
+- Command: \`node --test tests/audio-observer.test.js tests/audio-queue.test.js tests/audio-cancellation.test.js tests/audio-loader.test.js tests/audio-player.test.js tests/audio-visualizer.test.js\` — 51 passed, 0 failed. \`node --check js/audio/main.js\` and \`git diff --check\` passed.
+- Browser check over local HTTP on port 8765: the empty state appeared; pressing Enter on Add to queue created audio-1. The not-yet-added fixture URL returned HTTP 404 and the page announced the failed state and reason. Remove cleared the entry, showed the empty state and returned focus to the URL field.
+- Native buttons and form controls retain keyboard activation and visible focus. Queue/player changes update the live text region; Canvas animation does not update the DOM on each frame.
+- Successful checked-in fixture playback and local sample URL verification remain for T09. This is not a screen-reader audit or a frame-rate measurement.

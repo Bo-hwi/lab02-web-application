@@ -1,0 +1,23 @@
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #17263c; background: #f4f7fb; }
+body { margin: 0; }
+.page { max-width: 58rem; margin: 0 auto; padding: 1.5rem; }
+h1 { margin-top: 0; }
+section, form { background: white; border: 1px solid #adbbcd; border-radius: .6rem; padding: 1rem; margin-block: 1rem; }
+label { display: block; font-weight: 650; margin-bottom: .5rem; }
+.form-row, .section-heading, .task-actions { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
+.form-row input { flex: 1 1 20rem; min-width: 0; }
+input, button { font: inherit; min-height: 2.6rem; }
+input { padding: .3rem .6rem; border: 1px solid #71849d; border-radius: .3rem; }
+button { padding: .35rem .8rem; border: 1px solid #344b68; border-radius: .3rem; background: #eef3fb; color: #152740; cursor: pointer; }
+button:hover:not(:disabled) { background: #dce8f8; }
+button:disabled { color: #66768a; cursor: not-allowed; }
+:focus-visible { outline: 3px solid #075ed1; outline-offset: 2px; }
+.section-heading { justify-content: space-between; }
+#queue-list { padding-left: 2rem; }
+.task { padding: .8rem; margin-block: .65rem; border: 1px solid #d0d9e6; border-radius: .35rem; overflow-wrap: anywhere; }
+.task p { margin: .2rem 0 .6rem; }
+.task-id { font-weight: 700; }
+.task-state { font-weight: 600; }
+.task-error { color: #92221d; }
+#announcements { min-height: 1.5rem; font-weight: 600; }
+#frequency-canvas { display: block; width: 100%; height: 10rem; background: #10213a; border-radius: .35rem; }

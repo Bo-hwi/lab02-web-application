@@ -6,6 +6,7 @@ export class AudioPlayer {
   #currentId = null;
   #generation = 0;
   #state = "idle";
+  #listeners = new Set();
 
   constructor({ audioContext, analyserNode } = {}) {
     if (typeof audioContext?.createBufferSource !== "function" ||
@@ -23,6 +24,22 @@ export class AudioPlayer {
 
   get state() { return this.#state; }
   get currentId() { return this.#currentId; }
+
+  subscribe(listener) {
+    if (this.#state === "disposed") {
+      throw new DOMException("Player has been disposed", "InvalidStateError");
+    }
+    if (typeof listener !== "function") throw new TypeError("listener must be a function");
+    this.#listeners.add(listener);
+    return () => this.#listeners.delete(listener);
+  }
+
+  #notify() {
+    for (const listener of [...this.#listeners]) {
+      try { listener({ state: this.#state, currentId: this.#currentId }); }
+      catch (error) { console.error("Audio player subscriber failed", error); }
+    }
+  }
 
   async play(id, buffer) {
     if (this.#state === "disposed") {
@@ -57,6 +74,7 @@ export class AudioPlayer {
         if (this.#source === source) this.#releaseSource(source);
       };
       source.start(0);
+      this.#notify();
     } catch (error) {
       if (this.#source === source) this.#releaseSource(source);
       else { source.onended = null; source.disconnect(); }
@@ -76,6 +94,7 @@ export class AudioPlayer {
     this.#stopSource();
     this.#analyser.disconnect(this.#context.destination);
     this.#state = "disposed";
+    this.#listeners.clear();
   }
 
   #releaseSource(source) {
@@ -84,6 +103,7 @@ export class AudioPlayer {
     this.#source = null;
     this.#currentId = null;
     this.#state = "idle";
+    this.#notify();
   }
 
   #stopSource() {

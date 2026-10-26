@@ -1,6 +1,6 @@
 /**
  * Bounded FIFO scheduling with cancellation and explicit ownership cleanup.
- * Subscription/UI integration belongs to T08; the loader is supplied by callers.
+ * The loader is supplied by callers; subscribers receive detached metadata.
  */
 export class AudioTaskQueue {
   #load;
@@ -12,6 +12,7 @@ export class AudioTaskQueue {
   #active = 0;
   #drainScheduled = false;
   #disposed = false;
+  #listeners = new Set();
 
   constructor({ load, concurrency = 2, baseUrl = globalThis.location?.href } = {}) {
     if (typeof load !== "function") {
@@ -51,6 +52,7 @@ export class AudioTaskQueue {
     this.#entries.push(entry);
     this.#pending.push(entry);
     this.#scheduleDrain();
+    this.#notify();
     return { id: entry.id, promise };
   }
 
@@ -70,6 +72,7 @@ export class AudioTaskQueue {
     const [entry] = this.#entries.splice(index, 1);
     entry.buffer = undefined;
     entry.controller = undefined;
+    this.#notify();
     return true;
   }
 
@@ -80,6 +83,7 @@ export class AudioTaskQueue {
     const entries = this.#entries;
     this.#entries = [];
     this.#pending = [];
+    this.#listeners.clear();
     // Active invocations have already captured their loader; release queue ownership.
     this.#load = undefined;
     for (const entry of entries) {
@@ -107,6 +111,26 @@ export class AudioTaskQueue {
     }));
   }
 
+  /** Subscribe to future changes; call getSnapshot for the initial state. */
+  subscribe(listener) {
+    if (this.#disposed) {
+      throw new DOMException("The audio queue is disposed", "InvalidStateError");
+    }
+    if (typeof listener !== "function") throw new TypeError("listener must be a function");
+    this.#listeners.add(listener);
+    return () => this.#listeners.delete(listener);
+  }
+
+  #notify() {
+    if (this.#disposed) return;
+    for (const listener of [...this.#listeners]) {
+      try { listener(this.getSnapshot()); } catch (error) {
+        // A faulty observer must not interrupt the queue or other observers.
+        console.error("Audio queue subscriber failed", error);
+      }
+    }
+  }
+
   #normalizeUrl(value) {
     if (typeof value !== "string" || value.trim() === "") {
       throw new TypeError("A non-empty HTTP(S) audio URL is required");
@@ -128,6 +152,7 @@ export class AudioTaskQueue {
         const entry = this.#pending.shift();
         this.#active += 1;
         entry.state = "downloading";
+        this.#notify();
         void this.#run(entry);
       }
     });
@@ -140,6 +165,7 @@ export class AudioTaskQueue {
         onPhase: (phase) => {
           if (!entry.settled && phase === "decoding" && entry.state === "downloading") {
             entry.state = "decoding";
+            this.#notify();
           }
         },
       });
@@ -175,5 +201,6 @@ export class AudioTaskQueue {
       };
     }
     callback(value);
+    this.#notify();
   }
 }

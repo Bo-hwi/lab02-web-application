@@ -6,7 +6,7 @@
 - Branch: `hw2/audio-queue`
 - Baseline commit: `2b6135f`
 - Assignment source: Lab 02, slide 31.
-- Status: T01-T07 complete, including browser audio decoding, queue cancellation, playback lifecycle and a verified standalone frequency visualizer; application integration remains pending.
+- Status: T01-T08 complete, including browser audio decoding, queue cancellation, playback lifecycle, visualizer and accessible application controls; local audio fixtures remain for T09.
 - Technology: HTML, CSS and vanilla JavaScript with native browser APIs.
 - Submission language: English.
 - HW1 and HW3 remain on separate branches.
@@ -179,13 +179,13 @@ Acceptance: the visualizer responds to audio without creating duplicate loops.
 
 ### T08 - Build Queue Controls and Accessible Feedback
 
-- [ ] Display entries in enqueue order with stable IDs.
-- [ ] Provide enqueue, cancel, play, stop and remove controls.
-- [ ] Display useful task states and errors.
-- [ ] Label controls and preserve visible keyboard focus.
-- [ ] Announce important state changes appropriately.
-- [ ] Keep animation frames separate from routine DOM updates.
-- [ ] Verify keyboard operation and empty states.
+- [x] Display entries in enqueue order with stable IDs.
+- [x] Provide enqueue, cancel, play, stop and remove controls.
+- [x] Display useful task states and errors.
+- [x] Label controls and preserve visible keyboard focus.
+- [x] Announce important state changes appropriately.
+- [x] Keep animation frames separate from routine DOM updates.
+- [x] Verify keyboard operation and empty states.
 
 Acceptance: users can operate the queue and understand its current state.
 
@@ -277,7 +277,8 @@ Acceptance: GitHub contains the verified source and matching documentation.
 | T05 | Complete | 14 cancellation and disposal tests PASS; combined queue, loader and cancellation suite 37/37 PASS. Pending and active cancellation, fetch abort, late decode results, slot retention, removal, disposal and reentrancy verified. See HW2_VERIFICATION.md. | Included in this commit |
 | T06 | Complete | Player lifecycle tests 7/7 PASS; native browser playback checks 6/6 PASS using a user click, AudioContext and 256-bin analyser; prior queue/loader/cancellation suite 37/37 PASS. See HW2_VERIFICATION.md. | Included in this commit |
 | T07 | Complete | Visualizer Node tests 5/5 PASS; native browser Canvas and analyser checks 7/7 PASS with a silent frame and a muted oscillator signal. The combined audio suite passed 49/49; baseline engine suite passed 6/6. See HW2_VERIFICATION.md. | Included in this commit |
-| T08-T13 | Not started | Not yet recorded | Not yet recorded |
+| T08 | Complete | Queue and player subscriptions drive the HTML controls and live status; 51/51 audio Node tests PASS. Browser HTTP check confirmed Enter enqueues, a failed URL reports HTTP 404, Remove restores focus to the URL field and the empty state. Local playable samples follow in T09. See HW2_VERIFICATION.md. | Included in this commit |
+| T09-T13 | Not started | Not yet recorded | Not yet recorded |
 
 
 ## 9. Definition of Done
