@@ -257,12 +257,12 @@ Commit: `docs(a11y): record accessibility checks and Lighthouse evidence`
 
 ### T14 - Document AI Findings and Run Instructions
 
-- [ ] Record actual AI-related failures: context, faulty code/behavior, detection, correction and verification.
-- [ ] Address the lab-level requirement for three findings without fabricating evidence or treating slide errors as AI failures discovered in this implementation.
-- [ ] If evidence is insufficient, report what remains missing instead of claiming the audit is complete.
-- [ ] Write README instructions covering HW1, its branch, setup, features, keyboard controls and tests.
-- [ ] Document the decisions in section 3 and remaining limitations.
-- [ ] Prepare a short explanation of the data pipeline, focus management, event delegation and verification.
+- [x] Record actual AI-related failures: context, faulty code/behavior, detection, correction and verification.
+- [x] Address the lab-level requirement for three findings without fabricating evidence or treating slide errors as AI failures discovered in this implementation.
+- [x] If evidence is insufficient, report what remains missing instead of claiming the audit is complete.
+- [x] Write README instructions covering HW1, its branch, setup, features, keyboard controls and tests.
+- [x] Document the decisions in section 3 and remaining limitations.
+- [x] Prepare a short explanation of the data pipeline, focus management, event delegation and verification.
 
 Acceptance: another person can clone, run and verify the branch using README; the audit reflects actual evidence.
 
@@ -315,7 +315,8 @@ Update this section after actual work. A planned check is not completion evidenc
 | T10 | Complete | Logic suite: 36/36 PASS across product, model, state, pagination, selection and keyboard tests; syntax checks and `git diff --check` passed. Browser: `grid-render-test.html` 12/12 and `grid-event-test.html` 8/8 PASS. Manual keyboard checks verified Tab entry/exit, arrow movement, Enter selection, Space toggle, and focus/selection behavior through filtering, sorting and pagination. | Included in this commit |
 | T11 | Complete | Styling and live feedback verified. Logic suite 36/36 PASS; render page 12/12 PASS; 200% zoom and keyboard focus verified manually; Lighthouse Accessibility 100 and all 10 additional manual checks reviewed and passed, as confirmed by the user. Runtime screen-reader announcement behavior remains for the dedicated T13 assistive-technology audit. | ebf3fc3 |
 | T12 | Complete | Logic 36/36 and baseline 6/6 PASS; browser workflow and edge cases PASS; event 8/8 and render 12/12 PASS; no browser console/page errors after favicon fix. Details in docs/verification/HW1_VERIFICATION.md. | 652ee84; T12 verification commit |
-| T13 | Complete | Lighthouse Accessibility 100/100 and Best Practices 100/100; keyboard, focus and screen-reader workflow manually verified; details recorded in docs/verification/HW1_VERIFICATION.md | Pending |
+| T13 | Complete | Lighthouse Accessibility 100/100 and Best Practices 100/100; keyboard, focus and screen-reader workflow manually verified; details recorded in docs/verification/HW1_VERIFICATION.md | 2409617 |
+| T14 | Complete | AI failures and risks documented in AI_FAILURE_AUDIT.md; README covers setup, features, architecture, keyboard controls, tests and limitations. README commands rerun: HW1 logic 36/36 PASS, baseline 6/6 PASS; browser rendering 12/12 PASS and event delegation 8/8 PASS. | 615c50f, b9959c6 |
 ## 9. Definition of Done
 
 - [ ] R01-R07 have acceptance evidence.
