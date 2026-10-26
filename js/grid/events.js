@@ -32,10 +32,14 @@ export function setupGridEventHub(root, { onAction, onKeydown } = {}) {
       if (!actionEvents.has(type) || !(event.target instanceof Element)) return;
       const control = event.target.closest("[data-grid-action]");
       if (!control || !root.contains(control) || control.disabled) return;
+      if (control instanceof HTMLInputElement && control.type === "checkbox" && type !== "change") return;
 
       onAction?.({
         action: control.dataset.gridAction,
         value: "value" in control ? control.value : undefined,
+        checked: control instanceof HTMLInputElement && control.type === "checkbox"
+          ? control.checked
+          : undefined,
         event,
       });
     };

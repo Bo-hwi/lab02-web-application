@@ -4,6 +4,7 @@ import { products } from "../data/products.js";
 import { createGridView } from "./view.js";
 import { setupGridEventHub } from "./events.js";
 import { createInitialGridState, transitionGridState } from "./state.js";
+import { updateProductSelection } from "./selection.js";
 
 const columns = [
   { header: "Product ID", accessorKey: "id", sortable: true },
@@ -16,10 +17,14 @@ const columns = [
 const state = createInitialGridState();
 const root = document.getElementById("grid-root");
 const status = document.getElementById("grid-status");
+const selectionStatus = document.getElementById("selection-status");
 const categoryFilter = document.getElementById("category-filter");
 const previousPageButton = document.getElementById("previous-page");
 const nextPageButton = document.getElementById("next-page");
 const pageSizeControl = document.getElementById("page-size");
+const onRowSelect = typeof window.onGridRowSelect === "function"
+  ? window.onGridRowSelect
+  : undefined;
 
 for (const category of new Set(products.map((product) => product.category))) {
   const option = document.createElement("option");
@@ -43,8 +48,10 @@ function render() {
     pageSize: state.pageSize,
   });
   state.page = pageResult.page;
-  const focusedSortKey = root.contains(document.activeElement)
-    ? document.activeElement.dataset.sortKey
+  const focusedElement = root.contains(document.activeElement) ? document.activeElement : null;
+  const focusedSortKey = focusedElement?.dataset.sortKey;
+  const focusedProductId = focusedElement instanceof HTMLInputElement
+    ? focusedElement.dataset.productId
     : undefined;
   root.replaceChildren(renderToDOM(createGridView({
     data: pageResult.items,
@@ -52,14 +59,18 @@ function render() {
     ariaLabel: "Product inventory",
     sortKey: state.sortKey,
     sortDirection: state.sortDirection,
+    selectedIds: state.selectedIds,
   })));
 
-  if (focusedSortKey) {
-  const replacementButton = [...root.querySelectorAll("[data-sort-key]")]
-    .find((button) => button.dataset.sortKey === focusedSortKey);
-
-  replacementButton?.focus({ preventScroll: true });
-}
+  if (focusedProductId) {
+    [...root.querySelectorAll('input[data-grid-action="row-selection"]')]
+      .find((checkbox) => checkbox.dataset.productId === focusedProductId)
+      ?.focus({ preventScroll: true });
+  } else if (focusedSortKey) {
+    [...root.querySelectorAll("[data-sort-key]")]
+      .find((button) => button.dataset.sortKey === focusedSortKey)
+      ?.focus({ preventScroll: true });
+  }
 
   status.textContent = pageResult.totalRows === 0
     ? "0 products"
@@ -68,6 +79,8 @@ function render() {
   previousPageButton.disabled = pageResult.pageCount === 0 || pageResult.page === 1;
   nextPageButton.disabled = pageResult.pageCount === 0 || pageResult.page === pageResult.pageCount;
   pageSizeControl.value = String(pageResult.pageSize);
+  const selectedCount = state.selectedIds.size;
+  selectionStatus.textContent = `${selectedCount} selected; count includes products outside this page`;
 }
 
 render();
@@ -95,6 +108,13 @@ setupGridEventHub(document.querySelector("main"), {
       case "page-size":
         stateEvent = { type: "PAGE_SIZE_CHANGED", pageSize: Number(action.value) };
         break;
+      case "row-selection": {
+        const productId = action.event.target.dataset.productId;
+        const product = products.find((item) => item.id === productId);
+        if (!product) return;
+        if (updateProductSelection(state, product, action.checked, onRowSelect)) render();
+        return;
+      }
       case "previous-page":
         stateEvent = { type: "PAGE_CHANGED", page: state.page - 1 };
         break;

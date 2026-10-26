@@ -191,11 +191,11 @@ Commit: `feat(grid): implement pagination and page size controls`
 
 ### T09 - Select Rows by ID
 
-- [ ] Add an accessibly named checkbox for each row.
-- [ ] Store selection by ID and keep checkbox state and aria-selected consistent.
-- [ ] Implement optional onRowSelect and document exactly when it runs.
-- [ ] Preserve selection across filtering, sorting and pagination; show an accurate selected count.
-- [ ] Test that repeated interactions do not cause unintended duplicate callbacks or toggles.
+- [x] Add an accessibly named checkbox for each row.
+- [x] Store selection by ID and keep checkbox state and aria-selected consistent.
+- [x] Implement optional onRowSelect and document exactly when it runs.
+- [x] Preserve selection across filtering, sorting and pagination; show an accurate selected count.
+- [x] Test that repeated interactions do not cause unintended duplicate callbacks or toggles.
 
 Acceptance: selection stays attached to the correct product when its row position changes.
 
@@ -309,7 +309,7 @@ Update this section after actual work. A planned check is not completion evidenc
 | T06 | Complete | node --test tests/grid-model.test.js tests/grid-state.test.js: 12/12 PASS; browser verified live search (SP010 returns 1), SP010 + Displays returns 0 with empty state, and Displays alone returns 20 | 375e510 |
 | T07 | Complete | node --test tests/grid-model.test.js tests/grid-state.test.js: 17/17 PASS; tests/grid-render-test.html: 10/10 PASS; browser verified ascending/descending sorting on filtered Audio results | 758e9a5 |
 | T08 | Complete | node --test tests/grid-pagination.test.js tests/grid-model.test.js tests/grid-state.test.js: 24/24 PASS; browser verified page navigation, page-size reset, final-page filter clamp and empty state without Page 1/0 | 259ee18 |
-
+| T09 | Complete | Selection/state tests: 11/11 PASS; render tests: 11/11 PASS; event tests: 7/7 PASS. Browser check: SP001 remained selected after pagination and filtering; deselecting it changed the count to 0. | Pending commit |
 ## 9. Definition of Done
 
 - [ ] R01-R07 have acceptance evidence.

@@ -3,8 +3,17 @@ import { createElement } from "../../mini-react.js";
 const numberFormatter = new Intl.NumberFormat("en", { maximumFractionDigits: 0 });
 
 /** Build a table VNode without changing data or registering listeners. */
-export function createGridView({ data, columns, ariaLabel, sortKey = null, sortDirection = "asc" }) {
-  const headers = columns.map((column) =>
+export function createGridView({
+  data,
+  columns,
+  ariaLabel,
+  sortKey = null,
+  sortDirection = "asc",
+  selectedIds = new Set(),
+}) {
+  const headers = [
+    createElement("th", { scope: "col", role: "columnheader" }, "Selection"),
+    ...columns.map((column) =>
     createElement("th", {
       scope: "col",
       role: "columnheader",
@@ -23,15 +32,25 @@ export function createGridView({ data, columns, ariaLabel, sortKey = null, sortD
       }, `${column.header}${sortKey === column.accessorKey
         ? sortDirection === "desc" ? " ▼" : " ▲"
         : ""}`)
-      : column.header),
-  );
+      : column.header)),
+  ];
 
   const rows = data.map((product) =>
     createElement("tr", {
       role: "row",
       key: product.id,
       "data-product-id": product.id,
-    }, columns.map((column) => {
+      "aria-selected": selectedIds.has(product.id) ? "true" : "false",
+    }, [
+      createElement("td", { role: "gridcell" },
+        createElement("input", {
+          type: "checkbox",
+          checked: selectedIds.has(product.id),
+          "data-grid-action": "row-selection",
+          "data-product-id": product.id,
+          "aria-label": `Select ${product.id}: ${product.name}`,
+        })),
+      ...columns.map((column) => {
       const value = product[column.accessorKey];
       const text = typeof value === "number"
         ? numberFormatter.format(value)
@@ -40,14 +59,14 @@ export function createGridView({ data, columns, ariaLabel, sortKey = null, sortD
         role: "gridcell",
         "data-column-key": column.accessorKey,
       }, text);
-    })),
+    })]),
   );
 
   if (rows.length === 0) {
     rows.push(createElement("tr", { role: "row" },
       createElement("td", {
         role: "gridcell",
-        colSpan: columns.length,
+        colSpan: columns.length + 1,
       }, "No results found"),
     ));
   }

@@ -19,6 +19,7 @@ const table = renderToDOM(createGridView({
   data: products,
   columns,
   ariaLabel: "Rendering test inventory",
+  selectedIds: new Set(["SP001"]),
 }));
 document.getElementById("test-root").appendChild(table);
 
@@ -28,25 +29,33 @@ check("Native table sections and ARIA grid name are preserved",
   table.getAttribute("aria-label") === "Rendering test inventory");
 
 const headers = [...table.querySelectorAll("thead th")];
-check("Headers follow column configuration and preserve semantics",
-  headers.length === 3 && headers.every((header, index) =>
+check("Headers include selection and follow data column configuration",
+  headers.length === columns.length + 1 && headers[0].textContent === "Selection" &&
+  headers.slice(1).every((header, index) =>
     header.textContent === columns[index].header &&
     header.scope === "col" && header.getAttribute("role") === "columnheader"));
 
 const rows = [...table.tBodies[0].rows];
 check("All 100 rows have the configured cells and stable product IDs",
   rows.length === 100 && rows.every((row, index) =>
-    row.cells.length === 3 && row.dataset.productId === products[index].id &&
+    row.cells.length === columns.length + 1 && row.dataset.productId === products[index].id &&
     row.getAttribute("role") === "row" &&
     [...row.cells].every((cell) => cell.getAttribute("role") === "gridcell")));
 
+const firstCheckbox = rows[0].cells[0].querySelector('input[type="checkbox"]');
+const secondCheckbox = rows[1].cells[0].querySelector('input[type="checkbox"]');
+check("Named row checkboxes agree with aria-selected", firstCheckbox.checked &&
+  firstCheckbox.getAttribute("aria-label") === "Select SP001: Mechanical Keyboard - Series 1" &&
+  rows[0].getAttribute("aria-selected") === "true" && !secondCheckbox.checked &&
+  rows[1].getAttribute("aria-selected") === "false");
+
 check("Numeric values are formatted in English and zero stock is retained",
-  rows[0].cells[1].textContent === "850,000" && rows[0].cells[2].textContent === "0");
+  rows[0].cells[2].textContent === "850,000" && rows[0].cells[3].textContent === "0");
 
 const headerButtons = [...table.querySelectorAll("thead button")];
 check("Only sortable headers contain enabled native buttons",
   headerButtons.length === 2 && headerButtons.every((button) => !button.disabled) &&
-  !headers[2].querySelector("button"));
+  !headers[3].querySelector("button"));
 
 const ascendingSort = renderToDOM(createGridView({
   data: products.slice(0, 1),
@@ -79,7 +88,7 @@ check("Descending sort state exposes aria-sort and a visible direction",
 const empty = renderToDOM(createGridView({ data: [], columns, ariaLabel: "Empty inventory" }));
 check("Empty data produces a full-width empty state",
   empty.tBodies[0].rows.length === 1 &&
-  empty.tBodies[0].rows[0].cells[0].colSpan === 3 &&
+  empty.tBodies[0].rows[0].cells[0].colSpan === columns.length + 1 &&
   empty.tBodies[0].textContent === "No results found");
 
 const payload = '<img src=x onerror="alert(1)">';
@@ -89,7 +98,7 @@ const unsafeTextTable = renderToDOM(createGridView({
   ariaLabel: "Safe text rendering test",
 }));
 document.getElementById("test-root").appendChild(unsafeTextTable);
-const payloadCell = unsafeTextTable.tBodies[0].rows[0].cells[0];
+const payloadCell = unsafeTextTable.tBodies[0].rows[0].cells[1];
 check("HTML-like product names remain inert text",
   payloadCell.textContent === payload && payloadCell.firstChild.nodeType === Node.TEXT_NODE &&
   unsafeTextTable.querySelector("img, script") === null);

@@ -38,6 +38,11 @@ GridOptions:
 - ariaLabel: non-empty accessible name for the grid.
 - onRowSelect: optional callback receiving the selected Product.
 
+The demo reads an optional `window.onGridRowSelect` callback before
+`js/grid/main.js` initializes. It receives the Product once when that
+product changes from unselected to selected, and is not called for
+deselection, repeated selection, or rendering.
+
 The selection checkbox column is a UI column, not a Product field.
 It is not sortable.
 
