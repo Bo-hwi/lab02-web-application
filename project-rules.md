@@ -3,7 +3,10 @@
 
 **Course:** Web Application Development — UIT Advanced Program  
 **Lab:** Modern React Architecture, Virtual DOM & State Machines  
-**Current Scope:** Exercise 1 — Mini-React VNode & Mounting Engine
+**Current Scope:** HW2 - Concurrent FIFO Audio Visualizer Queue Engine
+**Target Branch:** `hw2/audio-queue`
+**Technology:** HTML, CSS, vanilla JavaScript and native browser APIs
+**Submission Language:** English
 
 ## 1. Engineering Philosophy
 
@@ -539,25 +542,37 @@ Exercise 1 is considered complete only when:
 
 ## 11. Scope Isolation
 
-The current active scope is Exercise 1 only.
+The active scope is HW2 on branch `hw2/audio-queue`.
 
-Do not implement the following without explicit authorization:
+### Implementation Boundaries
 
-- Custom `useState`
-- Reactive state dispatcher
-- Hook cursor lifecycle
-- Full root Event Delegation hub
-- Virtual DOM reconciliation
-- Memoization
-- Virtual scrolling
-- Async finite state machines
-- Homework Data-Grid
-- Audio queue engine
-- Flash-sale engine
+- Follow the HW2 tasks in TASK_DECOMPOSITION.md.
+- Use HTML, CSS, vanilla JavaScript and native browser APIs.
+- Do not introduce external frameworks or runtime libraries.
+- Reuse existing repository code where useful.
+- A complete custom React implementation is not required.
+- HW1 and HW3 remain on separate branches.
+- Earlier Exercise 1 restrictions apply to the historical exercise.
+- Exercise-specific contracts elsewhere in this file apply to their named
+  components; define separate contracts for HW2 modules.
 
-These belong to later exercises or additional assignments.
+### HW2 Engineering Requirements
 
----
+- Define queue, cancellation and resource ownership contracts before coding.
+- Enforce bounded concurrency and FIFO task start order.
+- Distinguish download cancellation from late decode-result handling.
+- Settle each task promise exactly once.
+- Create a fresh AudioBufferSourceNode for each playback.
+- Stop and disconnect owned source nodes when appropriate.
+- Release retained buffer references when entries are removed.
+- Maintain at most one visualizer animation loop.
+- Dispose owned listeners, animation callbacks and audio resources.
+- Verify AnalyserNode configuration against the actual Web Audio API.
+- Record measured performance and memory observations honestly.
+- Use audio assets with documented redistribution permission.
+- Treat slide code as reference material requiring independent verification.
+- Record actual AI failures separately from hypothetical risks.
+- Review and verify each isolated change before committing.
 
 ## 12. Final Engineering Principle
 
