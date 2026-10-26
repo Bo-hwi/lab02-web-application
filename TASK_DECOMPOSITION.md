@@ -244,12 +244,12 @@ Commit: `test(grid): verify data-grid integration and regression cases`
 
 ### T13 - Audit Accessibility and Lighthouse Scores
 
-- [ ] Check the full workflow with a keyboard and at least one screen reader, such as NVDA.
-- [ ] Check table names, column headers, cell position, sort state, selection and announcements.
-- [ ] Review applicable WCAG 2.2 AA criteria; distinguish pass, fail, untested and not applicable.
-- [ ] Run Lighthouse over HTTP and achieve Accessibility 100 and Best Practices 100.
-- [ ] Save reports with the date, browser/version, URL, configuration and tested commit.
-- [ ] Recheck affected behavior and rerun the final audit after subsequent code changes.
+- [x] Check the full workflow with a keyboard and at least one screen reader, such as NVDA.
+- [x] Check table names, column headers, cell position, sort state, selection and announcements.
+- [x] Review applicable WCAG 2.2 AA criteria; distinguish pass, fail, untested and not applicable.
+- [x] Run Lighthouse over HTTP and achieve Accessibility 100 and Best Practices 100.
+- [x] Save reports with the date, browser/version, URL, configuration and tested commit.
+- [x] Recheck affected behavior and rerun the final audit after subsequent code changes.
 
 Acceptance: requirements have actual evidence; Lighthouse scores do not replace manual WCAG checks.
 
@@ -315,6 +315,7 @@ Update this section after actual work. A planned check is not completion evidenc
 | T10 | Complete | Logic suite: 36/36 PASS across product, model, state, pagination, selection and keyboard tests; syntax checks and `git diff --check` passed. Browser: `grid-render-test.html` 12/12 and `grid-event-test.html` 8/8 PASS. Manual keyboard checks verified Tab entry/exit, arrow movement, Enter selection, Space toggle, and focus/selection behavior through filtering, sorting and pagination. | Included in this commit |
 | T11 | Complete | Styling and live feedback verified. Logic suite 36/36 PASS; render page 12/12 PASS; 200% zoom and keyboard focus verified manually; Lighthouse Accessibility 100 and all 10 additional manual checks reviewed and passed, as confirmed by the user. Runtime screen-reader announcement behavior remains for the dedicated T13 assistive-technology audit. | ebf3fc3 |
 | T12 | Complete | Logic 36/36 and baseline 6/6 PASS; browser workflow and edge cases PASS; event 8/8 and render 12/12 PASS; no browser console/page errors after favicon fix. Details in docs/verification/HW1_VERIFICATION.md. | 652ee84; T12 verification commit |
+| T13 | Complete | Lighthouse Accessibility 100/100 and Best Practices 100/100; keyboard, focus and screen-reader workflow manually verified; details recorded in docs/verification/HW1_VERIFICATION.md | Pending |
 ## 9. Definition of Done
 
 - [ ] R01-R07 have acceptance evidence.
