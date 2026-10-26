@@ -95,7 +95,7 @@ const empty = renderToDOM(createGridView({ data: [], columns, ariaLabel: "Empty 
 check("Empty data produces a full-width empty state",
   empty.tBodies[0].rows.length === 1 &&
   empty.tBodies[0].rows[0].cells[0].colSpan === columns.length + 1 &&
-  empty.tBodies[0].textContent === "No results found");
+  empty.tBodies[0].textContent === "No results found" && empty.tabIndex === -1);
 
 const payload = '<img src=x onerror="alert(1)">';
 const unsafeTextTable = renderToDOM(createGridView({

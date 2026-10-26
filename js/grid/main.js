@@ -19,6 +19,7 @@ const state = createInitialGridState();
 const root = document.getElementById("grid-root");
 const status = document.getElementById("grid-status");
 const selectionStatus = document.getElementById("selection-status");
+const announcement = document.getElementById("grid-announcement");
 const categoryFilter = document.getElementById("category-filter");
 const previousPageButton = document.getElementById("previous-page");
 const nextPageButton = document.getElementById("next-page");
@@ -28,6 +29,35 @@ const onRowSelect = typeof window.onGridRowSelect === "function"
   : undefined;
 const columnKeys = ["selection", ...columns.map((column) => column.accessorKey)];
 let currentPageProducts = [];
+let searchAnnouncementTimer = null;
+
+function announce(message) {
+  clearTimeout(searchAnnouncementTimer);
+  searchAnnouncementTimer = null;
+  announcement.textContent = message;
+}
+
+function describeResults(pageResult) {
+  if (pageResult.totalRows === 0) return "0 products found.";
+  return `${pageResult.totalRows} products found. Showing rows ${pageResult.startRow} ` +
+    `to ${pageResult.endRow}, page ${pageResult.page} of ${pageResult.pageCount}.`;
+}
+
+function announceFilteredResults(pageResult) {
+  clearTimeout(searchAnnouncementTimer);
+  searchAnnouncementTimer = setTimeout(() => {
+    searchAnnouncementTimer = null;
+    announce(describeResults(pageResult));
+  }, 350);
+}
+
+function changeSelection(product, checked, focusActiveCell = false) {
+  if (!updateProductSelection(state, product, checked, onRowSelect)) return false;
+  render({ focusActiveCell });
+  announce(`${product.name} (${product.id}) ${checked ? "selected" : "deselected"}. ` +
+    `${state.selectedIds.size} selected total.`);
+  return true;
+}
 
 for (const category of new Set(products.map((product) => product.category))) {
   const option = document.createElement("option");
@@ -113,6 +143,7 @@ function render({ focusActiveCell = false } = {}) {
   pageSizeControl.value = String(pageResult.pageSize);
   const selectedCount = state.selectedIds.size;
   selectionStatus.textContent = `${selectedCount} selected; count includes products outside this page`;
+  return pageResult;
 }
 
 function focusCellOrGrid(cellPosition) {
@@ -157,7 +188,7 @@ setupGridEventHub(document.querySelector("main"), {
         const productId = action.event.target.dataset.productId;
         const product = products.find((item) => item.id === productId);
         if (!product) return;
-        if (updateProductSelection(state, product, action.checked, onRowSelect)) render();
+        changeSelection(product, action.checked);
         return;
       }
       case "previous-page":
@@ -170,7 +201,19 @@ setupGridEventHub(document.querySelector("main"), {
         return;
     }
     Object.assign(state, transitionGridState(state, stateEvent));
-    render();
+    const pageResult = render();
+    if (action.action === "query") {
+      announceFilteredResults(pageResult);
+    } else if (action.action === "category") {
+      announce(describeResults(pageResult));
+    } else if (action.action === "sort") {
+      const column = columns.find((item) => item.accessorKey === state.sortKey);
+      if (column) announce(`Sorted by ${column.header}, ${state.sortDirection}. ${describeResults(pageResult)}`);
+    } else if (action.action === "page-size") {
+      announce(`${state.pageSize} rows per page. ${describeResults(pageResult)}`);
+    } else if (action.action === "previous-page" || action.action === "next-page") {
+      announce(describeResults(pageResult));
+    }
   },
   onKeydown({ key, target, event }) {
     if (!(target instanceof Element)) return;
@@ -183,7 +226,7 @@ setupGridEventHub(document.querySelector("main"), {
       const product = products.find((item) => item.id === checkbox.dataset.productId);
       if (!product) return;
       event.preventDefault();
-      if (updateProductSelection(state, product, true, onRowSelect)) render({ focusActiveCell: true });
+      changeSelection(product, true, true);
       return;
     }
 
@@ -193,16 +236,14 @@ setupGridEventHub(document.querySelector("main"), {
 
     if (key === "Enter") {
       event.preventDefault();
-      if (updateProductSelection(state, product, true, onRowSelect)) render({ focusActiveCell: true });
+      changeSelection(product, true, true);
       return;
     }
 
     if (key === " ") {
       event.preventDefault();
       const shouldSelect = !state.selectedIds.has(product.id);
-      if (updateProductSelection(state, product, shouldSelect, onRowSelect)) {
-        render({ focusActiveCell: true });
-      }
+      changeSelection(product, shouldSelect, true);
       return;
     }
 

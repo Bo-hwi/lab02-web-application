@@ -72,7 +72,8 @@ export function createGridView({
     })]),
   );
 
-  if (rows.length === 0) {
+  const hasDataRows = rows.length > 0;
+  if (!hasDataRows) {
     rows.push(createElement("tr", { role: "row" },
       createElement("td", {
         role: "gridcell",
@@ -85,7 +86,7 @@ export function createGridView({
     role: "grid",
     "aria-label": ariaLabel,
     ...(ariaDescribedBy ? { "aria-describedby": ariaDescribedBy } : {}),
-    ...(rows.length === 0 ? { tabIndex: -1 } : {}),
+    ...(!hasDataRows ? { tabIndex: -1 } : {}),
   },
     createElement("thead", null, createElement("tr", { role: "row" }, headers)),
     createElement("tbody", null, rows));

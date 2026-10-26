@@ -114,5 +114,37 @@ A separate in-branch archive is not required for this project.
   navigation, Enter selection, Space toggle, and focus retention through
   filtering, sorting and pagination. Selection remained attached to the
   same product ID across page changes.
-- Visual focus indication is present. Contrast, full WCAG conformance,
-  screen-reader behavior and Lighthouse scores remain for T11-T13.
+- Commit: b8e1f94 (feat(a11y): implement grid keyboard navigation and focus management).
+
+## T11 - Styling and Accessible Feedback (In Progress)
+
+- `node --test tests/products.test.js tests/grid-model.test.js
+  tests/grid-state.test.js tests/grid-pagination.test.js
+  tests/grid-selection.test.js tests/grid-keyboard.test.js`: 36 passed,
+  0 failed. Syntax checks for `js/grid/main.js` and `js/grid/view.js` and
+  `git diff --check` also passed.
+- Browser render report: `tests/grid-render-test.html` showed 12/12 checks
+  passed, including the full-width empty state and named grid semantics.
+- Main page loaded at `http://127.0.0.1:5500/index.html` with its title,
+  filter labels, named inventory grid, five configured columns, and pagination
+  controls present in the accessibility tree.
+- At a 320 CSS-pixel viewport, the document stayed 320 pixels wide and did not
+  overflow horizontally; the 672-pixel table remained within its 283-pixel
+  scrollable grid viewport. Filter controls wrapped to the available width.
+- Measured row checkboxes at 24 by 24 CSS pixels, sort buttons at 32 pixels
+  high, and remaining controls at 40 pixels high. The grid render page reported
+  12/12 checks passed. Browser interactions updated the polite live region for
+  filtering, sorting and selection. No browser JavaScript errors were logged
+  on the render test page.
+- A 200% browser-zoom check was not performed. Focus obscuration, screen-reader
+  announcement behavior, full WCAG conformance and Lighthouse scores remain
+  unverified and must not be inferred from automated checks.
+- Calculated WCAG contrast ratios from the stylesheet colors:
+  `#172033` on `#f5f7fb`: 15.17:1; `#38465c` on `#f5f7fb`: 8.90:1;
+  `#38465c` on white: 9.55:1; disabled text `#475569` on `#e9edf2`: 6.44:1;
+  control border `#68778c` on white: 4.56:1; focus outline `#005fcc` on
+  white: 5.98:1; selected-row text `#172033` on `#e4efff`: 14.01:1.
+- A visible focus outline is defined; sorting exposes `aria-sort` and a
+  visible direction marker. A dedicated polite live region now announces
+  filter, sort, page and selection updates; runtime screen-reader announcement
+  behavior has not yet been manually confirmed.
