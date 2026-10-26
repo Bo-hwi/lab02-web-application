@@ -1,521 +1,285 @@
-
-# Lab 02 — Task Decomposition (WBS)
-
-## Exercise 1: Mini-React VNode & Mounting Engine
-
-**Course:** Web Application Development — UIT Advanced Program  
-**Sprint:** In-Class Sprint 1  
-**Duration:** 35 minutes (lecture allocation)  
-**Status:** In Progress — Independent Verification (Exercise 1)  
-**Implementation Strategy:** Contract-First, Atomic Generation, Independent Verification
-
----
-
-## 1. Exercise Objective
-
-Build a minimal Virtual DOM creation and mounting engine from scratch.
-
-The engine must provide:
-
-1. A structured VNode contract.
-2. A text element factory.
-3. A general VNode element factory.
-4. A recursive DOM mounting engine.
-5. Safe rendering of untrusted strings.
-6. Semantic HTML output.
-7. Independently verified implementation checkpoints.
-
-### Required Runtime Exports
-
-The engine must export:
-
-- `createTextElement`
-- `createElement`
-- `renderToDOM`
-
-The lecture's verification example imports the runtime functions from `mini-react.js`.
-
-### Mandatory Git Milestones
-
-- `feat(core): implement createElement factory`
-- `feat(core): implement renderToDOM`
-
----
-
-## 2. Strict WBS Execution Rules
-
-- Complete only one implementation subtask at a time.
-- Do not generate code for the entire exercise.
-- Specify each function's contract before implementation.
-- Verify the current subtask before continuing.
-- Create the specified Conventional Commit after verification.
-- Do not combine Exercise 1 with later sprints.
-- Do not mark a task complete without evidence.
-- Do not commit failing or unverified implementation work.
-
-A subtask is complete only when its acceptance criteria pass and its associated commit is created.
-
----
-
-## 3. Phase 0 — Engineering Documentation
-
-### Task 0.1 — Establish Engineering Rules
-
-- [x] Create `project-rules.md`.
-- [x] Document Anti-XSS requirements.
-- [x] Document forbidden JavaScript patterns.
-- [x] Document Prop Mapping rules.
-- [x] Document the no-monolithic-code rule.
-- [x] Document verification and Git requirements.
-
-**Target commit:**
-
-`docs: add engineering rules and exercise 1 WBS`
-
-**Acceptance Criteria:**
-
-- The file exists at the repository root.
-- All required security and workflow rules are documented.
-- No application implementation is included.
-
-### Task 0.2 — Establish the WBS
-
-- [x] Create `TASK_DECOMPOSITION.md`.
-- [x] Define atomic development tasks.
-- [x] Assign a target Conventional Commit to each task.
-- [x] Define acceptance criteria.
-- [x] Record technical risks and verification checkpoints.
-
-**Commit handling:**
-
-Task 0.2 is included in the documentation commit specified in Task 0.1.
-
-Both documentation files must be staged and committed together before implementation begins.
-
----
-
-## 4. Phase 1 — Contract-First Design
-
-### Task 1.1 — Define VNode and Props Interfaces
-
-**Target artifact:** `vnode-interface.ts`
-
-**Scope:**
-
-Define TypeScript contracts for the custom Virtual DOM representation.
-
-- [x] Define `VNodeType`.
-- [x] Define `VNode`.
-- [x] Define the Props structure.
-- [x] Define the `children` collection.
-- [x] Define optional text node content.
-- [x] Represent supported component types.
-
-**Required Structural Contract:**
-
-- `type`: Native tag name or component function.
-- `props`: Object containing supported properties.
-- `props.children`: Array of VNodes.
-- `props.nodeValue`: Optional text value.
-
-**Acceptance Criteria:**
-
-- The contract matches the lecture's VNode representation.
-- The interfaces are syntactically valid TypeScript.
-- No runtime renderer is implemented.
-- No state-management functionality is introduced.
-
-The TypeScript contract serves as a specification for the JavaScript engine and does not require introducing a separate TypeScript runtime.
-
-**Target Conventional Commit:**
-
-`docs(core): define vnode and props contracts`
-
----
-
-## 5. Phase 2 — Virtual DOM Factories
-
-### Task 2.1 — Implement createTextElement
-
-**Target module:** `mini-react.js`
-
-**Target function:** `createTextElement(text)`
-
-**Scope:**
-
-Implement only the text node factory.
-
-- [x] Accept primitive text input.
-- [x] Convert the input into a string.
-- [x] Return a `TEXT_ELEMENT` VNode.
-- [x] Store content in `props.nodeValue`.
-- [x] Initialize `props.children` as an empty array.
-- [x] Avoid mutating external data.
-
-**Acceptance Criteria:**
-
-- String input produces a valid text VNode.
-- Numeric input is normalized to a string.
-- The returned object follows the VNode contract.
-- The function has no DOM side effects.
-- No unrelated factory or renderer is implemented.
-
-**Target Conventional Commit:**
-
-`feat(core): implement createTextElement factory`
-
-**History note:** This dedicated commit was not made. Based on the student-provided Git screenshot, `createTextElement` was committed together with `createElement` under `feat(core): implement createElement factory`. The implementation and automated tests are complete; record this atomic-commit deviation honestly instead of manufacturing Git history.
-
-### Task 2.2 — Implement createElement
-
-**Target module:** `mini-react.js`
-
-**Target function:** `createElement(type, props, ...children)`
-
-**Scope:**
-
-Implement only the general VNode factory.
-
-- [x] Accept an element type.
-- [x] Accept nullable props.
-- [x] Accept variadic children.
-- [x] Normalize missing props into an empty object.
-- [x] Flatten nested children arrays.
-- [x] Exclude `null`, `undefined`, and `false` children.
-- [x] Wrap primitive text and numeric children with `createTextElement`.
-- [x] Preserve existing VNode children.
-- [x] Return a correctly structured VNode.
-- [x] Avoid mutating incoming props and child arrays.
-
-**Acceptance Criteria:**
-
-- A simple element produces a valid VNode.
-- An element with null props is handled safely.
-- Nested child arrays are flattened.
-- Primitive children become text VNodes.
-- Excluded child values are not rendered.
-- Input objects remain unchanged.
-- Generated objects satisfy the contract.
-
-**Target Conventional Commit:**
-
-`feat(core): implement createElement factory`
-
-**Mandatory lecture milestone: Commit 1**
-
----
-
-## 6. Phase 3 — Recursive DOM Mounting
-
-### Task 3.1 — Implement renderToDOM
-
-**Verification status:** Implementation exists and passed JavaScript syntax inspection, but actual browser DOM mounting has not yet been independently verified. Do not mark the runtime acceptance criteria complete until Task 4.2 passes.
-
-**Target module:** `mini-react.js`
-
-**Target function:** `renderToDOM(vNode)`
-
-**Scope:**
-
-Implement one recursive function that converts a VNode tree into real DOM nodes.
-
-The function must handle:
-
-- [ ] Identification of `TEXT_ELEMENT` nodes.
-- [ ] Safe creation of native text nodes.
-- [ ] Creation of standard HTML elements.
-- [ ] Safe assignment of supported props.
-- [ ] Mapping `className` to HTML `class`.
-- [ ] Exclusion of reserved VNode properties.
-- [ ] Prevention of inline HTML event attributes.
-- [ ] Recursive mounting of child VNodes.
-- [ ] Returning the completed DOM node.
-
-**Security Requirements:**
-
-- Never use `innerHTML`.
-- Use `document.createTextNode()` for text content.
-- Never interpret raw strings as HTML.
-- Never serialize event handlers into HTML attributes.
-
-**Acceptance Criteria:**
-
-- Text VNodes produce browser Text nodes.
-- HTML VNodes produce the correct element types.
-- `className` maps to the native `class` attribute.
-- Nested elements are mounted recursively.
-- The output hierarchy matches the VNode tree.
-- No unexpected elements are inserted.
-- The implementation respects the documented event architecture boundary.
-
-**Target Conventional Commit:**
-
-`feat(core): implement renderToDOM`
-
-**Mandatory lecture milestone: Commit 2**
-
----
-
-## 7. Phase 4 — Independent Verification
-
-### Task 4.1 — Verify VNode Normalization
-
-**Evidence:** 6/6 existing Node.js tests passed against the uploaded source on 2026-10-16. This does not prove DOM or XSS safety.
-
-**Target artifact:** Focused factory tests
-
-- [x] Verify string child normalization.
-- [x] Verify numeric child normalization.
-- [x] Verify null props.
-- [x] Verify nested children arrays.
-- [x] Verify empty children arrays.
-- [x] Verify exclusion of unsupported child placeholders.
-- [x] Verify that caller-owned props are unchanged.
-
-**Acceptance Criteria:**
-
-- Every factory test passes.
-- Failures provide meaningful diagnostics.
-- No DOM rendering is required for these tests.
-
-**Target Conventional Commit:**
-
-`test(core): verify vnode normalization`
-
-### Task 4.2 — Verify Recursive Mounting
-
-**Target artifact:** Browser DOM test harness (`dom-mount-test.html`), with manual Chrome DevTools inspection. The existing `test-runner.js` only runs Node-side VNode tests; Node does not provide browser DOM APIs by default.
-
-- [x] Create a semantic VNode tree.
-- [x] Include `main`, `header`, `h1`, `p`, and `button`.
-- [x] Mount the tree into the root container.
-- [x] Verify the existence of the button.
-- [x] Verify the expected element hierarchy.
-- [x] Verify proper HTML class mapping.
-- [x] Verify text node content.
-- [x]x Inspect the Elements panel in Browser DevTools.
-- [x] Confirm no unexpected orphan nodes.
-
-**Acceptance Criteria:**
-
-- The root DOM structure matches the VNode tree.
-- The button mount assertion passes.
-- Semantic HTML elements are present.
-- No unexpected DOM nodes are generated.
-
-**Target Conventional Commit:**
-
-`test(core): verify recursive dom mounting`
-
-### Task 4.3 — Verify XSS Resistance
-
-**Target artifact:** Security verification tests
-
-- [x] Test a script-tag string as a text child.
-- [x] Test an image-tag string with an `onerror` payload.
-- [x] Verify that both strings render literally.
-- [x] Verify that no payload executes.
-- [x] Verify that no injected script or image element appears.
-- [x] Inspect relevant DOM output in DevTools.
-
-**Acceptance Criteria:**
-
-- All supplied attack strings remain inert text.
-- No injected script executes.
-- No HTML parsing is performed on text content.
-- Security findings are recorded accurately.
-
-**Target Conventional Commit:**
-
-`test(security): verify xss-safe text rendering`
-
-### Task 4.4 — Record Exercise Verification
-
-**Target artifact:** Verification notes in the project documentation
-
-- [ ] Record the tests executed.
-- [ ] Record observed pass/fail results.
-- [ ] Record DOM inspection findings.
-- [ ] Record any architectural exceptions.
-- [ ] Review the final implementation diff.
-
-**Acceptance Criteria:**
-
-- Results are supported by actual test evidence.
-- All required implementation tasks are complete.
-- Any remaining issue is explicitly documented.
-
-**Target Conventional Commit:**
-
-`docs(verification): record exercise 1 test results`
-
----
-
-
-### Exercise 1 — Final Verification Report
-
-**Verification Date:** 2026-10-16
-**Scope:** Mini-React VNode & Mounting Engine
-**Status:** Functional checkpoints passed; final review pending
-
-#### Test Results
-
-| Checkpoint | Result | Evidence |
+# HW2 - Concurrent FIFO Audio Visualizer: Task Decomposition
+
+## 1. Scope and Status
+
+- Repository: https://github.com/Bo-hwi/lab02-web-application
+- Branch: `hw2/audio-queue`
+- Baseline commit: `2b6135f`
+- Assignment source: Lab 02, slide 31.
+- Status: planning; implementation and verification are pending.
+- Technology: HTML, CSS and vanilla JavaScript with native browser APIs.
+- Submission language: English.
+- HW1 and HW3 remain on separate branches.
+- Existing baseline documentation is preserved in Git history.
+
+## 2. Assignment Requirements
+
+| ID | Requirement | Verification evidence |
 |---|---|---|
-| VNode Normalization | 6/6 PASS | Node.js test runner |
-| Recursive DOM Mounting | 9/9 PASS | Chrome browser test |
-| XSS Security Verification | 8/8 PASS | Chrome browser test |
-| Total | 23/23 PASS | Test execution screenshots |
+| R01 | Integrate Web Audio API and AnalyserNode for frequency analysis | Browser playback and analyser checks |
+| R02 | Implement a FIFO queue for concurrent track downloads and audio decoding | Queue ordering, concurrency and failure tests |
+| R03 | Support cancellation through AbortController | Pending and active cancellation tests |
+| R04 | Explicitly clean up AudioBufferSourceNodes and other owned resources | Lifecycle tests and browser inspection |
+| R05 | Use requestAnimationFrame for a Canvas or SVG visualizer targeting 60fps | Browser performance recording |
+| R06 | Avoid excessive UI updates and memory leaks | Repeated interaction and cleanup checks |
 
-#### Verified Requirements
+The slide's code is reference material and must be independently verified.
 
-- VNode factories generate normalized tree structures.
-- Recursive mounting creates native DOM elements.
-- Plain text is rendered using safe Text nodes.
-- `className` is mapped to `class`.
-- `htmlFor` is mapped to `for`.
-- Tested accessibility attributes are preserved.
-- Semantic HTML elements are successfully mounted.
-- The tested XSS payloads remain inert.
-- Case-insensitive inline event attributes are blocked.
+## 3. Design Decisions to Confirm in T02
 
-#### Security Finding
+These are implementation choices, not additional instructor requirements.
 
-**Issue:** Uppercase inline event attributes bypassed
-the original event handler detection logic.
+- Use Canvas for the frequency visualizer.
+- Use bundled, licensed audio samples with documented sources.
+- Serve the project over local HTTP.
+- Start or resume AudioContext after a user gesture.
+- Use a bounded concurrency limit, initially 2.
+- FIFO applies to the order in which pending tasks start.
+- Tasks may finish in a different order.
+- Keep displayed queue entries in enqueue order.
+- Play one decoded track at a time.
+- Define the difference between task cancellation and playback stopping.
+- Verify the relationship between fftSize and frequencyBinCount.
+- Distinguish abortable downloads from non-abortable decoding.
+- Discard late decode results after cancellation or disposal.
+- Release retained audio buffers when entries are removed.
+- Avoid recreating application state on each animation frame.
+- Use meaningful commits after verified work.
 
-**Before fix:** 7/8 security checks passed.
+## 4. Proposed Structure
 
-**Correction:** Case-insensitive event attribute filtering.
+```text
+index.html
+css/
+  audio.css
+js/
+  audio/
+    queue.js
+    loader.js
+    player.js
+    visualizer.js
+    main.js
+audio/
+  README.md
+tests/
+  audio-queue.test.js
+  audio-lifecycle-test.html
+  audio-lifecycle.test.js
+docs/
+  contracts/
+    audio-queue.md
+  verification/
+    HW2_VERIFICATION.md
+README.md
+TASK_DECOMPOSITION.md
+AI_FAILURE_AUDIT.md
+project-rules.md
+```
 
-**After fix:** 8/8 security checks passed.
+Adjust filenames when implementation decisions require it.
+The README must eventually reflect the actual structure.
 
-**Fix commit:** `78bcc14`
+## 5. Workflow
 
-#### Architectural Limitations
+1. Define the task contract.
+2. Implement one isolated change.
+3. Run focused verification.
+4. Review the diff and tracked files.
+5. Commit verified work with a meaningful message.
+6. Update this document with actual evidence.
+7. Push completed checkpoints.
 
-- Exercise 1 uses element-level event listeners.
-- Root Event Delegation belongs to Sprint 2.
-- Full WCAG 2.2 AA conformance has not been audited.
-- The passing security tests do not prove complete XSS immunity.
-- Object freezing and deeper immutability guarantees
-  require further verification.
-- The text element factory was included in the
-  createElement milestone commit.
+Do not mark planned tests as passed.
+Do not create empty commits or fabricate findings.
 
-#### Git Verification
+## 6. Ordered Tasks
 
-- Required createElement milestone commit: Verified.
-- Required renderToDOM milestone commit: Verified.
-- Conventional Commit history: Verified.
-- Local branch synchronized with origin/main: Verified.
+### T01 - Establish HW2 Scope
 
-#### Final Review
+- [x] Create `hw2/audio-queue` from the main baseline.
+- [x] Record baseline commit `2b6135f`.
+- [ ] Add the HW2 task decomposition.
+- [ ] Update project-rules.md for HW2.
+- [ ] Rerun available baseline tests.
+- [ ] Record actual baseline results.
 
-- [x] Record executed tests.
-- [x] Record observed test results.
-- [x] Record available browser verification findings.
-- [x] Record architectural exceptions.
-- [x] Complete final Git diff review.
-- [ ] Commit final verification documentation.
+Acceptance: HW2 has a clear scope and a verified starting point.
 
-**Status:** Verification passed; documentation commit pending
+### T02 - Define Contracts and State Transitions
 
-## 8. Technical Trap Register
+- [ ] Define task IDs, queue entries and public queue methods.
+- [ ] Define pending, downloading, decoding, ready, failed and cancelled states.
+- [ ] Define FIFO start order and the concurrency limit.
+- [ ] Define cancellation before starting, during download and during decoding.
+- [ ] Specify exactly when task promises resolve or reject.
+- [ ] Define playback, stop, removal and disposal behavior.
+- [ ] Specify fftSize and expected frequencyBinCount.
+- [ ] Document ownership and cleanup of audio and animation resources.
 
-| ID | Technical Trap | Required Check |
+Acceptance: behavior can be tested without ambiguity.
+
+### T03 - Implement the Bounded FIFO Scheduler
+
+- [ ] Assign stable task IDs.
+- [ ] Start pending tasks in FIFO order.
+- [ ] Enforce the concurrency limit.
+- [ ] Continue processing after a task fails.
+- [ ] Settle each task promise exactly once.
+- [ ] Test ordering, concurrency and out-of-order completion.
+
+Acceptance: concurrent execution never exceeds the configured limit.
+
+### T04 - Implement Download and Decode
+
+- [ ] Download audio using fetch with AbortSignal.
+- [ ] Reject unsuccessful HTTP responses.
+- [ ] Decode downloaded data using AudioContext.
+- [ ] Report download and decode failures clearly.
+- [ ] Test the loader with controlled dependencies.
+- [ ] Verify real audio decoding in the browser.
+
+Acceptance: valid audio becomes an AudioBuffer and failures do not stall the queue.
+
+### T05 - Implement Cancellation and Queue Disposal
+
+- [ ] Cancel a pending task without starting it.
+- [ ] Abort an active download.
+- [ ] Ignore late decode results after cancellation.
+- [ ] Prevent cancelled tasks from becoming ready.
+- [ ] Release scheduler slots after cancellation.
+- [ ] Cancel or reject unfinished tasks during disposal.
+- [ ] Test repeated cancellation and disposal.
+
+Acceptance: cancellation is predictable and the queue continues safely.
+
+### T06 - Implement Audio Playback
+
+- [ ] Create or resume AudioContext after a user gesture.
+- [ ] Create a new AudioBufferSourceNode for each playback.
+- [ ] Connect the playback graph through AnalyserNode.
+- [ ] Implement play and stop behavior.
+- [ ] Stop and disconnect old source nodes.
+- [ ] Clear ended handlers and retained source references.
+- [ ] Verify repeated play and stop interactions.
+
+Acceptance: playback does not overlap unintentionally or reuse a started source node.
+
+### T07 - Implement the Frequency Visualizer
+
+- [ ] Configure AnalyserNode using the verified FFT contract.
+- [ ] Reuse the frequency data array.
+- [ ] Draw using Canvas and requestAnimationFrame.
+- [ ] Maintain at most one animation loop.
+- [ ] Cancel animation when stopped or disposed.
+- [ ] Handle Canvas resizing and device pixel ratio.
+- [ ] Check visualizer behavior during playback and silence.
+
+Acceptance: the visualizer responds to audio without creating duplicate loops.
+
+### T08 - Build Queue Controls and Accessible Feedback
+
+- [ ] Display entries in enqueue order with stable IDs.
+- [ ] Provide enqueue, cancel, play, stop and remove controls.
+- [ ] Display useful task states and errors.
+- [ ] Label controls and preserve visible keyboard focus.
+- [ ] Announce important state changes appropriately.
+- [ ] Keep animation frames separate from routine DOM updates.
+- [ ] Verify keyboard operation and empty states.
+
+Acceptance: users can operate the queue and understand its current state.
+
+### T09 - Prepare Reproducible Audio Fixtures
+
+- [ ] Add small audio samples permitted for redistribution.
+- [ ] Record sources and licenses.
+- [ ] Include a documented failure scenario.
+- [ ] Avoid dependence on unrelated remote servers.
+- [ ] Verify sample URLs over the local HTTP server.
+
+Acceptance: another person can reproduce playback and queue tests.
+
+### T10 - Verify Lifecycle and Memory Cleanup
+
+- [ ] Repeat enqueue, cancel, play, stop and remove cycles.
+- [ ] Verify source nodes are stopped and disconnected.
+- [ ] Verify removed entries release owned buffer references.
+- [ ] Verify disposal removes listeners and cancels animation.
+- [ ] Inspect memory behavior after repeated cycles.
+- [ ] Record observations and limitations without claiming absolute proof.
+
+Acceptance: no identified retained-resource or duplicate-loop defect remains.
+
+### T11 - Verify Performance and Integration
+
+- [ ] Run scheduler, loader and cancellation tests.
+- [ ] Test multiple tracks and mixed success/failure results.
+- [ ] Record a browser performance trace during visualization.
+- [ ] Assess the 60fps target in the recorded environment.
+- [ ] Check for unnecessary per-frame DOM updates.
+- [ ] Check browser console errors.
+- [ ] Rerun relevant baseline tests if shared code changes.
+
+Acceptance: functional and performance results have actual evidence.
+
+### T12 - Write README and AI Audit
+
+- [ ] Document setup, sample audio, controls and test instructions.
+- [ ] Explain FIFO ordering, concurrency and cancellation.
+- [ ] Explain the audio graph and resource lifecycle.
+- [ ] Document actual AI failures with detection and corrections.
+- [ ] Distinguish observed failures from possible risks.
+- [ ] Record missing audit evidence honestly.
+- [ ] Document browser and performance limitations.
+
+Acceptance: documentation matches the implementation and actual evidence.
+
+### T13 - Review and Submit
+
+- [ ] Review R01-R06 and every required task.
+- [ ] Reconcile task statuses and verification records.
+- [ ] Inspect tracked files and commit history.
+- [ ] Confirm no secrets or unrelated temporary files are included.
+- [ ] Verify the README procedure from committed files.
+- [ ] Push the HW2 branch.
+- [ ] Compare local and remote commit IDs.
+- [ ] Record the submission branch URL.
+
+Acceptance: GitHub contains the verified source and matching documentation.
+
+## 7. Minimum Verification Matrix
+
+| Area | Scenario | Expected result |
 |---|---|---|
-| T01 | Raw HTML injection | Verify inert text rendering |
-| T02 | Incorrect `className` mapping | Inspect native `class` attribute |
-| T03 | Null props handling | Test element creation with null props |
-| T04 | Incorrect child flattening | Test nested children arrays |
-| T05 | Invalid primitive normalization | Verify text VNode structure |
-| T06 | Mutating caller-owned objects | Check input immutability |
-| T07 | DOM hierarchy mismatch | Compare VNode and Elements tree |
-| T08 | Per-node versus root event handling | Document lecture discrepancy |
-| T09 | Unverified code generation | Require test evidence and Git diff |
-| T10 | Unnecessary feature expansion | Enforce exercise scope isolation |
+| FIFO | Enqueue A, B and C | Tasks start in enqueue order |
+| Concurrency | Enqueue more tasks than the limit | Active tasks never exceed the limit |
+| Completion | B finishes before A | Results remain associated with the correct task |
+| Failure | One task fails | Remaining tasks continue |
+| Cancellation | Cancel a pending task | It never starts |
+| Cancellation | Cancel during download | Fetch is aborted and the task is cancelled |
+| Cancellation | Cancel during decoding | Late results are discarded |
+| Playback | Play the same track repeatedly | A fresh source node is created each time |
+| Playback | Stop and replace a track | Previous source is stopped and disconnected |
+| Visualizer | Start repeatedly | Only one animation loop runs |
+| Disposal | Dispose during active work | Owned resources are released |
+| Memory | Repeat interaction cycles | No identified accumulating retained references |
+| Performance | Record active visualization | Frame behavior is assessed against the 60fps target |
+| Accessibility | Operate with keyboard | Controls are usable and focus is visible |
 
----
+## 8. Progress and Evidence Log
 
-## 9. Git Commit Sequence
+| Task | Status | Evidence | Commit |
+|---|---|---|---|
+| T01 | In progress | Branch created from baseline 2b6135f; baseline tests pending | Not yet recorded |
+| T02-T13 | Not started | Not yet recorded | Not yet recorded |
 
-The planned implementation history is:
+## 9. Definition of Done
 
-| Order | Conventional Commit |
-|---|---|
-| 1 | `docs: add engineering rules and exercise 1 WBS` |
-| 2 | `docs(core): define vnode and props contracts` |
-| 3 | `feat(core): implement createTextElement factory` |
-| 4 | `feat(core): implement createElement factory` |
-| 5 | `feat(core): implement renderToDOM` |
-| 6 | `test(core): verify vnode normalization` |
-| 7 | `test(core): verify recursive dom mounting` |
-| 8 | `test(security): verify xss-safe text rendering` |
-| 9 | `docs(verification): record exercise 1 test results` |
-
-Commits 4 and 5 preserve the exact mandatory milestone messages from the lecture.
-
-Additional commits are proposed to support atomic development and independent verification.
-
-Do not create a commit before completing its corresponding task.
-
----
-
-## 10. Definition of Done (DoD)
-
-Exercise 1 is complete when:
-
-- [x] Required engineering documentation exists.
-- [x] VNode and Props contracts are defined.
-- [x] Text element factory passes verification.
-- [x] Element factory passes verification.
-- [x] Recursive DOM mounting passes verification.
-- [x] Required semantic HTML is present.
-- [x] Required property mapping is correct.
-- [x] All mandatory XSS checks pass.
-- [ ] No unexpected orphan DOM nodes remain.
-- [ ] Browser DevTools inspection is complete.
-- [x] Both mandatory Git milestone commits exist.
-- [ ] All completed subtasks have verification evidence.
-- [ ] The repository contains no unrelated exercise implementation.
-
----
-
-## 11. Execution Gate
-
-**Current State:** Independent Verification — Task 4.2 pending browser runtime testing
-
-**Next Authorized Subtask:** Task 4.2 — Verify Recursive Mounting (browser DOM).
-
-Prerequisites already met for this phase:
-
-1. `project-rules.md` and `TASK_DECOMPOSITION.md` exist.
-2. VNode contracts and factories have been implemented.
-3. All six VNode normalization tests pass.
-
-Remaining gate: run and verify real browser DOM mounting before completing Task 4.2. A clean Git commit must follow the verified task.
-
-No additional task may be implemented in the same AI request.
-
----
-
-## 12. Lab-Level Follow-Up
-
-The complete lab also requires `AI_FAILURE_AUDIT.md`.
-
-This document must eventually record:
-
-- At least three actual AI-related failures or risks.
-- The original problematic output or behavior.
-- Security, memory, or rendering implications.
-- Evidence from DevTools or tests.
-- Engineering corrections and verification.
-
-This deliverable is tracked separately and must not expand the current Exercise 1 implementation scope.
-
----
-
-**Engineering Standard:** Generate → Understand → Verify → Commit
-
-**WBS Rule:** Never prompt AI with more than one subtask simultaneously.
+- [ ] R01-R06 have actual verification evidence.
+- [ ] Required tasks are complete.
+- [ ] FIFO, concurrency, failure and cancellation tests pass.
+- [ ] Browser playback and visualizer checks pass.
+- [ ] Lifecycle and performance observations are recorded.
+- [ ] README, audit and task statuses match the actual work.
+- [ ] Audio sample licenses and sources are documented.
+- [ ] Commits are meaningful and HW2 is isolated on its branch.
+- [ ] Local and remote submission commits match.
