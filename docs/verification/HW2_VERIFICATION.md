@@ -81,3 +81,18 @@ References:
 - The test revoked its Blob URL and closed its owned AudioContext; 5th check verified closed state.
 - The test emits no audio and does not verify playback, visualization or full queue cancellation/disposal.
 - T05-T13 and final Definition of Done remain pending.
+
+## T05 - Cancellation and Queue Disposal
+
+- Date: 2026-10-26.
+- Implementation: js/audio/queue.js; cancel, remove and dispose with terminal-state guards.
+- Syntax check: node --check js/audio/queue.js - PASS.
+- Command: node --test tests/audio-cancellation.test.js tests/audio-loader.test.js tests/audio-queue.test.js.
+- Result: 37 passed, 0 failed (14 cancellation/disposal, 11 loader and 12 scheduler tests).
+- Pending cancellation rejects with AbortError and prevents the loader from starting; remaining tasks keep FIFO order.
+- Active cancellation aborts the signal and rejects the public promise immediately; its scheduler slot remains occupied until the underlying loader settles.
+- Late decode success or failure cannot change a cancelled task to ready or failed, including after removal and disposal.
+- Controlled real-loader integration verifies fetch abort and cancellation during non-abortable decode.
+- Terminal-only removal releases retained buffer references; IDs are not reused. Disposal rejects unfinished work, aborts active signals, prevents new enqueue and ignores late results.
+- Repeated cancellation, disposal before/after scheduling and abort-handler reentrancy were checked.
+- These are controlled lifecycle tests, not browser playback, memory profiling or performance measurements. T06-T13 and final Definition of Done remain pending.

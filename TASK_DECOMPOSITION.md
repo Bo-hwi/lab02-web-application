@@ -6,7 +6,7 @@
 - Branch: `hw2/audio-queue`
 - Baseline commit: `2b6135f`
 - Assignment source: Lab 02, slide 31.
-- Status: T01-T04 complete, including browser audio decoding; queue cancellation, playback, visualization and final integration remain pending.
+- Status: T01-T05 complete, including browser audio decoding and queue cancellation; playback, visualization and final integration remain pending.
 - Technology: HTML, CSS and vanilla JavaScript with native browser APIs.
 - Submission language: English.
 - HW1 and HW3 remain on separate branches.
@@ -143,13 +143,13 @@ Acceptance: valid audio becomes an AudioBuffer and failures do not stall the que
 
 ### T05 - Implement Cancellation and Queue Disposal
 
-- [ ] Cancel a pending task without starting it.
-- [ ] Abort an active download.
-- [ ] Ignore late decode results after cancellation.
-- [ ] Prevent cancelled tasks from becoming ready.
-- [ ] Release cancelled operations' scheduler slots only after their loaders settle.
-- [ ] Cancel or reject unfinished tasks during disposal.
-- [ ] Test repeated cancellation and disposal.
+- [x] Cancel a pending task without starting it.
+- [x] Abort an active download.
+- [x] Ignore late decode results after cancellation.
+- [x] Prevent cancelled tasks from becoming ready.
+- [x] Release cancelled operations' scheduler slots only after their loaders settle.
+- [x] Cancel or reject unfinished tasks during disposal.
+- [x] Test repeated cancellation and disposal.
 
 Acceptance: cancellation is predictable and the queue continues safely.
 
@@ -274,7 +274,8 @@ Acceptance: GitHub contains the verified source and matching documentation.
 | T02 | Specification complete | All eight contract items reviewed; FIFO, bounded concurrency, cancellation races, promise settlement, playback, FFT and ownership specified in docs/contracts/audio-queue.md. Specification review recorded in HW2_VERIFICATION.md; runtime checks pending. | Included in this commit |
 | T03 | Complete | Scheduler syntax check and 12/12 controlled-loader tests PASS: FIFO starts, limits 1/2/3, out-of-order results, failure recovery, stable IDs, exactly-once settlement and detached snapshots. Real audio and cancellation remain for T04-T05. | Included in this commit |
 | T04 | Complete | Loader and scheduler Node tests 23/23 PASS; browser real WAV decode, invalid audio, abort guard, queue recovery and context cleanup 5/5 PASS. See HW2_VERIFICATION.md. | Included in this commit |
-| T05-T13 | Not started | Not yet recorded | Not yet recorded |
+| T05 | Complete | 14 cancellation and disposal tests PASS; combined queue, loader and cancellation suite 37/37 PASS. Pending and active cancellation, fetch abort, late decode results, slot retention, removal, disposal and reentrancy verified. See HW2_VERIFICATION.md. | Included in this commit |
+| T06-T13 | Not started | Not yet recorded | Not yet recorded |
 
 
 ## 9. Definition of Done
