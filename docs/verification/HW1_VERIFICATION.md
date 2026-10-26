@@ -149,3 +149,8 @@ A separate in-branch archive is not required for this project.
   visible direction marker. A dedicated polite live region now announces
   filter, sort, page and selection updates; runtime screen-reader announcement
   behavior has not yet been manually confirmed.
+
+## T12 - Integration and Regression Checks (In Progress)
+
+- Logic suite, 2026-10-26: `node --test tests/products.test.js tests/grid-model.test.js tests/grid-state.test.js tests/grid-pagination.test.js tests/grid-selection.test.js tests/grid-keyboard.test.js` — 36 passed, 0 failed.
+- Browser workflow and regression checks remain pending.

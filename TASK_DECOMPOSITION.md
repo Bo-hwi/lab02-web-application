@@ -231,7 +231,7 @@ Commit: `feat(a11y): improve grid styling and accessible feedback`
 
 ### T12 - Run Integration and Regression Checks
 
-- [ ] Run logic tests using available JavaScript tools or a plain test harness; do not introduce a test library without authorization.
+- [x] Run logic tests using available JavaScript tools or a plain test harness; do not introduce a test library without authorization.
 - [ ] Exercise filtering -> sorting -> pagination -> selection -> changed filters.
 - [ ] Check empty data, the last page, selection outside the filtered results and focus after updates.
 - [ ] Check for accumulating listeners and console errors after repeated interactions.
@@ -314,6 +314,7 @@ Update this section after actual work. A planned check is not completion evidenc
 | T09 | Complete | Selection/state tests: 11/11 PASS; render tests: 11/11 PASS; event tests: 7/7 PASS. Browser check: SP001 remained selected after pagination and filtering; deselecting it changed the count to 0. | c9faf2a |
 | T10 | Complete | Logic suite: 36/36 PASS across product, model, state, pagination, selection and keyboard tests; syntax checks and `git diff --check` passed. Browser: `grid-render-test.html` 12/12 and `grid-event-test.html` 8/8 PASS. Manual keyboard checks verified Tab entry/exit, arrow movement, Enter selection, Space toggle, and focus/selection behavior through filtering, sorting and pagination. | Included in this commit |
 | T11 | Complete | Styling and live feedback verified. Logic suite 36/36 PASS; render page 12/12 PASS; 200% zoom and keyboard focus verified manually; Lighthouse Accessibility 100 and all 10 additional manual checks reviewed and passed, as confirmed by the user. Runtime screen-reader announcement behavior remains for the dedicated T13 assistive-technology audit. | ebf3fc3 |
+| T12 | In progress | Logic suite on 2026-10-26: six native Node test files, 36 passed, 0 failed. Browser integration and regression checks remain. | Pending |
 ## 9. Definition of Done
 
 - [ ] R01-R07 have acceptance evidence.
