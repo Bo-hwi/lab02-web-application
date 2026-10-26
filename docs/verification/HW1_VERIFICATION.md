@@ -27,8 +27,9 @@
 - Manual inspection of the Elements tree has not been documented.
 - Passing the supplied XSS checks does not prove complete XSS immunity.
 - These results cover the existing engine, not the future Data-Grid.
-- HW1 functionality, WCAG conformance and Lighthouse scores
-  have not yet been verified.
+- The baseline run did not cover HW1 functionality. Current HW1 feature
+  verification is recorded by task below; full WCAG conformance and
+  Lighthouse scores remain unverified.
 
 ## Historical Documentation
 
@@ -54,7 +55,19 @@ A separate in-branch archive is not required for this project.
   to the root, disabled controls are ignored, keydown is forwarded,
   and disposal removes listeners.
 - The application entry point loaded successfully in the browser.
-- State changes do not yet update displayed data.
-- Focus restoration after rendering remains pending.
+- Filter state changes update the rendered product list (see T06).
+- Focus behavior for remaining grid interactions is still pending.
 - A Summarizer API warning appeared in the browser console;
   no JavaScript test failed.
+
+## T06 - Search and Category Filtering
+
+- Command: node --test tests/grid-model.test.js tests/grid-state.test.js
+- Result: 12 tests passed, 0 failed.
+- Verified ID/name matching, whitespace trimming, case-insensitive search,
+  exact category matching, combined filters, empty filters and source-array
+  immutability; filter changes reset pagination state to page 1.
+- Browser checks: SP010 returned 1 product; SP010 with Displays returned
+  0 products and the empty state; Displays alone returned 20 products.
+- Search updates while typing; Enter is not required.
+- Commit: 375e510 (feat(grid): implement search and category filtering).

@@ -305,8 +305,8 @@ Update this section after actual work. A planned check is not completion evidenc
 | T02 | Specification complete | Contract reviewed against all six T02 items; implementation and runtime verification remain pending | d6cc8d9 |
 | T03 | Complete | node --test tests/products.test.js: 4/4 PASS; product fields, unique IDs, fixture coverage and source immutability verified | b27cd5f |
 | T04 | Complete | Main page rendered 100 products in five columns; tests/grid-render-test.html reported 8/8 PASS | 817e8aa |
-| T05 | In progress | tests/grid-state.test.js: 6/6 PASS; tests/grid-event-test.html: 6/6 PASS; UI update and focus restoration remain pending | 133490c |
-| T06 | Complete | node --test tests/grid-model.test.js tests/grid-state.test.js: 12/12 PASS; browser verified SP010 returns 1, SP010 + Displays returns 0 with empty state, and Displays alone returns 20 | Pending |
+| T05 | In progress | tests/grid-state.test.js: 6/6 PASS; tests/grid-event-test.html: 6/6 PASS; filter state updates the rendered table; focus behavior for remaining grid interactions is pending | 133490c |
+| T06 | Complete | node --test tests/grid-model.test.js tests/grid-state.test.js: 12/12 PASS; browser verified live search (SP010 returns 1), SP010 + Displays returns 0 with empty state, and Displays alone returns 20 | 375e510 |
 
 ## 9. Definition of Done
 
