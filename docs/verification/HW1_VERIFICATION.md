@@ -159,3 +159,13 @@ A separate in-branch archive is not required for this project.
 - Browser checks recorded no console errors or uncaught page errors after adding a data-URI favicon to the main and test pages. The initial run exposed a favicon 404; it was fixed and the affected pages were rerun successfully.
 - No changes were made to `mini-react.js`; the baseline engine suite was rerun as an additional regression check.
 - `git diff --check` passed. No new test library or framework was added.
+
+## T13 - Accessibility and Lighthouse Audit (In Progress)
+
+- Date: 2026-10-26.
+- Tested commit: 3cd28fc.
+- URL: http://127.0.0.1:5500/index.html.
+- Browser and version: [ghi chính xác từ trang About/Version của trình duyệt].
+- Lighthouse configuration: [ghi Mode, Device và các Categories đã chọn].
+- Lighthouse results: Accessibility 100/100; Best Practices 100/100.
+- Manual screen-reader and applicable WCAG results: to be recorded in a separate verification update.
