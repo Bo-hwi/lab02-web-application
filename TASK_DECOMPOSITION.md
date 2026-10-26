@@ -6,7 +6,7 @@
 - Branch: `hw2/audio-queue`
 - Baseline commit: `2b6135f`
 - Assignment source: Lab 02, slide 31.
-- Status: T01 baseline verified, T02 specified and T03 scheduler verified with controlled loaders; real audio and lifecycle integration remain pending.
+- Status: T01-T04 complete, including browser audio decoding; queue cancellation, playback, visualization and final integration remain pending.
 - Technology: HTML, CSS and vanilla JavaScript with native browser APIs.
 - Submission language: English.
 - HW1 and HW3 remain on separate branches.
@@ -132,12 +132,12 @@ Acceptance: concurrent execution never exceeds the configured limit.
 
 ### T04 - Implement Download and Decode
 
-- [ ] Download audio using fetch with AbortSignal.
-- [ ] Reject unsuccessful HTTP responses.
-- [ ] Decode downloaded data using AudioContext.
-- [ ] Report download and decode failures clearly.
-- [ ] Test the loader with controlled dependencies.
-- [ ] Verify real audio decoding in the browser.
+- [x] Download audio using fetch with AbortSignal.
+- [x] Reject unsuccessful HTTP responses.
+- [x] Decode downloaded data using AudioContext.
+- [x] Report download and decode failures clearly.
+- [x] Test the loader with controlled dependencies.
+- [x] Verify real audio decoding in the browser.
 
 Acceptance: valid audio becomes an AudioBuffer and failures do not stall the queue.
 
@@ -273,7 +273,8 @@ Acceptance: GitHub contains the verified source and matching documentation.
 | T01 | Complete | HW2 scope and rules recorded; baseline 2b6135f verified: Node 6/6, browser DOM 9/9 and XSS 8/8 PASS. Details in docs/verification/HW2_VERIFICATION.md. | c954fa7; scope and baseline documentation commits |
 | T02 | Specification complete | All eight contract items reviewed; FIFO, bounded concurrency, cancellation races, promise settlement, playback, FFT and ownership specified in docs/contracts/audio-queue.md. Specification review recorded in HW2_VERIFICATION.md; runtime checks pending. | Included in this commit |
 | T03 | Complete | Scheduler syntax check and 12/12 controlled-loader tests PASS: FIFO starts, limits 1/2/3, out-of-order results, failure recovery, stable IDs, exactly-once settlement and detached snapshots. Real audio and cancellation remain for T04-T05. | Included in this commit |
-| T04-T13 | Not started | Not yet recorded | Not yet recorded |
+| T04 | Complete | Loader and scheduler Node tests 23/23 PASS; browser real WAV decode, invalid audio, abort guard, queue recovery and context cleanup 5/5 PASS. See HW2_VERIFICATION.md. | Included in this commit |
+| T05-T13 | Not started | Not yet recorded | Not yet recorded |
 
 
 ## 9. Definition of Done

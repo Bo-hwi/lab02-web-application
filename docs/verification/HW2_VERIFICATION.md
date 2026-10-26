@@ -58,3 +58,26 @@ References:
 - These tests use synthetic buffers and controlled operations, not real Web Audio decoding.
 - T04 real downloads/decoding, T05 cancellation/disposal and T08 subscriptions remain pending.
 - No browser playback, memory or performance result is claimed for T03.
+
+## T04 - Download and Decode Adapter
+
+- Date: 2026-10-26.
+- Implementation: js/audio/loader.js; createAudioLoader with injected AudioContext/fetch.
+- Syntax checks: node --check js/audio/loader.js and node --check tests/audio-loader.browser.js - PASS.
+- Command: node --test tests/audio-loader.test.js tests/audio-queue.test.js.
+- Result: 23 passed, 0 failed (11 loader tests and 12 scheduler regression tests).
+- Verified signal forwarding, full-body decode, decoding phase order and context receiver binding.
+- Verified HTTP/network/body errors, synchronous/asynchronous decode errors and preserved causes.
+- Verified pre-abort, active fetch abort, cancellation during body reading and late decoding results.
+- Verified queue recovery after HTTP/decode failure and ownership of the supplied context.
+- Verified error reporting for non-Error rejection values.
+- Browser: Codex in-app browser over Live Server, http://127.0.0.1:5500/tests/audio-loader-test.html.
+- Final browser result: 5/5 checks passed after clicking Run audio loader tests.
+- Native fetch read a Blob URL containing an original generated mono PCM WAV (8000 Hz, 0.1 seconds).
+- Real decodeAudioData produced a non-silent AudioBuffer with the expected duration and channels.
+- Native HTTP fetch of this test page supplied HTML, correctly rejected at the decode stage.
+- Pre-aborted loading rejected with AbortError; the queue then recovered from invalid audio and decoded a valid WAV.
+- Browser integration maps a same-origin fixture URL to the generated Blob URL; no claim of a checked-in HTTP WAV asset.
+- The test revoked its Blob URL and closed its owned AudioContext; 5th check verified closed state.
+- The test emits no audio and does not verify playback, visualization or full queue cancellation/disposal.
+- T05-T13 and final Definition of Done remain pending.

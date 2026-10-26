@@ -3,8 +3,9 @@
 ## 1. Scope
 
 This is the T02 specification. T03 implements the scheduler, enqueue and snapshots;
-its controlled-loader tests are recorded in HW2_VERIFICATION.md. Real audio loading,
-cancellation, subscription, removal, disposal and playback remain pending.
+its controlled-loader tests are recorded in HW2_VERIFICATION.md. T04 provides the
+real download/decode adapter with browser verification. Queue cancellation,
+subscription, removal, disposal and playback remain pending.
 FIFO start order and a default concurrency limit of 2 are project decisions.
 
 ## 2. Task Identity and State
@@ -82,6 +83,10 @@ Failure does not stall subsequent tasks.
 Use fetch(url, { signal }), check response.ok, read the complete ArrayBuffer,
 then decodeAudioData. HTTP, body-reading and decoding failures reject the loader.
 Check cancellation before starting decode and after decode resolves.
+createAudioLoader({ audioContext, fetchImpl = globalThis.fetch }) returns load.
+Download/body/HTTP failures reject with AudioLoadError(stage = "download");
+decode failures use stage = "decode". The original failure is preserved as cause.
+AbortError remains distinct from download/decode failures.
 
 Pending cancellation removes eligibility to start and rejects the public promise.
 Downloading cancellation aborts the controller and rejects the public promise.
