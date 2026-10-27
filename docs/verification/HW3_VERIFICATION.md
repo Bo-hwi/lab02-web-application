@@ -93,3 +93,13 @@ The branch diff against `main` before this report contained only `TASK_DECOMPOSI
 - Browser: pressing Enter on Reserve Wireless Mouse and clicking Cancel showed success and restored available stock from 0 to 1. A checkout attempt after the hold had expired showed `No active hold` and restored stock.
 - Product data is inserted through `textContent`; the page uses semantic headings, a product list, native buttons, a focusable status region and visible focus styles.
 - This verifies the immediate browser workflow. T09 remains responsible for synchronizing visible hold status with scheduled expiry, polishing deadline announcements and guarding focus through timer-driven rerenders. No real payment or shared inventory is involved.
+
+## T09 - UI State and Deadline Integration
+
+- Date: 2026-10-28 (Asia/Ho_Chi_Minh). Branch: `hw3/flash-sale`.
+- Files: `index.html`, `js/sale/controller.js`, `js/sale/main.js`, and `tests/controller.test.js`.
+- `node --check js/sale/main.js` passed. The combined Node suite passed 38/38 with zero failures.
+- Added controller subscriptions for inventory transitions. The UI now redraws after a scheduled hold expiry without requiring a click or keyboard action. Subscription cleanup and one notification per inventory change are covered by controller tests.
+- Browser over local HTTP: reserving Midnight Earbuds changed available stock from 2 to 1 and showed the active hold ID with its remaining time. After the 30-second hold deadline passed, the UI displayed an expiry notice, restored available stock to 2 and offered Reserve again without a user action.
+- The sale timer derives its displayed value from the fixed deadline. Its `timer` role and `aria-live="off"` avoid announcing every second; changes such as hold expiry use the separate status region. The current action button or feedback region receives focus after a product-list redraw.
+- This is one local buyer and one JavaScript runtime. Full keyboard and screen-reader audits, repeated lifecycle stress, and cross-tab inventory authority are outside this T09 result.

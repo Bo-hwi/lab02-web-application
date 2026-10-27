@@ -15,6 +15,7 @@ export function createSaleController({ inventory, clock = { now: () => Date.now(
   let disposed = false;
   let timeoutHandle = null;
   let timerGeneration = 0;
+  const inventoryListeners = new Set();
   const disposedResult = Object.freeze({ ok: false, code: "DISPOSED" });
 
   function observedNow() {
@@ -48,8 +49,20 @@ export function createSaleController({ inventory, clock = { now: () => Date.now(
   }
 
   function setInventory(inventoryState) {
+    const previous = queue.inventory;
     queue = Object.freeze({ ...queue, inventory: inventoryState });
     scheduleExpiry();
+    if (previous !== inventoryState) notifyInventoryChange(inventoryState, previous);
+  }
+
+  function notifyInventoryChange(current, previous) {
+    for (const listener of [...inventoryListeners]) listener(current, previous);
+  }
+
+  function subscribeInventory(listener) {
+    if (typeof listener !== "function") throw new TypeError("listener must be a function");
+    if (!disposed) inventoryListeners.add(listener);
+    return () => inventoryListeners.delete(listener);
   }
 
   function expireDue() {
@@ -68,9 +81,11 @@ export function createSaleController({ inventory, clock = { now: () => Date.now(
 
   function processNext() {
     if (disposed) return { settlement: null, result: disposedResult };
+    const previous = queue.inventory;
     const outcome = processNextReservation(queue, observedNow());
     queue = outcome.queue;
     if (outcome.settlement) scheduleExpiry();
+    if (previous !== queue.inventory) notifyInventoryChange(queue.inventory, previous);
     return { settlement: outcome.settlement };
   }
 
@@ -93,6 +108,7 @@ export function createSaleController({ inventory, clock = { now: () => Date.now(
     if (disposed) return false;
     disposed = true;
     clearExpiryTimer();
+    inventoryListeners.clear();
     const cancelled = queue.pending.map((ticket) => Object.freeze({
       ...ticket,
       result: Object.freeze({ ok: false, code: "REQUEST_CANCELLED" }),
@@ -107,7 +123,7 @@ export function createSaleController({ inventory, clock = { now: () => Date.now(
 
   scheduleExpiry();
   return Object.freeze({
-    enqueue, processNext, cancelPending, expireDue,
+    enqueue, processNext, cancelPending, expireDue, subscribeInventory,
     checkout: (reservationId, buyerId) => applyHoldAction("CHECKOUT", reservationId, buyerId),
     cancelHold: (reservationId, buyerId) => applyHoldAction("CANCEL", reservationId, buyerId),
     dispose,

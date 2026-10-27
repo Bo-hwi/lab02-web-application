@@ -153,10 +153,10 @@ Suggested commit: feat(hw3): add flash-sale interface
 
 ### T09 - Connect UI to Clock and State Machine
 
-- [ ] Connect user actions to the tested domain model without duplicating state.
-- [ ] Keep countdown display in sync with the fixed deadline.
-- [ ] Show accurate inventory and reservation status through expiry and checkout.
-- [ ] Prevent duplicate UI handlers after repeated rendering.
+- [x] Connect user actions to the tested domain model without duplicating state.
+- [x] Keep countdown display in sync with the fixed deadline.
+- [x] Show accurate inventory and reservation status through expiry and checkout.
+- [x] Prevent duplicate UI handlers after repeated rendering.
 
 Acceptance: visible state matches domain state under ordinary and boundary workflows.
 Suggested commit: feat(hw3): connect sale UI and inventory state
@@ -231,10 +231,11 @@ Update only after actual work. Planning and suggested commit names are not compl
 | T03 | Complete | Fixed three-product fixture matches the T02 contract; node --test tests/products.test.js: 3/3 passed, 0 failed; see docs/verification/HW3_VERIFICATION.md | 3e0e510 |
 | T04 | Complete | Fixed deadline, delayed frames, zero tick, cancellation and formatting verified: node --test tests/clock.test.js 5/5 PASS; combined Node suite 14/14 PASS; see docs/verification/HW3_VERIFICATION.md | 76fdd52 |
 | T05 | Complete | Pure inventory transitions; node --test tests/inventory.test.js: 9/9 PASS; combined Node suite 23/23 PASS; see docs/verification/HW3_VERIFICATION.md | 3b2f0f3 |
-| T06 | Complete | FIFO request coordinator; node --test tests/queue.test.js: 7/7 PASS; combined Node suite 30/30 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
-| T07 | Complete | Scheduled absolute hold expiry, checkout boundary and disposal verified; node --test tests/controller.test.js: 6/6 PASS; combined Node suite 36/36 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
-| T08 | Complete | Semantic English browser page; reserve/checkout and reserve/cancel verified in a fresh browser session; sold-out action disabled; combined Node suite 36/36 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
-| T09-T13 | Not started | Not yet recorded | Not yet recorded |
+| T06 | Complete | FIFO request coordinator; node --test tests/queue.test.js: 7/7 PASS; combined Node suite 30/30 PASS; see docs/verification/HW3_VERIFICATION.md | 1a26b28 |
+| T07 | Complete | Scheduled absolute hold expiry, checkout boundary and disposal verified; node --test tests/controller.test.js: 6/6 PASS; combined Node suite 36/36 PASS; see docs/verification/HW3_VERIFICATION.md | eed5060 |
+| T08 | Complete | Semantic English browser page; reserve/checkout and reserve/cancel verified in a fresh browser session; sold-out action disabled; combined Node suite 36/36 PASS; see docs/verification/HW3_VERIFICATION.md | 23e98d8 |
+| T09 | Complete | Scheduled expiry refreshes stock and hold status without a user action; fixed-deadline countdown and focus behavior checked in the browser; combined Node suite 38/38 PASS; see docs/verification/HW3_VERIFICATION.md | feat(hw3): connect sale UI and inventory state |
+| T10-T13 | Not started | Not yet recorded | Not yet recorded |
 
 ## 8. Definition of Done
 

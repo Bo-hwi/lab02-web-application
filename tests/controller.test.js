@@ -113,3 +113,37 @@ test("dispose clears timer, settles all pending attempts and blocks late work", 
   assert.equal(env.controller.enqueue({ requestId: "new" }).result.code, "DISPOSED");
   assert.equal(getAvailableStock(env.controller.inventory, "SALE-001"), 1);
 });
+
+test("inventory subscribers see a hold expire and released stock without a user action", () => {
+  const env = setup();
+  const snapshots = [];
+  env.controller.subscribeInventory((current, previous) => {
+    snapshots.push({ before: getAvailableStock(previous, "SALE-001"),
+      after: getAvailableStock(current, "SALE-001"),
+      status: current.reservations.at(-1)?.status });
+  });
+  env.reserve();
+  const [handle] = env.callbacks.keys();
+  env.setNow(35000);
+  env.fire(handle);
+  env.controller.expireDue();
+  assert.deepEqual(snapshots, [
+    { before: 2, after: 1, status: "RESERVED" },
+    { before: 1, after: 2, status: "EXPIRED" },
+  ]);
+});
+
+test("unsubscribed and disposed listeners are never called again", () => {
+  const env = setup();
+  let notifications = 0;
+  const unsubscribe = env.controller.subscribeInventory(() => notifications++);
+  const hold = env.reserve();
+  assert.equal(notifications, 1);
+  unsubscribe();
+  env.controller.checkout(hold.reservationId, "alice");
+  assert.equal(notifications, 1);
+  env.controller.subscribeInventory(() => notifications++);
+  env.controller.dispose();
+  env.controller.expireDue();
+  assert.equal(notifications, 1);
+});
