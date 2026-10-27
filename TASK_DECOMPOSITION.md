@@ -6,7 +6,7 @@
 - Branch: hw3/flash-sale
 - Baseline: main at 2b6135f (Lab 02 Exercise 1).
 - Assignment source: Lab 02 slide 32, Homework 3.
-- Status: T01 baseline verification complete; HW3 functional implementation has not started.
+- Status: T01 baseline verification and T02 contract complete; HW3 functional implementation has not started.
 - Technology: HTML, CSS, vanilla JavaScript and native browser APIs. No external framework or library.
 - Submission language: English.
 - HW1 and HW2 remain on their own branches.
@@ -81,12 +81,12 @@ Suggested commit: test(hw3): record baseline verification
 
 ### T02 - Define Flash-Sale Contract
 
-- [ ] Choose a Vietnam flash-sale scenario, product dataset, currency display and stock values.
-- [ ] Define the authoritative inventory quantity and how simulated competing requests are ordered.
-- [ ] Define reservation states, events, guards, expiry time and checkout rules in a transition table.
-- [ ] Define how time is injected for deterministic tests and how a stopped timer is cleaned up.
-- [ ] State explicitly which concurrency guarantees are simulated locally and which require a server.
-- [ ] Define accessible countdown and status announcement behavior.
+- [x] Choose a Vietnam flash-sale scenario, product dataset, currency display and stock values.
+- [x] Define the authoritative inventory quantity and how simulated competing requests are ordered.
+- [x] Define reservation states, events, guards, expiry time and checkout rules in a transition table.
+- [x] Define how time is injected for deterministic tests and how a stopped timer is cleaned up.
+- [x] State explicitly which concurrency guarantees are simulated locally and which require a server.
+- [x] Define accessible countdown and status announcement behavior.
 
 Acceptance: every visible action, state transition and failure path has a written expected outcome.
 Suggested commit: docs(hw3): define flash-sale state machine contract
@@ -226,8 +226,9 @@ Update only after actual work. Planning and suggested commit names are not compl
 
 | Task | Status | Verification evidence | Commit |
 |---|---|---|---|
-| T01 | Complete | Node 6/6, DOM 9/9 and XSS 8/8 passed; details in docs/verification/HW3_VERIFICATION.md | This commit |
-| T02-T13 | Not started | Not yet recorded | Not yet recorded |
+| T01 | Complete | Node 6/6, DOM 9/9 and XSS 8/8 passed; details in docs/verification/HW3_VERIFICATION.md | 1b8cf02 |
+| T02 | Complete | Contract reviewed for scenario, time, inventory invariants, transition guards, simulated contention and accessibility; see docs/contracts/flash-sale.md and docs/verification/HW3_VERIFICATION.md | This commit |
+| T03-T13 | Not started | Not yet recorded | Not yet recorded |
 
 ## 8. Definition of Done
 

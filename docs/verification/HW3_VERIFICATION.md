@@ -17,4 +17,13 @@
 
 The DOM page reported semantic hierarchy, native controls, label association, ARIA live region, one mounted main element, a real Text node, and event feedback as passing. The XSS page reported inert HTML and script payloads, blocked unsafe URLs and attributes, working safe event handling, and preserved accessibility props as passing. These are the existing Exercise 1 checks; they do not verify the HW3 sale engine.
 
-The branch diff against `main` before this report contained only `TASK_DECOMPOSITION.md` and `project-rules.md`. No HW3 functional implementation was present. T02 and later tasks remain pending.
+The branch diff against `main` before this report contained only `TASK_DECOMPOSITION.md` and `project-rules.md`. No HW3 functional implementation was present at T01. T02 and later tasks were pending then.
+
+## T02 - Contract Review
+
+- Date: 2026-10-27 (Asia/Ho_Chi_Minh).
+- Source checked: Lab 02 slide 32, Homework 3. It requires a Vietnam flash-sale scenario, deadline-based millisecond countdown, optimistic inventory reservation with expiry and checkout, an AI failure audit and at least eight discrete commits. The sample timer code was not assumed correct.
+- Document reviewed: docs/contracts/flash-sale.md.
+- Review result: the contract specifies three immutable products, VND display, single-controller stock accounting, FIFO request ordering, repeated-request behavior, reservation guards and terminal states, exact expiry versus checkout policy, injected time and disposal, browser feedback and limits of local contention simulation.
+- The transition table covers reserve success, sold out, closed sale, invalid input, duplicate holds, checkout, expiry, cancellation and illegal repeated transitions. Stock conservation and nonnegative availability are explicit invariants.
+- This is a specification review. No HW3 timer, inventory engine or browser workflow has been implemented or runtime-tested yet. T03-T11 verification remains pending.
