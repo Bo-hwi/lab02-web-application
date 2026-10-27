@@ -27,3 +27,12 @@ The branch diff against `main` before this report contained only `TASK_DECOMPOSI
 - Review result: the contract specifies three immutable products, VND display, single-controller stock accounting, FIFO request ordering, repeated-request behavior, reservation guards and terminal states, exact expiry versus checkout policy, injected time and disposal, browser feedback and limits of local contention simulation.
 - The transition table covers reserve success, sold out, closed sale, invalid input, duplicate holds, checkout, expiry, cancellation and illegal repeated transitions. Stock conservation and nonnegative availability are explicit invariants.
 - This is a specification review. No HW3 timer, inventory engine or browser workflow has been implemented or runtime-tested yet. T03-T11 verification remains pending.
+
+## T03 - Deterministic Sale Fixtures
+
+- Date: 2026-10-27 (Asia/Ho_Chi_Minh).
+- Files: js/sale/products.js and tests/products.test.js.
+- Command: node --test tests/products.test.js.
+- Result: 3 tests passed, 0 failed.
+- Confirmed exact IDs, names, integer VND prices and initial stock values against the T02 contract; checked unique IDs, valid values, zero-stock coverage, frozen records and unchanged source order after rejected mutations.
+- The fixture is static and needs no network or external data. Timer, reservation and browser behavior remain pending.
