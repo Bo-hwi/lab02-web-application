@@ -136,3 +136,12 @@ References:
 - Local HTTP check on port 8765: both fixture URLs returned HTTP 200, \`audio/wav\`, 24,044 bytes. \`./audio/fixtures/missing.wav\` returned HTTP 404.
 - Browser page: the queue decoded both checked-in WAV files to Ready. Clicking Play for each displayed \`Playing audio-2\` and \`Playing audio-3\` respectively. The missing-file failure and Remove/empty-state behavior were observed in T08 before the fixtures were added.
 - Audio was not instrumentally measured from the speaker output. T10 lifecycle and memory assessment remains pending.
+
+## T10 - Lifecycle and Memory Cleanup
+
+- Date: 2026-10-27.
+- Controlled test: `node --expose-gc --test tests/audio-lifecycle.test.js` — 1 passed, 0 failed. It ran 100 enqueue/cancel/remove and enqueue/play/stop/remove cycles. All 100 test sources were stopped and disconnected once, and their `onended` handlers were cleared. The queue and application-style buffer map were empty after each cycle.
+- Repeated `visualizer.start()` maintained one scheduled animation frame. Stopping cancelled it. Final disposal disconnected the analyser and ResizeObserver, cleared the queue, and closed the caller-owned test context once. The app's listener unsubscribe and buffer deletion paths were inspected in `js/audio/main.js`.
+- Browser check: `http://127.0.0.1:8765/tests/audio-lifecycle-test.html` used a native `AudioContext` and silent `AudioBuffer`; 100 cancel/play/stop/remove cycles passed, the queue was empty and the context was closed.
+- Node heap used after explicit garbage collection: 5,520,240 bytes before and 5,914,616 bytes after the 100-cycle run. Browser `performance.memory.usedJSHeapSize` reported 11,024,787 bytes before and after, without forced garbage collection. These single-run measurements are observations only: runtime allocation, collector timing and coarse browser readings prevent a no-leak conclusion. No retained-resource or duplicate-loop defect was identified by these checks.
+- The browser check does not measure audible output or prove that an arbitrarily long session has no leak.

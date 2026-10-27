@@ -201,12 +201,12 @@ Acceptance: another person can reproduce playback and queue tests.
 
 ### T10 - Verify Lifecycle and Memory Cleanup
 
-- [ ] Repeat enqueue, cancel, play, stop and remove cycles.
-- [ ] Verify source nodes are stopped and disconnected.
-- [ ] Verify removed entries release owned buffer references.
-- [ ] Verify disposal removes listeners and cancels animation.
-- [ ] Inspect memory behavior after repeated cycles.
-- [ ] Record observations and limitations without claiming absolute proof.
+- [x] Repeat enqueue, cancel, play, stop and remove cycles.
+- [x] Verify source nodes are stopped and disconnected.
+- [x] Verify removed entries release owned buffer references.
+- [x] Verify disposal removes listeners and cancels animation.
+- [x] Inspect memory behavior after repeated cycles.
+- [x] Record observations and limitations without claiming absolute proof.
 
 Acceptance: no identified retained-resource or duplicate-loop defect remains.
 
@@ -279,7 +279,8 @@ Acceptance: GitHub contains the verified source and matching documentation.
 | T07 | Complete | Visualizer Node tests 5/5 PASS; native browser Canvas and analyser checks 7/7 PASS with a silent frame and a muted oscillator signal. The combined audio suite passed 49/49; baseline engine suite passed 6/6. See HW2_VERIFICATION.md. | Included in this commit |
 | T08 | Complete | Queue and player subscriptions drive the HTML controls and live status; 51/51 audio Node tests PASS. Browser HTTP check confirmed Enter enqueues, a failed URL reports HTTP 404, Remove restores focus to the URL field and the empty state. Local playable samples follow in T09. See HW2_VERIFICATION.md. | Included in this commit |
 | T09 | Complete | Two generated 0.75-second mono PCM WAV fixtures and CC0-1.0/source notes committed. Both served locally as audio/wav HTTP 200 at 24,044 bytes; missing fixture returned HTTP 404. Browser queue decoded both to Ready and Play announced each track. Fixture format tests 2/2 PASS. See HW2_VERIFICATION.md. | Included in this commit |
-| T10-T13 | Not started | Not yet recorded | Not yet recorded |
+| T10 | Complete | Controlled Node and native browser checks completed 100 cancel/play/stop/remove cycles; source cleanup, buffer release, one animation loop and disposal were checked. One-time heap readings are inconclusive; see HW2_VERIFICATION.md. | Included in this commit |
+| T11-T13 | Not started | Not yet recorded | Not yet recorded |
 
 
 ## 9. Definition of Done

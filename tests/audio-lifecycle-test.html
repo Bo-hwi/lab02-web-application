@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Audio lifecycle browser check</title>
+<h1>Audio lifecycle browser check</h1>
+<button id="run" type="button">Run 100 cycles</button>
+<pre id="result" aria-live="polite">Ready</pre>
+<canvas id="canvas" width="320" height="80" style="width:320px;height:80px"></canvas>
+<script type="module">
+import { AudioTaskQueue } from "../js/audio/queue.js";
+import { AudioPlayer } from "../js/audio/player.js";
+import { FrequencyVisualizer } from "../js/audio/visualizer.js";
+
+const output = document.getElementById("result");
+document.getElementById("run").addEventListener("click", async () => {
+  const button = document.getElementById("run");
+  button.disabled = true;
+  output.textContent = "Running...";
+  let context;
+  let queue;
+  let player;
+  let visualizer;
+  try {
+    const before = performance.memory?.usedJSHeapSize ?? null;
+    context = new AudioContext();
+    await context.resume();
+    const analyser = context.createAnalyser();
+    const silentBuffer = context.createBuffer(1, 128, context.sampleRate);
+    queue = new AudioTaskQueue({
+      baseUrl: document.baseURI,
+      load: async (_url, { signal, onPhase }) => {
+        if (signal.aborted) throw new DOMException("Cancelled", "AbortError");
+        onPhase("decoding");
+        return silentBuffer;
+      },
+    });
+    player = new AudioPlayer({ audioContext: context, analyserNode: analyser });
+    visualizer = new FrequencyVisualizer({
+      canvas: document.getElementById("canvas"), analyserNode: analyser,
+    });
+    for (let index = 0; index < 100; index += 1) {
+      const cancelled = queue.enqueue(`cancel-${index}.wav`);
+      const rejection = cancelled.promise.catch((error) => error);
+      queue.cancel(cancelled.id);
+      const error = await rejection;
+      if (error.name !== "AbortError") throw new Error("Cancellation did not reject");
+      queue.remove(cancelled.id);
+      const task = queue.enqueue(`play-${index}.wav`);
+      await player.play(task.id, await task.promise);
+      visualizer.start();
+      visualizer.start();
+      player.stop();
+      visualizer.stop();
+      queue.remove(task.id);
+      if (queue.getSnapshot().length) throw new Error("Queue retained entries");
+    }
+    queue.dispose();
+    player.dispose();
+    visualizer.dispose();
+    await context.close();
+    const after = performance.memory?.usedJSHeapSize ?? null;
+    output.textContent = `PASS: 100 cancel/play/stop/remove cycles; queue empty; context closed.\n` +
+      `Browser JS heap (unforced GC): ${before ?? "unavailable"} -> ${after ?? "unavailable"} bytes.\n` +
+      "A single heap comparison cannot prove absence of a leak.";
+  } catch (error) {
+    output.textContent = `FAIL: ${error.stack ?? error}`;
+    queue?.dispose();
+    player?.dispose();
+    visualizer?.dispose();
+    if (context?.state !== "closed") await context?.close();
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>
