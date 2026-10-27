@@ -6,7 +6,7 @@
 - Branch: hw3/flash-sale
 - Baseline: main at 2b6135f (Lab 02 Exercise 1).
 - Assignment source: Lab 02 slide 32, Homework 3.
-- Status: T01-T03 complete; sale timer, reservations and browser workflow have not started.
+- Status: T01-T04 complete; reservations and browser workflow have not started.
 - Technology: HTML, CSS, vanilla JavaScript and native browser APIs. No external framework or library.
 - Submission language: English.
 - HW1 and HW2 remain on their own branches.
@@ -102,11 +102,11 @@ Suggested commit: feat(hw3): add deterministic sale inventory
 
 ### T04 - Implement Fixed-Deadline Countdown
 
-- [ ] Compute remaining time from deadline minus current Date.now() on every update.
-- [ ] Clamp at zero, emit a final zero tick once and stop scheduling.
-- [ ] Support cancellation/disposal with no later callback.
-- [ ] Test delayed frames, clock boundaries and an already expired deadline.
-- [ ] Use requestAnimationFrame only for display cadence; derive time from the deadline.
+- [x] Compute remaining time from deadline minus current Date.now() on every update.
+- [x] Clamp at zero, emit a final zero tick once and stop scheduling.
+- [x] Support cancellation/disposal with no later callback.
+- [x] Test delayed frames, clock boundaries and an already expired deadline.
+- [x] Use requestAnimationFrame only for display cadence; derive time from the deadline.
 
 Acceptance: delayed callbacks do not accumulate countdown drift.
 Suggested commit: feat(hw3): implement fixed-deadline countdown
@@ -228,8 +228,9 @@ Update only after actual work. Planning and suggested commit names are not compl
 |---|---|---|---|
 | T01 | Complete | Node 6/6, DOM 9/9 and XSS 8/8 passed; details in docs/verification/HW3_VERIFICATION.md | 1b8cf02 |
 | T02 | Complete | Contract reviewed for scenario, time, inventory invariants, transition guards, simulated contention and accessibility; see docs/contracts/flash-sale.md and docs/verification/HW3_VERIFICATION.md | 05fb386 |
-| T03 | Complete | Fixed three-product fixture matches the T02 contract; node --test tests/products.test.js: 3/3 passed, 0 failed; see docs/verification/HW3_VERIFICATION.md | This commit |
-| T04-T13 | Not started | Not yet recorded | Not yet recorded |
+| T03 | Complete | Fixed three-product fixture matches the T02 contract; node --test tests/products.test.js: 3/3 passed, 0 failed; see docs/verification/HW3_VERIFICATION.md | 3e0e510 |
+| T04 | Complete | Fixed deadline, delayed frames, zero tick, cancellation and formatting verified: node --test tests/clock.test.js 5/5 PASS; combined Node suite 14/14 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
+| T05-T13 | Not started | Not yet recorded | Not yet recorded |
 
 ## 8. Definition of Done
 
