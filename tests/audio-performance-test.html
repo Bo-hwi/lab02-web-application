@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Audio visualizer performance trace</title>
+</head>
+<body>
+  <h1>Audio visualizer performance trace</h1>
+  <p>Keep this tab visible while the 120-frame sample runs.</p>
+  <button id="run" type="button">Record frame trace</button>
+  <main id="observed-area">
+    <canvas id="canvas" width="640" height="160" style="width:640px;height:160px" aria-label="Test frequency visualizer"></canvas>
+  </main>
+  <pre id="result" aria-live="polite">Ready</pre>
+  <script type="module">
+    import { FrequencyVisualizer } from "../js/audio/visualizer.js";
+
+    const button = document.getElementById("run");
+    const result = document.getElementById("result");
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      result.textContent = "Recording...";
+      let context;
+      let oscillator;
+      let oscillatorStarted = false;
+      let visualizer;
+      let observer;
+      try {
+        context = new AudioContext();
+        await context.resume();
+        const analyser = context.createAnalyser();
+        const mute = context.createGain();
+        mute.gain.value = 0;
+        oscillator = context.createOscillator();
+        oscillator.frequency.value = 440;
+        oscillator.connect(analyser);
+        analyser.connect(mute);
+        mute.connect(context.destination);
+        oscillator.start();
+        oscillatorStarted = true;
+        visualizer = new FrequencyVisualizer({
+          canvas: document.getElementById("canvas"), analyserNode: analyser,
+        });
+        visualizer.start();
+
+        const intervals = [];
+        let lastFrame;
+        let domMutations = 0;
+        observer = new MutationObserver((records) => { domMutations += records.length; });
+        observer.observe(document.getElementById("observed-area"), {
+          subtree: true, childList: true, attributes: true, characterData: true,
+        });
+        await new Promise((resolve) => {
+          function sample(timestamp) {
+            if (lastFrame !== undefined) intervals.push(timestamp - lastFrame);
+            lastFrame = timestamp;
+            if (intervals.length === 120) resolve();
+            else requestAnimationFrame(sample);
+          }
+          requestAnimationFrame(sample);
+        });
+        observer.disconnect();
+        observer = null;
+        visualizer.stop();
+        const sorted = [...intervals].sort((a, b) => a - b);
+        const elapsed = intervals.reduce((total, interval) => total + interval, 0);
+        const summary = {
+          samples: intervals.length,
+          visibility: document.visibilityState,
+          devicePixelRatio: window.devicePixelRatio,
+          elapsedMs: Number(elapsed.toFixed(2)),
+          averageFps: Number((1000 * intervals.length / elapsed).toFixed(2)),
+          medianMs: Number(sorted[Math.floor(sorted.length / 2)].toFixed(2)),
+          p95Ms: Number(sorted[Math.ceil(sorted.length * 0.95) - 1].toFixed(2)),
+          over33ms: intervals.filter((interval) => interval > 33.33).length,
+          domMutations,
+        };
+        result.textContent = "PASS: recorded active Canvas visualization with a muted oscillator.\n" +
+          JSON.stringify(summary) + "\nFrame intervals (ms):\n" +
+          JSON.stringify(intervals.map((interval) => Number(interval.toFixed(2))));
+      } catch (error) {
+        result.textContent = `FAIL: ${error.stack ?? error}`;
+      } finally {
+        observer?.disconnect();
+        visualizer?.dispose();
+        if (oscillator) {
+          if (oscillatorStarted) oscillator.stop();
+          oscillator.disconnect();
+        }
+        if (context && context.state !== "closed") await context.close();
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -212,13 +212,13 @@ Acceptance: no identified retained-resource or duplicate-loop defect remains.
 
 ### T11 - Verify Performance and Integration
 
-- [ ] Run scheduler, loader and cancellation tests.
-- [ ] Test multiple tracks and mixed success/failure results.
-- [ ] Record a browser performance trace during visualization.
-- [ ] Assess the 60fps target in the recorded environment.
-- [ ] Check for unnecessary per-frame DOM updates.
-- [ ] Check browser console errors.
-- [ ] Rerun relevant baseline tests if shared code changes.
+- [x] Run scheduler, loader and cancellation tests.
+- [x] Test multiple tracks and mixed success/failure results.
+- [x] Record a browser performance trace during visualization.
+- [x] Assess the 60fps target in the recorded environment.
+- [x] Check for unnecessary per-frame DOM updates.
+- [x] Check browser console errors.
+- [x] Rerun relevant baseline tests if shared code changes.
 
 Acceptance: functional and performance results have actual evidence.
 
@@ -280,7 +280,8 @@ Acceptance: GitHub contains the verified source and matching documentation.
 | T08 | Complete | Queue and player subscriptions drive the HTML controls and live status; 51/51 audio Node tests PASS. Browser HTTP check confirmed Enter enqueues, a failed URL reports HTTP 404, Remove restores focus to the URL field and the empty state. Local playable samples follow in T09. See HW2_VERIFICATION.md. | Included in this commit |
 | T09 | Complete | Two generated 0.75-second mono PCM WAV fixtures and CC0-1.0/source notes committed. Both served locally as audio/wav HTTP 200 at 24,044 bytes; missing fixture returned HTTP 404. Browser queue decoded both to Ready and Play announced each track. Fixture format tests 2/2 PASS. See HW2_VERIFICATION.md. | Included in this commit |
 | T10 | Complete | Controlled Node and native browser checks completed 100 cancel/play/stop/remove cycles; source cleanup, buffer release, one animation loop and disposal were checked. One-time heap readings are inconclusive; see HW2_VERIFICATION.md. | Included in this commit |
-| T11-T13 | Not started | Not yet recorded | Not yet recorded |
+| T11 | Complete | Audio Node suite 54/54 and baseline engine 6/6 PASS. Browser queue held two Ready fixtures and one expected HTTP 404 failure; both valid tracks played. A 120-interval visualizer trace measured 59.98 average fps, 16.7 ms median, 16.9 ms p95, no interval above 33.33 ms and no observed per-frame DOM mutations. No browser JavaScript errors were reported. See HW2_VERIFICATION.md and HW2_PERFORMANCE_TRACE.md for conditions and limits. | Included in this commit |
+| T12-T13 | Not started | Not yet recorded | Not yet recorded |
 
 
 ## 9. Definition of Done
