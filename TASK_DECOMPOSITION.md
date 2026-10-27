@@ -133,10 +133,10 @@ Suggested commit: feat(hw3): coordinate competing reservations
 
 ### T07 - Add Expiry and Checkout Flow
 
-- [ ] Expire holds against an absolute deadline and release stock exactly once.
-- [ ] Accept checkout only for a currently valid reservation.
-- [ ] Define and test the expiry/checkout race boundary.
-- [ ] Ensure disposal stops timers and pending work.
+- [x] Expire holds against an absolute deadline and release stock exactly once.
+- [x] Accept checkout only for a currently valid reservation.
+- [x] Define and test the expiry/checkout race boundary.
+- [x] Ensure disposal stops timers and pending work.
 
 Acceptance: checkout cannot succeed after expiry and stock is not released twice.
 Suggested commit: feat(hw3): complete reservation expiry and checkout
@@ -232,7 +232,8 @@ Update only after actual work. Planning and suggested commit names are not compl
 | T04 | Complete | Fixed deadline, delayed frames, zero tick, cancellation and formatting verified: node --test tests/clock.test.js 5/5 PASS; combined Node suite 14/14 PASS; see docs/verification/HW3_VERIFICATION.md | 76fdd52 |
 | T05 | Complete | Pure inventory transitions; node --test tests/inventory.test.js: 9/9 PASS; combined Node suite 23/23 PASS; see docs/verification/HW3_VERIFICATION.md | 3b2f0f3 |
 | T06 | Complete | FIFO request coordinator; node --test tests/queue.test.js: 7/7 PASS; combined Node suite 30/30 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
-| T07-T13 | Not started | Not yet recorded | Not yet recorded |
+| T07 | Complete | Scheduled absolute hold expiry, checkout boundary and disposal verified; node --test tests/controller.test.js: 6/6 PASS; combined Node suite 36/36 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
+| T08-T13 | Not started | Not yet recorded | Not yet recorded |
 
 ## 8. Definition of Done
 

@@ -69,3 +69,14 @@ The branch diff against `main` before this report contained only `TASK_DECOMPOSI
 - Verified pending cancellation settles as REQUEST_CANCELLED before inventory transition; duplicate pending and settled request IDs return the original ticket without another stock change.
 - Verified invalid and closed-sale results, separately observed clock time per command, expiry before a later request, and identical final states for identical inputs and times.
 - This is deterministic competition in one JavaScript runtime. It does not demonstrate parallel execution or atomic inventory across tabs or devices. T07 scheduled expiry and the browser workflow remain pending.
+
+## T07 - Hold Expiry and Checkout Controller
+
+- Date: 2026-10-27 (Asia/Ho_Chi_Minh).
+- Files: `js/sale/controller.js` and `tests/controller.test.js`.
+- Command: `node --test tests/controller.test.js`. Result: 6 passed, 0 failed.
+- Command: `node --test test-runner.js tests/products.test.js tests/clock.test.js tests/inventory.test.js tests/queue.test.js tests/controller.test.js`. Result: 36 passed, 0 failed.
+- Verified that the controller schedules the earliest absolute hold deadline and expires due holds using the observed clock, even when a timer callback runs late. A repeated expiry does not release stock again.
+- Verified checkout at one millisecond before expiry succeeds; checkout at the exact expiry timestamp rejects as `HOLD_EXPIRED` and releases stock once. An active hold can be checked out after the sale closes while it is still valid.
+- Verified cancellation and repeated terminal commands do not release stock twice. Disposal cancels the timer, settles all queued requests as `REQUEST_CANCELLED` (including malformed requests), ignores late callbacks and rejects later commands as `DISPOSED`.
+- These are deterministic checks within one JavaScript runtime. Browser UI integration, cross-tab inventory authority and real payment processing are not claimed.
