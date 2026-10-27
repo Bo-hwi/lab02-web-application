@@ -6,7 +6,7 @@
 - Branch: hw3/flash-sale
 - Baseline: main at 2b6135f (Lab 02 Exercise 1).
 - Assignment source: Lab 02 slide 32, Homework 3.
-- Status: T01-T05 complete; the request coordinator and browser workflow have not started.
+- Status: T01-T06 complete; scheduled expiry and the browser workflow have not started.
 - Technology: HTML, CSS, vanilla JavaScript and native browser APIs. No external framework or library.
 - Submission language: English.
 - HW1 and HW2 remain on their own branches.
@@ -123,10 +123,10 @@ Suggested commit: feat(hw3): implement inventory reservation machine
 
 ### T06 - Simulate Concurrent Reservation Requests
 
-- [ ] Accept competing reservation attempts and process them according to the T02 contract.
-- [ ] Ensure every attempt settles with a success or failure result.
-- [ ] Prove stock is never oversold within the simulation.
-- [ ] Test concurrent attempts, cancellation and repeated requests.
+- [x] Accept competing reservation attempts and process them according to the T02 contract.
+- [x] Ensure every attempt settles with a success or failure result.
+- [x] Prove stock is never oversold within the simulation.
+- [x] Test concurrent attempts, cancellation and repeated requests.
 
 Acceptance: the same input sequence produces the same legal final inventory state.
 Suggested commit: feat(hw3): coordinate competing reservations
@@ -230,8 +230,9 @@ Update only after actual work. Planning and suggested commit names are not compl
 | T02 | Complete | Contract reviewed for scenario, time, inventory invariants, transition guards, simulated contention and accessibility; see docs/contracts/flash-sale.md and docs/verification/HW3_VERIFICATION.md | 05fb386 |
 | T03 | Complete | Fixed three-product fixture matches the T02 contract; node --test tests/products.test.js: 3/3 passed, 0 failed; see docs/verification/HW3_VERIFICATION.md | 3e0e510 |
 | T04 | Complete | Fixed deadline, delayed frames, zero tick, cancellation and formatting verified: node --test tests/clock.test.js 5/5 PASS; combined Node suite 14/14 PASS; see docs/verification/HW3_VERIFICATION.md | 76fdd52 |
-| T05 | Complete | Pure inventory transitions; node --test tests/inventory.test.js: 9/9 PASS; combined Node suite 23/23 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
-| T06-T13 | Not started | Not yet recorded | Not yet recorded |
+| T05 | Complete | Pure inventory transitions; node --test tests/inventory.test.js: 9/9 PASS; combined Node suite 23/23 PASS; see docs/verification/HW3_VERIFICATION.md | 3b2f0f3 |
+| T06 | Complete | FIFO request coordinator; node --test tests/queue.test.js: 7/7 PASS; combined Node suite 30/30 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
+| T07-T13 | Not started | Not yet recorded | Not yet recorded |
 
 ## 8. Definition of Done
 

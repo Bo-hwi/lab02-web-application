@@ -58,3 +58,14 @@ The branch diff against `main` before this report contained only `TASK_DECOMPOSI
 - Verified that a processed request ID returns its original result, a buyer's active hold is reused without consuming stock, and an existing hold remains reusable after the sale closes. New holds are rejected after the sale deadline.
 - Verified that expiry runs before a command: at the exact hold deadline, checkout is rejected and stock is released once. A later duplicate expiry has no further stock effect.
 - This is domain-model verification only. T06 request ordering and pending cancellation, T07 scheduled expiry, and browser integration remain pending.
+
+## T06 - Ordered Reservation Requests
+
+- Date: 2026-10-27 (Asia/Ho_Chi_Minh).
+- Files: js/sale/queue.js and tests/queue.test.js.
+- Command: node --test tests/queue.test.js. Result: 7 passed, 0 failed.
+- Command: node --test test-runner.js tests/products.test.js tests/clock.test.js tests/inventory.test.js tests/queue.test.js. Result: 30 passed, 0 failed.
+- Verified FIFO sequence numbers and serial reserve transitions. Three buyers competing for two units settled RESERVED, RESERVED and SOLD_OUT, with zero available stock and no third hold.
+- Verified pending cancellation settles as REQUEST_CANCELLED before inventory transition; duplicate pending and settled request IDs return the original ticket without another stock change.
+- Verified invalid and closed-sale results, separately observed clock time per command, expiry before a later request, and identical final states for identical inputs and times.
+- This is deterministic competition in one JavaScript runtime. It does not demonstrate parallel execution or atomic inventory across tabs or devices. T07 scheduled expiry and the browser workflow remain pending.
