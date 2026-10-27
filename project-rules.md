@@ -3,7 +3,10 @@
 
 **Course:** Web Application Development — UIT Advanced Program  
 **Lab:** Modern React Architecture, Virtual DOM & State Machines  
-**Current Scope:** Exercise 1 — Mini-React VNode & Mounting Engine
+**Current Scope:** HW3 — High-Concurrency Flash-Sale E-Commerce Engine
+**Target Branch:** `hw3/flash-sale`
+**Technology:** HTML, CSS, vanilla JavaScript and native browser APIs
+**Submission Language:** English
 
 ## 1. Engineering Philosophy
 
@@ -539,23 +542,12 @@ Exercise 1 is considered complete only when:
 
 ## 11. Scope Isolation
 
-The current active scope is Exercise 1 only.
-
-Do not implement the following without explicit authorization:
-
-- Custom `useState`
-- Reactive state dispatcher
-- Hook cursor lifecycle
-- Full root Event Delegation hub
-- Virtual DOM reconciliation
-- Memoization
-- Virtual scrolling
-- Async finite state machines
-- Homework Data-Grid
-- Audio queue engine
-- Flash-sale engine
-
-These belong to later exercises or additional assignments.
+The current active scope is HW3 on `hw3/flash-sale`.
+Use the ordered work in `TASK_DECOMPOSITION.md`; HW1 and HW2 belong to their own branches.
+Exercise 1 restrictions above describe the historical baseline and do not prohibit the explicitly assigned HW3 state machine or timer.
+Do not introduce React, external frameworks, libraries, backend services or payment processing as implied requirements.
+Treat code printed on the slide as reference material to review and test, not as a verified implementation.
+Record actual results and AI findings honestly; do not claim that a Lighthouse score or a browser-only simulation proves cross-user stock consistency.
 
 ---
 
