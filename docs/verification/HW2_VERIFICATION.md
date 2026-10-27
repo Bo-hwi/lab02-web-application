@@ -153,3 +153,11 @@ References:
 - Browser integration at `http://127.0.0.1:8765/index.html`: added `tone-a.wav`, `tone-b.wav` and the intentionally missing `missing.wav` in order. The snapshot showed audio-1 and audio-2 Ready while audio-3 Failed with HTTP 404. Clicking Play on each valid entry announced `Playing audio-1` and `Playing audio-2` respectively. The browser error log query returned no JavaScript errors. The missing URL's HTTP 404 was an expected test input, not an application exception.
 - Browser visualizer trace: `http://127.0.0.1:8765/tests/audio-performance-test.html` ran the production `FrequencyVisualizer` with a muted native oscillator and analyser while the tab was visible. The recorded 120 frame intervals totalled 2,000.8 ms: average 59.98 fps, median 16.7 ms, 95th percentile 16.9 ms, and zero intervals above 33.33 ms. The observed Canvas region had zero DOM mutations during sampling. The trace and method are in `HW2_PERFORMANCE_TRACE.md`.
 - The measured result is consistent with the approximately 60 fps target in this short visible-tab run. It does not establish sustained 60 fps on other devices or under load. The standalone trace measures the same visualizer implementation used by the application; app playback was checked separately. No audible output quality measurement was made.
+
+## T12 - README and AI Audit
+
+- Date: 2026-10-27.
+- README documents Python HTTP setup, local CC0 fixture paths, controls, FIFO/concurrency/cancellation, audio graph and cleanup, Node and native browser checks, and performance limits.
+- AI_FAILURE_AUDIT.md records the observed T06 5/6 browser timing result and correction to 6/6. It explicitly leaves AI authorship unverified because the rejected draft and prompt history are unavailable.
+- The audit separates observed results from possible risks and states that finite lifecycle and performance checks do not prove zero leaks or sustained 60 fps.
+- Documentation was compared with index.html, audio modules, fixture notes and the existing T06-T11 evidence. T13 submission review remains pending.
