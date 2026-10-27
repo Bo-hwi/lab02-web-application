@@ -36,6 +36,7 @@ The branch diff against `main` before this report contained only `TASK_DECOMPOSI
 - Result: 3 tests passed, 0 failed.
 - Confirmed exact IDs, names, integer VND prices and initial stock values against the T02 contract; checked unique IDs, valid values, zero-stock coverage, frozen records and unchanged source order after rejected mutations.
 - The fixture is static and needs no network or external data. Timer, reservation and browser behavior remain pending.
+
 ## T04 - Fixed-Deadline Countdown
 
 - Date: 2026-10-27 (Asia/Ho_Chi_Minh).
@@ -46,3 +47,14 @@ The branch diff against `main` before this report contained only `TASK_DECOMPOSI
 - Verified that every tick derives remaining milliseconds from the absolute deadline, including delayed frame callbacks. The clock clamps at zero, emits the zero tick once, and schedules no later frame.
 - Verified immediate expiry, stop/dispose cancellation, ignored late callbacks and whole-second plus three-digit millisecond formatting with an injected clock and frame scheduler.
 - Browser timer display and reservation integration remain pending. Existing DOM/XSS browser pages were not rerun during this T04 review.
+
+## T05 - Inventory State Machine
+
+- Date: 2026-10-27 (Asia/Ho_Chi_Minh).
+- Files: js/sale/inventory.js and tests/inventory.test.js.
+- Command: node --test tests/inventory.test.js. Result: 9 passed, 0 failed.
+- Command: node --test test-runner.js tests/products.test.js tests/clock.test.js tests/inventory.test.js. Result: 23 passed, 0 failed.
+- Verified immutable state snapshots and derived available stock, successful reserve/checkout, cancellation, rejection of invalid or sold-out requests, owner and terminal-state guards, and nonnegative availability under repeated attempts.
+- Verified that a processed request ID returns its original result, a buyer's active hold is reused without consuming stock, and an existing hold remains reusable after the sale closes. New holds are rejected after the sale deadline.
+- Verified that expiry runs before a command: at the exact hold deadline, checkout is rejected and stock is released once. A later duplicate expiry has no further stock effect.
+- This is domain-model verification only. T06 request ordering and pending cancellation, T07 scheduled expiry, and browser integration remain pending.
