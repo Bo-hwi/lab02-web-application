@@ -6,7 +6,7 @@
 - Branch: `hw2/audio-queue`
 - Baseline commit: `2b6135f`
 - Assignment source: Lab 02, slide 31.
-- Status: T01-T12 complete; T13 submission review remains.
+- Status: T01-T13 complete; HW2 is submitted on `hw2/audio-queue`.
 - Technology: HTML, CSS and vanilla JavaScript with native browser APIs.
 - Submission language: English.
 - HW1 and HW3 remain on separate branches.
@@ -236,14 +236,14 @@ Acceptance: documentation matches the implementation and actual evidence.
 
 ### T13 - Review and Submit
 
-- [ ] Review R01-R06 and every required task.
-- [ ] Reconcile task statuses and verification records.
-- [ ] Inspect tracked files and commit history.
-- [ ] Confirm no secrets or unrelated temporary files are included.
-- [ ] Verify the README procedure from committed files.
-- [ ] Push the HW2 branch.
-- [ ] Compare local and remote commit IDs.
-- [ ] Record the submission branch URL.
+- [x] Review R01-R06 and every required task.
+- [x] Reconcile task statuses and verification records.
+- [x] Inspect tracked files and commit history.
+- [x] Confirm no secrets or unrelated temporary files are included.
+- [x] Verify the README procedure from committed files and recorded browser evidence.
+- [x] Push the HW2 branch.
+- [x] Compare local and remote commit IDs at the T12 checkpoint; repeat after this commit is pushed.
+- [x] Record the submission branch URL.
 
 Acceptance: GitHub contains the verified source and matching documentation.
 
@@ -271,28 +271,28 @@ Acceptance: GitHub contains the verified source and matching documentation.
 | Task | Status | Evidence | Commit |
 |---|---|---|---|
 | T01 | Complete | HW2 scope and rules recorded; baseline 2b6135f verified: Node 6/6, browser DOM 9/9 and XSS 8/8 PASS. Details in docs/verification/HW2_VERIFICATION.md. | c954fa7; scope and baseline documentation commits |
-| T02 | Specification complete | All eight contract items reviewed; FIFO, bounded concurrency, cancellation races, promise settlement, playback, FFT and ownership specified in docs/contracts/audio-queue.md. Specification review recorded in HW2_VERIFICATION.md; runtime checks pending. | Included in this commit |
-| T03 | Complete | Scheduler syntax check and 12/12 controlled-loader tests PASS: FIFO starts, limits 1/2/3, out-of-order results, failure recovery, stable IDs, exactly-once settlement and detached snapshots. Real audio and cancellation remain for T04-T05. | Included in this commit |
-| T04 | Complete | Loader and scheduler Node tests 23/23 PASS; browser real WAV decode, invalid audio, abort guard, queue recovery and context cleanup 5/5 PASS. See HW2_VERIFICATION.md. | Included in this commit |
-| T05 | Complete | 14 cancellation and disposal tests PASS; combined queue, loader and cancellation suite 37/37 PASS. Pending and active cancellation, fetch abort, late decode results, slot retention, removal, disposal and reentrancy verified. See HW2_VERIFICATION.md. | Included in this commit |
-| T06 | Complete | Player lifecycle tests 7/7 PASS; native browser playback checks 6/6 PASS using a user click, AudioContext and 256-bin analyser; prior queue/loader/cancellation suite 37/37 PASS. See HW2_VERIFICATION.md. | Included in this commit |
-| T07 | Complete | Visualizer Node tests 5/5 PASS; native browser Canvas and analyser checks 7/7 PASS with a silent frame and a muted oscillator signal. The combined audio suite passed 49/49; baseline engine suite passed 6/6. See HW2_VERIFICATION.md. | Included in this commit |
-| T08 | Complete | Queue and player subscriptions drive the HTML controls and live status; 51/51 audio Node tests PASS. Browser HTTP check confirmed Enter enqueues, a failed URL reports HTTP 404, Remove restores focus to the URL field and the empty state. Local playable samples follow in T09. See HW2_VERIFICATION.md. | Included in this commit |
-| T09 | Complete | Two generated 0.75-second mono PCM WAV fixtures and CC0-1.0/source notes committed. Both served locally as audio/wav HTTP 200 at 24,044 bytes; missing fixture returned HTTP 404. Browser queue decoded both to Ready and Play announced each track. Fixture format tests 2/2 PASS. See HW2_VERIFICATION.md. | Included in this commit |
-| T10 | Complete | Controlled Node and native browser checks completed 100 cancel/play/stop/remove cycles; source cleanup, buffer release, one animation loop and disposal were checked. One-time heap readings are inconclusive; see HW2_VERIFICATION.md. | Included in this commit |
-| T11 | Complete | Audio Node suite 54/54 and baseline engine 6/6 PASS. Browser queue held two Ready fixtures and one expected HTTP 404 failure; both valid tracks played. A 120-interval visualizer trace measured 59.98 average fps, 16.7 ms median, 16.9 ms p95, no interval above 33.33 ms and no observed per-frame DOM mutations. No browser JavaScript errors were reported. See HW2_VERIFICATION.md and HW2_PERFORMANCE_TRACE.md for conditions and limits. | Included in this commit |
-| T12 | Complete | README documents local setup, controls, queue and playback lifecycle, tests, fixture provenance and limits. AI_FAILURE_AUDIT.md records the observed T06 timing failure, correction, unverified attribution and remaining risks. See HW2_VERIFICATION.md. | Included in T12 documentation commit |
-| T13 | Not started | Not yet recorded | Not yet recorded |
+| T02 | Complete | All eight contract items reviewed; FIFO, bounded concurrency, cancellation races, promise settlement, playback, FFT and ownership specified in docs/contracts/audio-queue.md. The implementation was verified in T03-T11. | 3ef91ff |
+| T03 | Complete | Scheduler syntax check and 12/12 controlled-loader tests PASS: FIFO starts, limits 1/2/3, out-of-order results, failure recovery, stable IDs, exactly-once settlement and detached snapshots. Real audio and cancellation were completed in T04-T05. | 8563177 |
+| T04 | Complete | Loader and scheduler Node tests 23/23 PASS; browser real WAV decode, invalid audio, abort guard, queue recovery and context cleanup 5/5 PASS. See HW2_VERIFICATION.md. | e421772 |
+| T05 | Complete | 14 cancellation and disposal tests PASS; combined queue, loader and cancellation suite 37/37 PASS. Pending and active cancellation, fetch abort, late decode results, slot retention, removal, disposal and reentrancy verified. See HW2_VERIFICATION.md. | 47eac15 |
+| T06 | Complete | Player lifecycle tests 7/7 PASS; native browser playback checks 6/6 PASS using a user click, AudioContext and 256-bin analyser; prior queue/loader/cancellation suite 37/37 PASS. See HW2_VERIFICATION.md. | c7a5599 |
+| T07 | Complete | Visualizer Node tests 5/5 PASS; native browser Canvas and analyser checks 7/7 PASS with a silent frame and a muted oscillator signal. The combined audio suite passed 49/49; baseline engine suite passed 6/6. See HW2_VERIFICATION.md. | 1e6d9f4 |
+| T08 | Complete | Queue and player subscriptions drive the HTML controls and live status; 51/51 audio Node tests PASS. Browser HTTP check confirmed Enter enqueues, a failed URL reports HTTP 404, Remove restores focus to the URL field and the empty state. Local playable samples were added in T09. See HW2_VERIFICATION.md. | 3092efc |
+| T09 | Complete | Two generated 0.75-second mono PCM WAV fixtures and CC0-1.0/source notes committed. Both served locally as audio/wav HTTP 200 at 24,044 bytes; missing fixture returned HTTP 404. Browser queue decoded both to Ready and Play announced each track. Fixture format tests 2/2 PASS. See HW2_VERIFICATION.md. | 6a7e5f2 |
+| T10 | Complete | Controlled Node and native browser checks completed 100 cancel/play/stop/remove cycles; source cleanup, buffer release, one animation loop and disposal were checked. One-time heap readings are inconclusive; see HW2_VERIFICATION.md. | 5e364ca |
+| T11 | Complete | Audio Node suite 54/54 and baseline engine 6/6 PASS. Browser queue held two Ready fixtures and one expected HTTP 404 failure; both valid tracks played. A 120-interval visualizer trace measured 59.98 average fps, 16.7 ms median, 16.9 ms p95, no interval above 33.33 ms and no observed per-frame DOM mutations. No browser JavaScript errors were reported. See HW2_VERIFICATION.md and HW2_PERFORMANCE_TRACE.md for conditions and limits. | 8d3b874 |
+| T12 | Complete | README documents local setup, controls, queue and playback lifecycle, tests, fixture provenance and limits. AI_FAILURE_AUDIT.md records the observed T06 timing failure, correction, unverified attribution and remaining risks. See HW2_VERIFICATION.md. | c4ac1a3 |
+| T13 | Complete | Reviewed R01-R06, tracked files, commit history, documentation, tests and prior browser evidence. T12 local and remote commit IDs matched after push; submission URL recorded in HW2_VERIFICATION.md. | Final T13 documentation commit |
 
 
 ## 9. Definition of Done
 
-- [ ] R01-R06 have actual verification evidence.
-- [ ] Required tasks are complete.
-- [ ] FIFO, concurrency, failure and cancellation tests pass.
-- [ ] Browser playback and visualizer checks pass.
-- [ ] Lifecycle and performance observations are recorded.
-- [ ] README, audit and task statuses match the actual work.
-- [ ] Audio sample licenses and sources are documented.
-- [ ] Commits are meaningful and HW2 is isolated on its branch.
-- [ ] Local and remote submission commits match.
+- [x] R01-R06 have actual verification evidence, with the stated measurement limits.
+- [x] Required tasks are complete.
+- [x] FIFO, concurrency, failure and cancellation tests pass.
+- [x] Browser playback and visualizer checks pass.
+- [x] Lifecycle and performance observations are recorded.
+- [x] README, audit and task statuses match the actual work.
+- [x] Audio sample licenses and sources are documented.
+- [x] Commits are meaningful and HW2 is isolated on its branch.
+- [x] Local and remote commits matched at the T12 checkpoint; the final T13 push is verified separately.

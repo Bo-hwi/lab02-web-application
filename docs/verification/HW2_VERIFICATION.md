@@ -161,3 +161,18 @@ References:
 - AI_FAILURE_AUDIT.md records the observed T06 5/6 browser timing result and correction to 6/6. It explicitly leaves AI authorship unverified because the rejected draft and prompt history are unavailable.
 - The audit separates observed results from possible risks and states that finite lifecycle and performance checks do not prove zero leaks or sustained 60 fps.
 - Documentation was compared with index.html, audio modules, fixture notes and the existing T06-T11 evidence. T13 submission review remains pending.
+
+## T13 - Final Review and Submission
+
+- Date: 2026-10-27. Submission branch: https://github.com/Bo-hwi/lab02-web-application/tree/hw2/audio-queue.
+- R01: native AudioContext, AnalyserNode and 256 frequency bins were checked in T06-T07; application playback was checked in T09 and T11.
+- R02: FIFO starts, bounded concurrency, out-of-order completion and failure recovery were covered by T03-T05 controlled tests and the T11 combined suite.
+- R03: pending and active cancellation, AbortController use, late decode results and slot retention were covered by T05 tests.
+- R04: source stop/disconnect and owned-resource disposal were covered by T06 and T10. The 100-cycle lifecycle test cannot prove the absence of every possible leak.
+- R05: the T07 visualizer uses requestAnimationFrame and Canvas. The T11 visible-tab trace measured 59.98 average fps over 120 intervals; this is a bounded observation, not a guarantee on other devices.
+- R06: T10 repeated cycles checked cleanup and one animation loop; the T11 trace observed no per-frame DOM mutations. The single-run heap readings remain inconclusive.
+- T01-T12 evidence, checkboxes and commit history were reviewed against the actual tracked source and test files. The T12 commit is `c4ac1a3e5750c0079439d33feb7d613aa6c78e88`; after pushing it, `git ls-remote origin refs/heads/hw2/audio-queue` returned the same ID.
+- README commands were checked against committed paths. `node --test tests/audio-*.test.js` passed 54/54 and `node --test test-runner.js` passed 6/6 in T12. The same local HTTP setup served both fixtures with HTTP 200 and the intentional missing file with HTTP 404 in T09-T11. During this T13 review, the local tool environment blocked a fresh connection to `127.0.0.1`; no fresh browser playback or HTTP result is claimed.
+- `git ls-files` was reviewed: only source, tests, two generated WAV fixtures, documentation and the fixture generator were tracked. A targeted pattern scan of text files found no private-key, common GitHub token, OpenAI key or password assignment matches; this is a limited scan rather than a complete secret audit. No unrelated temporary file was identified.
+- Commit history has separate documentation, scheduler, loader, cancellation, playback, visualizer, integration, fixture, lifecycle, performance and audit commits on `hw2/audio-queue`. HW1 and HW3 are on separate branches.
+- The final T13 documentation commit must be pushed and its full local and remote IDs compared after this report is committed.
