@@ -12,10 +12,12 @@ const controller = createSaleController({
 const list = document.getElementById("product-list");
 const feedback = document.getElementById("sale-feedback");
 const countdown = document.getElementById("sale-countdown");
+const saleAnnouncement = document.getElementById("sale-announcement");
 const priceFormatter = new Intl.NumberFormat("vi-VN", {
   style: "currency", currency: "VND", maximumFractionDigits: 0,
 });
 let nextRequest = 1;
+let lastShownSeconds = null;
 
 function secondsRemaining(deadlineMs) {
   return Math.max(0, Math.ceil((deadlineMs - Date.now()) / 1000));
@@ -161,9 +163,14 @@ const timer = createDeadlineCountdown({
         hold.status === "RESERVED" && hold.expiresAtMs <= Date.now())) controller.expireDue();
       updateHoldCountdowns();
     }
+    if (lastShownSeconds !== null && totalSeconds < lastShownSeconds &&
+        totalSeconds > 0 && (totalSeconds % 10 === 0 || totalSeconds <= 5)) {
+      saleAnnouncement.textContent = "Sale ends in " + totalSeconds + " seconds.";
+    }
+    lastShownSeconds = totalSeconds;
     if (remainingMs === 0) {
       renderProducts();
-      setFeedback("The sale has ended. Existing valid holds may still be checked out.");
+      saleAnnouncement.textContent = "The sale has ended. Existing valid holds may still be checked out.";
     }
   },
 });

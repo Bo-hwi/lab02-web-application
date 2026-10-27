@@ -163,10 +163,10 @@ Suggested commit: feat(hw3): connect sale UI and inventory state
 
 ### T10 - Run Functional and Accessibility Checks
 
-- [ ] Run logic tests for timer, state machine, contention, expiry and checkout.
-- [ ] Exercise complete browser workflows including sold-out and expiry cases.
-- [ ] Test keyboard navigation, focus, status announcements and text contrast.
-- [ ] Record actual browser and test results in HW3_VERIFICATION.md.
+- [x] Run logic tests for timer, state machine, contention, expiry and checkout.
+- [x] Exercise complete browser workflows including sold-out and expiry cases.
+- [x] Test keyboard navigation, focus, status announcements and text contrast.
+- [x] Record actual browser and test results in HW3_VERIFICATION.md.
 
 Acceptance: critical paths pass; unresolved issues are recorded accurately.
 Suggested commit: test(hw3): verify sale workflows and accessibility
@@ -235,7 +235,8 @@ Update only after actual work. Planning and suggested commit names are not compl
 | T07 | Complete | Scheduled absolute hold expiry, checkout boundary and disposal verified; node --test tests/controller.test.js: 6/6 PASS; combined Node suite 36/36 PASS; see docs/verification/HW3_VERIFICATION.md | eed5060 |
 | T08 | Complete | Semantic English browser page; reserve/checkout and reserve/cancel verified in a fresh browser session; sold-out action disabled; combined Node suite 36/36 PASS; see docs/verification/HW3_VERIFICATION.md | 23e98d8 |
 | T09 | Complete | Scheduled expiry refreshes stock and hold status without a user action; fixed-deadline countdown and focus behavior checked in the browser; combined Node suite 38/38 PASS; see docs/verification/HW3_VERIFICATION.md | feat(hw3): connect sale UI and inventory state |
-| T10-T13 | Not started | Not yet recorded | Not yet recorded |
+| T10 | Complete | Node suite 38/38; browser reserve, checkout, cancel, sold-out, hold expiry and sale deadline checked; keyboard focus, timed status text and CSS contrast checked. Screen-reader speech remains untested; see docs/verification/HW3_VERIFICATION.md | test(hw3): verify sale workflows and accessibility |
+| T11-T13 | Not started | Not yet recorded | Not yet recorded |
 
 ## 8. Definition of Done
 
