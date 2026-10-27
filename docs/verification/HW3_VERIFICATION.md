@@ -80,3 +80,16 @@ The branch diff against `main` before this report contained only `TASK_DECOMPOSI
 - Verified checkout at one millisecond before expiry succeeds; checkout at the exact expiry timestamp rejects as `HOLD_EXPIRED` and releases stock once. An active hold can be checked out after the sale closes while it is still valid.
 - Verified cancellation and repeated terminal commands do not release stock twice. Disposal cancels the timer, settles all queued requests as `REQUEST_CANCELLED` (including malformed requests), ignores late callbacks and rejects later commands as `DISPOSED`.
 - These are deterministic checks within one JavaScript runtime. Browser UI integration, cross-tab inventory authority and real payment processing are not claimed.
+
+
+## T08 - Semantic Browser Interface
+
+- Date: 2026-10-28 (Asia/Ho_Chi_Minh). Branch: `hw3/flash-sale`.
+- Files: `index.html`, `css/sale.css`, `js/sale/main.js`.
+- `node --check js/sale/main.js` passed.
+- `node --test test-runner.js tests/products.test.js tests/clock.test.js tests/inventory.test.js tests/queue.test.js tests/controller.test.js`: 36 passed, 0 failed.
+- Browser: loaded `index.html` from a local HTTP server. It displayed all three products with VND prices, available stock and a running sale countdown. The zero-stock product had a disabled Reserve button.
+- Browser: Reserve Midnight Earbuds showed success and reduced available stock from 2 to 1. Pressing Enter on Checkout completed the simulated checkout; available stock remained 1.
+- Browser: pressing Enter on Reserve Wireless Mouse and clicking Cancel showed success and restored available stock from 0 to 1. A checkout attempt after the hold had expired showed `No active hold` and restored stock.
+- Product data is inserted through `textContent`; the page uses semantic headings, a product list, native buttons, a focusable status region and visible focus styles.
+- This verifies the immediate browser workflow. T09 remains responsible for synchronizing visible hold status with scheduled expiry, polishing deadline announcements and guarding focus through timer-driven rerenders. No real payment or shared inventory is involved.

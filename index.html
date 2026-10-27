@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>11.11 Flash Sale</title>
+  <link rel="stylesheet" href="./css/sale.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Vietnam 11.11 demo</p>
+      <h1>11.11 Flash Sale</h1>
+      <p>Reserve a product while the sale is open, then check out before your hold expires.</p>
+      <p class="timer-label">Sale ends in <output id="sale-countdown" aria-label="Time remaining">05:00</output></p>
+    </header>
+
+    <section aria-labelledby="products-heading">
+      <h2 id="products-heading">Products</h2>
+      <p>Prices are in Vietnamese đồng. This demo uses one local buyer and makes no payment.</p>
+      <div id="sale-feedback" class="feedback" role="status" aria-live="polite" tabindex="-1">Choose a product to reserve.</div>
+      <ul id="product-list" class="products"></ul>
+    </section>
+  </main>
+  <script type="module" src="./js/sale/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #17243c; background: #f3f6fb; }
+body { margin: 0; }
+.page { max-width: 70rem; margin: 0 auto; padding: 1.5rem; }
+.hero, .product, .feedback { background: #fff; border: 1px solid #b9c7da; border-radius: .75rem; }
+.hero { padding: 1.5rem; }
+.eyebrow { color: #8d2538; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+h1 { margin: .25rem 0; font-size: clamp(2rem, 5vw, 3rem); }
+.timer-label { font-weight: 700; }
+#sale-countdown { display: inline-block; min-width: 5ch; font-variant-numeric: tabular-nums; color: #8d2538; font-size: 1.75rem; }
+.feedback { padding: 1rem; margin: 1rem 0; border-left: .4rem solid #3557a0; }
+.feedback[data-kind="error"] { border-left-color: #a82424; color: #751919; }
+.feedback[data-kind="success"] { border-left-color: #157347; }
+.products { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 1rem; list-style: none; padding: 0; }
+.product { padding: 1.25rem; }
+.product h3 { margin-top: 0; }
+.price { font-size: 1.3rem; font-weight: 700; }
+.actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+button { font: inherit; padding: .55rem .9rem; border-radius: .4rem; border: 1px solid #264a88; color: #fff; background: #264a88; cursor: pointer; }
+button.secondary { background: #fff; color: #17243c; }
+button:disabled { border-color: #a4adbb; background: #e7eaf0; color: #4d5667; cursor: not-allowed; }
+:focus-visible, .feedback:focus { outline: 3px solid #d45900; outline-offset: 3px; }

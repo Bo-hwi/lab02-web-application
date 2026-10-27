@@ -143,10 +143,10 @@ Suggested commit: feat(hw3): complete reservation expiry and checkout
 
 ### T08 - Build Semantic Browser Interface
 
-- [ ] Create an English-language sale page with product, price, stock and countdown.
-- [ ] Provide controls to reserve and check out, plus clear error and success states.
-- [ ] Use semantic HTML, visible focus and keyboard-operable controls.
-- [ ] Render user-visible data as text, never executable HTML.
+- [x] Create an English-language sale page with product, price, stock and countdown.
+- [x] Provide controls to reserve and check out, plus clear error and success states.
+- [x] Use semantic HTML, visible focus and keyboard-operable controls.
+- [x] Render user-visible data as text, never executable HTML.
 
 Acceptance: the core sale workflow works in a browser without a mouse.
 Suggested commit: feat(hw3): add flash-sale interface
@@ -233,7 +233,8 @@ Update only after actual work. Planning and suggested commit names are not compl
 | T05 | Complete | Pure inventory transitions; node --test tests/inventory.test.js: 9/9 PASS; combined Node suite 23/23 PASS; see docs/verification/HW3_VERIFICATION.md | 3b2f0f3 |
 | T06 | Complete | FIFO request coordinator; node --test tests/queue.test.js: 7/7 PASS; combined Node suite 30/30 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
 | T07 | Complete | Scheduled absolute hold expiry, checkout boundary and disposal verified; node --test tests/controller.test.js: 6/6 PASS; combined Node suite 36/36 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
-| T08-T13 | Not started | Not yet recorded | Not yet recorded |
+| T08 | Complete | Semantic English browser page; reserve/checkout and reserve/cancel verified in a fresh browser session; sold-out action disabled; combined Node suite 36/36 PASS; see docs/verification/HW3_VERIFICATION.md | This commit |
+| T09-T13 | Not started | Not yet recorded | Not yet recorded |
 
 ## 8. Definition of Done
 
