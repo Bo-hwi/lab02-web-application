@@ -6,7 +6,7 @@
 - Branch: hw3/flash-sale
 - Baseline: main at 2b6135f (Lab 02 Exercise 1).
 - Assignment source: Lab 02 slide 32, Homework 3.
-- Status: planning only; no HW3 implementation or verification has been completed.
+- Status: T01 baseline verification complete; HW3 functional implementation has not started.
 - Technology: HTML, CSS, vanilla JavaScript and native browser APIs. No external framework or library.
 - Submission language: English.
 - HW1 and HW2 remain on their own branches.
@@ -72,9 +72,9 @@ Do not mark a check complete solely because code exists or a slide example appea
 ### T01 - Establish Branch and Baseline
 
 - [x] Start hw3/flash-sale from the clean, up-to-date main branch.
-- [ ] Run and record the existing Mini-React Node and browser checks.
-- [ ] Record baseline revision, browser and test results in HW3_VERIFICATION.md.
-- [ ] Confirm the branch remains limited to HW3 work.
+- [x] Run and record the existing Mini-React Node and browser checks.
+- [x] Record baseline revision, browser and test results in HW3_VERIFICATION.md.
+- [x] Confirm the branch remains limited to HW3 work.
 
 Acceptance: baseline checks are recorded truthfully; failures are explained before implementation.
 Suggested commit: test(hw3): record baseline verification
@@ -226,7 +226,7 @@ Update only after actual work. Planning and suggested commit names are not compl
 
 | Task | Status | Verification evidence | Commit |
 |---|---|---|---|
-| T01 | In progress | Branch created from main 2b6135f; baseline tests pending | Not yet recorded |
+| T01 | Complete | Node 6/6, DOM 9/9 and XSS 8/8 passed; details in docs/verification/HW3_VERIFICATION.md | This commit |
 | T02-T13 | Not started | Not yet recorded | Not yet recorded |
 
 ## 8. Definition of Done
