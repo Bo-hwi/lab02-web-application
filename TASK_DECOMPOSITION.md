@@ -183,11 +183,11 @@ Suggested commit: test(hw3): verify lifecycle and contention recovery
 
 ### T12 - Document AI Failures and Run Instructions
 
-- [ ] Write README.md with setup, controls, architecture and simulation limits.
-- [ ] Document at least three real AI failure observations in AI_FAILURE_AUDIT.md.
-- [ ] For each flaw record the symptom, affected code, reproduction, fix and retest.
-- [ ] Distinguish AI-caused mistakes from defects whose authorship is unknown.
-- [ ] Recheck that documentation matches the committed code.
+- [x] Write README.md with setup, controls, architecture and simulation limits.
+- [x] Document at least three observed gaps from AI-assisted intermediate revisions in AI_FAILURE_AUDIT.md.
+- [x] For each gap record the symptom, affected code, reproduction, fix and retest.
+- [x] Distinguish observed gaps from defects whose AI authorship cannot be established.
+- [x] Recheck that documentation matches the committed code.
 
 Acceptance: another student can run the branch and audit claims can be reproduced.
 Suggested commit: docs(hw3): document operation and verified AI audit
@@ -237,7 +237,8 @@ Update only after actual work. Planning and suggested commit names are not compl
 | T09 | Complete | Scheduled expiry refreshes stock and hold status without a user action; fixed-deadline countdown and focus behavior checked in the browser; combined Node suite 38/38 PASS; see docs/verification/HW3_VERIFICATION.md | feat(hw3): connect sale UI and inventory state |
 | T10 | Complete | Node suite 38/38; browser reserve, checkout, cancel, sold-out, hold expiry and sale deadline checked; keyboard focus, timed status text and CSS contrast checked. Screen-reader speech remains untested; see docs/verification/HW3_VERIFICATION.md | test(hw3): verify sale workflows and accessibility |
 | T11 | Complete | Reset restores the five-minute deadline, stock and holds in the browser; 20 simulated sale cycles leave zero pending frames/timeouts after disposal; late callbacks are inert; 12 competing requests do not oversell. `node --test tests/*.test.js`: 34/34 PASS; baseline suite: 6/6 PASS. See docs/verification/HW3_VERIFICATION.md. | 0fdf950; test(hw3): verify lifecycle and contention recovery |
-| T12-T13 | Not started | Not yet recorded | Not yet recorded |
+| T12 | Complete | README run steps and limits checked against source; three historical gaps traced through Git and earlier browser retests; current Node suite 34/34 and baseline 6/6 PASS. See AI_FAILURE_AUDIT.md and docs/verification/HW3_VERIFICATION.md. | Included in this commit |
+| T13 | Not started | Final branch review and submission remain pending | Not yet recorded |
 
 ## 8. Definition of Done
 

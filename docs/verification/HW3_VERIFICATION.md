@@ -123,3 +123,12 @@ The branch diff against `main` before this report contained only `TASK_DECOMPOSI
 - A simulated FIFO batch of 12 requests for two Midnight Earbuds units produced two reservations and no negative availability. Pending cancellation, checkout, hold cancellation, a replacement reservation, expiry and a rejected late checkout settled without duplicate stock release.
 - Browser over local HTTP: reserving Midnight Earbuds reduced available stock from 2 to 1 and displayed an active hold. Reset returned the countdown to `05:00`, cleared the hold and restored stock to 2. Two further Reset clicks kept the page responsive; the browser reported no JavaScript errors.
 - Limits: simulated contention occurs within one JavaScript runtime. Cross-tab authority, measured long-run memory/CPU use and actual screen-reader speech were not tested.
+
+## T12 - Run Guide and AI-Assisted Failure Audit
+
+- Date: 2026-10-28 (Asia/Ho_Chi_Minh). Branch: `hw3/flash-sale`.
+- Added `README.md` with local HTTP setup, controls, architecture, test commands and simulation limits. Its paths, controls and timings were checked against the current source and contract.
+- Added `AI_FAILURE_AUDIT.md` with three observed gaps in earlier AI-assisted revisions: stale UI after scheduled hold expiry at `23e98d8`, absent timer milestone announcements at `72539d7`, and no Reset control at `d4c86a1`. Each finding names the affected files, reproduction, corrective commit and recorded retest. A separate back-forward cache risk is clearly marked as a source-code inference without a browser retest.
+- Historical source checks used `git show` to compare the affected revisions with fixes `72539d7`, `d4c86a1` and `0fdf950`. Git does not establish AI authorship of individual lines, so the audit does not claim it.
+- Current regression: `node --test tests/*.test.js` passed 34/34; `node --test test-runner.js` passed 6/6. Earlier browser retests are documented under T09-T11 above. T12 changed documentation only.
+- Actual screen-reader speech, browser back-forward cache restoration and cross-tab inventory were not separately verified by T12.
