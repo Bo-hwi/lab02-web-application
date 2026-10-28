@@ -149,5 +149,15 @@ The branch diff against `main` before this report contained only `TASK_DECOMPOSI
 | R05: three AI-failure findings | `AI_FAILURE_AUDIT.md` traces three observable gaps in earlier AI-assisted revisions to source snapshots, fixes and recorded retests. | Git cannot prove AI authorship of individual lines. The final-five-second announcement branch and back-forward cache restoration were not separately observed in a browser. |
 | R06: discrete Conventional Commits | Fourteen qualifying commits preceded T13, checked from `main..HEAD` by count and subject. | The T13 review adds a further documentation commit. |
 
-- Accessibility evidence includes keyboard Tab/Enter interaction, browser accessibility-tree inspection, status-region behavior and CSS contrast calculations in T10. Actual screen-reader speech and full WCAG 2.2 AA conformance were not verified.
+- Accessibility evidence at T13 included keyboard Tab/Enter interaction, browser accessibility-tree inspection, status-region behavior and CSS contrast calculations in T10. Actual screen-reader speech was still pending at T13; a later focused speech check is recorded below. Full WCAG 2.2 AA conformance was not verified.
 - Submission URL: https://github.com/Bo-hwi/lab02-web-application/tree/hw3/flash-sale. After pushing this T13 review, compare full local `git rev-parse HEAD` and remote `git ls-remote origin refs/heads/hw3/flash-sale` IDs; the final result is reported with the submission handoff.
+
+## Follow-up - Chrome and Narrator Speech Check
+
+- Date: 2026-10-28 (Asia/Ho_Chi_Minh). Tester: student using Chrome and Windows Narrator; results reported in chat. No audio recording or verbatim speech transcript was captured.
+- The sold-out product action was confirmed disabled.
+- After Reserve, Narrator audibly read the resulting status message.
+- After Checkout or Cancel hold, Narrator audibly read the resulting status message.
+- After an active hold expired, Narrator audibly read the expiry notification.
+- The countdown did not repeatedly speak every second during the check.
+- This is a focused speech check of the reported interactions. Exact spoken wording, every product name, full navigation flow and full WCAG 2.2 AA conformance were not assessed by this follow-up.
