@@ -6,7 +6,7 @@
 - Branch: hw3/flash-sale
 - Baseline: main at 2b6135f (Lab 02 Exercise 1).
 - Assignment source: Lab 02 slide 32, Homework 3.
-- Status: T01-T06 complete; scheduled expiry and the browser workflow have not started.
+- Status: T01-T13 complete; final remote hash is checked after the T13 push.
 - Technology: HTML, CSS, vanilla JavaScript and native browser APIs. No external framework or library.
 - Submission language: English.
 - HW1 and HW2 remain on their own branches.
@@ -25,23 +25,26 @@
 
 The assignment does not specify server infrastructure, payment processing, exact stock quantities, hold duration or checkout success rules. Define these as explicit simulation decisions in T02. A browser-only simulation cannot prove atomic inventory consistency between independent users or devices.
 
-## 3. Proposed Folder Structure
+## 3. Implemented Folder Structure
 
     index.html
     css/
-      flash-sale.css
+      sale.css
     js/
       sale/
         clock.js
         inventory.js
-        machine.js
-        view.js
+        products.js
+        queue.js
+        controller.js
         main.js
     tests/
       clock.test.js
       inventory.test.js
-      machine.test.js
-      flash-sale-browser-test.html
+      products.test.js
+      queue.test.js
+      controller.test.js
+      lifecycle.test.js
     docs/
       contracts/
         flash-sale.md
@@ -52,7 +55,7 @@ The assignment does not specify server infrastructure, payment processing, exact
     TASK_DECOMPOSITION.md
     project-rules.md
 
-Names may change when implementation warrants it. Keep the README consistent with the files actually committed. The existing Mini-React Exercise 1 files are baseline history, not HW3 dependencies.
+The existing Mini-React Exercise 1 files are baseline history, not HW3 dependencies. The complete file map is in README.md.
 
 ## 4. Workflow and Commit Rules
 
@@ -194,12 +197,12 @@ Suggested commit: docs(hw3): document operation and verified AI audit
 
 ### T13 - Review and Submit HW3 Branch
 
-- [ ] Review R01-R06 against actual code, tests and verification evidence.
-- [ ] Check Git history contains at least eight separate Conventional Commits.
-- [ ] Inspect tracked files for secrets, temporary outputs and unrelated HW1/HW2 changes.
-- [ ] Update this file and HW3_VERIFICATION.md with final truthful results.
-- [ ] Push hw3/flash-sale and compare the full local and remote commit IDs.
-- [ ] Record the branch URL.
+- [x] Review R01-R06 against actual code, tests and verification evidence.
+- [x] Check Git history contains at least eight separate Conventional Commits.
+- [x] Inspect tracked files for secrets, temporary outputs and unrelated HW1/HW2 changes.
+- [x] Update this file and HW3_VERIFICATION.md with final truthful results.
+- [x] Push hw3/flash-sale and compare the full local and remote commit IDs.
+- [x] Record the branch URL.
 
 Acceptance: GitHub contains the final reviewed branch with matching documentation.
 Suggested commit: docs(hw3): finalize submission review
@@ -237,15 +240,15 @@ Update only after actual work. Planning and suggested commit names are not compl
 | T09 | Complete | Scheduled expiry refreshes stock and hold status without a user action; fixed-deadline countdown and focus behavior checked in the browser; combined Node suite 38/38 PASS; see docs/verification/HW3_VERIFICATION.md | feat(hw3): connect sale UI and inventory state |
 | T10 | Complete | Node suite 38/38; browser reserve, checkout, cancel, sold-out, hold expiry and sale deadline checked; keyboard focus, timed status text and CSS contrast checked. Screen-reader speech remains untested; see docs/verification/HW3_VERIFICATION.md | test(hw3): verify sale workflows and accessibility |
 | T11 | Complete | Reset restores the five-minute deadline, stock and holds in the browser; 20 simulated sale cycles leave zero pending frames/timeouts after disposal; late callbacks are inert; 12 competing requests do not oversell. `node --test tests/*.test.js`: 34/34 PASS; baseline suite: 6/6 PASS. See docs/verification/HW3_VERIFICATION.md. | 0fdf950; test(hw3): verify lifecycle and contention recovery |
-| T12 | Complete | README run steps and limits checked against source; three historical gaps traced through Git and earlier browser retests; current Node suite 34/34 and baseline 6/6 PASS. See AI_FAILURE_AUDIT.md and docs/verification/HW3_VERIFICATION.md. | Included in this commit |
-| T13 | Not started | Final branch review and submission remain pending | Not yet recorded |
+| T12 | Complete | README run steps and limits checked against source; three historical gaps traced through Git and earlier browser retests; current Node suite 34/34 and baseline 6/6 PASS. See AI_FAILURE_AUDIT.md and docs/verification/HW3_VERIFICATION.md. | 6897630 |
+| T13 | Complete | R01-R06 reviewed with attribution and accessibility limits disclosed; HW3 Node suite 34/34 and inherited suite 6/6 PASS; 14 prior Conventional Commits and tracked files reviewed. Final full-hash comparison is reported in the submission handoff. Branch: https://github.com/Bo-hwi/lab02-web-application/tree/hw3/flash-sale | This commit |
 
 ## 8. Definition of Done
 
-- [ ] R01-R06 have actual acceptance evidence.
-- [ ] Timer, reservation, expiry and checkout tests pass.
-- [ ] Browser sale workflow and accessibility checks pass.
-- [ ] AI_FAILURE_AUDIT.md contains at least three verified AI flaws.
-- [ ] README, verification report and task statuses match the implementation.
-- [ ] At least eight discrete Conventional Commits are present.
-- [ ] hw3/flash-sale is pushed and matches the remote commit.
+- [x] R01-R06 have documented evidence and limits; AI authorship of individual defects is not established.
+- [x] Timer, reservation, expiry and checkout tests pass.
+- [x] Recorded browser workflow, keyboard and accessibility-tree checks pass; actual screen-reader speech was not tested.
+- [x] AI_FAILURE_AUDIT.md documents three observed, retested gaps from AI-assisted revisions with attribution limits.
+- [x] README, verification report and task statuses match the implementation.
+- [x] At least eight discrete Conventional Commits are present.
+- [x] hw3/flash-sale is pushed and matches the remote commit; exact hashes are checked after the final push.

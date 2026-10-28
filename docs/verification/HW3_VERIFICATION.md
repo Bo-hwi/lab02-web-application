@@ -132,3 +132,22 @@ The branch diff against `main` before this report contained only `TASK_DECOMPOSI
 - Historical source checks used `git show` to compare the affected revisions with fixes `72539d7`, `d4c86a1` and `0fdf950`. Git does not establish AI authorship of individual lines, so the audit does not claim it.
 - Current regression: `node --test tests/*.test.js` passed 34/34; `node --test test-runner.js` passed 6/6. Earlier browser retests are documented under T09-T11 above. T12 changed documentation only.
 - Actual screen-reader speech, browser back-forward cache restoration and cross-tab inventory were not separately verified by T12.
+
+## T13 - Final Branch Review and Submission
+
+- Date: 2026-10-28 (Asia/Ho_Chi_Minh). Branch: `hw3/flash-sale`.
+- Reviewed the source, task checklist, contract, README, AI audit and the recorded browser observations. Final `node --test tests/*.test.js`: 34 passed, 0 failed. Final `node --test test-runner.js`: 6 passed, 0 failed. `git diff --check` passed.
+- Before this review commit, `git rev-list --count main..HEAD` returned 14 separate HW3 commits. All 14 subjects matched the Conventional Commit form. The sequence separates planning, baseline testing, data, clock, inventory, queue, controller, interface, integration, accessibility, lifecycle and documentation work.
+- `git diff --name-status main...HEAD` showed only HW3 files and the branch-specific `project-rules.md` update. A tracked-filename scan found no `.env`, private-key, log, build, coverage or temporary artifacts. A simple Git content scan found no private-key blocks or GitHub token prefixes. These scans do not prove that every possible secret pattern is absent.
+
+| Requirement | Final evidence | Limit |
+|---|---|---|
+| R01: Vietnam flash-sale simulation | `index.html`, `js/sale/main.js` and the T08-T11 browser observations show the three-product VND sale, reservation, checkout, cancellation, sold-out state and Reset. | One local browser runtime; no payment or shared stock server. |
+| R02: fixed-deadline millisecond countdown | `js/sale/clock.js` derives remaining time from the deadline and the observed clock; five clock tests cover delayed frames, zero, cancellation and formatting. | Browser scheduling controls display cadence. |
+| R03: inventory finite state machine | `docs/contracts/flash-sale.md`, `js/sale/inventory.js` and nine inventory tests cover legal transitions, guards, idempotency and nonnegative stock. | Contention is serialized only inside this runtime. |
+| R04: expiry and checkout | Controller, queue and lifecycle tests cover scheduled expiry, the exact deadline boundary, cancelled requests and cleanup; T09-T11 recorded browser expiry and checkout behavior. | No real order or payment service. |
+| R05: three AI-failure findings | `AI_FAILURE_AUDIT.md` traces three observable gaps in earlier AI-assisted revisions to source snapshots, fixes and recorded retests. | Git cannot prove AI authorship of individual lines. The final-five-second announcement branch and back-forward cache restoration were not separately observed in a browser. |
+| R06: discrete Conventional Commits | Fourteen qualifying commits preceded T13, checked from `main..HEAD` by count and subject. | The T13 review adds a further documentation commit. |
+
+- Accessibility evidence includes keyboard Tab/Enter interaction, browser accessibility-tree inspection, status-region behavior and CSS contrast calculations in T10. Actual screen-reader speech and full WCAG 2.2 AA conformance were not verified.
+- Submission URL: https://github.com/Bo-hwi/lab02-web-application/tree/hw3/flash-sale. After pushing this T13 review, compare full local `git rev-parse HEAD` and remote `git ls-remote origin refs/heads/hw3/flash-sale` IDs; the final result is reported with the submission handoff.
