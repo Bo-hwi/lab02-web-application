@@ -173,10 +173,10 @@ Suggested commit: test(hw3): verify sale workflows and accessibility
 
 ### T11 - Audit Lifecycle and Recovery
 
-- [ ] Repeatedly start, finish and reset the sale without duplicate timers or listeners.
-- [ ] Check cleanup after cancellation, checkout, expiry and page disposal.
-- [ ] Test delayed callbacks and simulated competing requests under stress.
-- [ ] Record performance and resource observations without unmeasured claims.
+- [x] Repeatedly start, finish and reset the sale without duplicate timers or listeners.
+- [x] Check cleanup after cancellation, checkout, expiry and page disposal.
+- [x] Test delayed callbacks and simulated competing requests under stress.
+- [x] Record performance and resource observations without unmeasured claims.
 
 Acceptance: no observed stale callbacks, negative stock or duplicate settlement.
 Suggested commit: test(hw3): verify lifecycle and contention recovery
@@ -236,7 +236,8 @@ Update only after actual work. Planning and suggested commit names are not compl
 | T08 | Complete | Semantic English browser page; reserve/checkout and reserve/cancel verified in a fresh browser session; sold-out action disabled; combined Node suite 36/36 PASS; see docs/verification/HW3_VERIFICATION.md | 23e98d8 |
 | T09 | Complete | Scheduled expiry refreshes stock and hold status without a user action; fixed-deadline countdown and focus behavior checked in the browser; combined Node suite 38/38 PASS; see docs/verification/HW3_VERIFICATION.md | feat(hw3): connect sale UI and inventory state |
 | T10 | Complete | Node suite 38/38; browser reserve, checkout, cancel, sold-out, hold expiry and sale deadline checked; keyboard focus, timed status text and CSS contrast checked. Screen-reader speech remains untested; see docs/verification/HW3_VERIFICATION.md | test(hw3): verify sale workflows and accessibility |
-| T11-T13 | Not started | Not yet recorded | Not yet recorded |
+| T11 | Complete | Reset restores the five-minute deadline, stock and holds in the browser; 20 simulated sale cycles leave zero pending frames/timeouts after disposal; late callbacks are inert; 12 competing requests do not oversell. `node --test tests/*.test.js`: 34/34 PASS; baseline suite: 6/6 PASS. See docs/verification/HW3_VERIFICATION.md. | 0fdf950; test(hw3): verify lifecycle and contention recovery |
+| T12-T13 | Not started | Not yet recorded | Not yet recorded |
 
 ## 8. Definition of Done
 
