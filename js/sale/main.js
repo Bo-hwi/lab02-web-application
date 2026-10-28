@@ -5,14 +5,15 @@ import { createDeadlineCountdown } from "./clock.js";
 
 const BUYER_ID = "local-buyer";
 const SALE_DURATION_MS = 5 * 60 * 1000;
-const saleEndsAtMs = Date.now() + SALE_DURATION_MS;
-const controller = createSaleController({
-  inventory: createInventoryState({ products: flashSaleProducts, saleEndsAtMs }),
-});
+let saleEndsAtMs;
+let controller;
+let timer;
+let unsubscribeInventory;
 const list = document.getElementById("product-list");
 const feedback = document.getElementById("sale-feedback");
 const countdown = document.getElementById("sale-countdown");
 const saleAnnouncement = document.getElementById("sale-announcement");
+const resetButton = document.getElementById("reset-sale");
 const priceFormatter = new Intl.NumberFormat("vi-VN", {
   style: "currency", currency: "VND", maximumFractionDigits: 0,
 });
@@ -111,6 +112,7 @@ const messages = {
 };
 
 function handleAction(action, productId) {
+  if (!controller) return;
   const product = flashSaleProducts.find((item) => item.id === productId);
   if (!product) return;
   let result;
@@ -136,13 +138,13 @@ function handleAction(action, productId) {
     result.ok ? "success" : "error", true);
 }
 
-const unsubscribeInventory = controller.subscribeInventory((current, previous) => {
+function onInventoryChange(current, previous) {
   renderProducts();
   const expired = current.reservations.find((hold) => hold.buyerId === BUYER_ID &&
     hold.status === "EXPIRED" && previous.reservations.some((prior) =>
       prior.id === hold.id && prior.status === "RESERVED"));
   if (expired) setFeedback("Your hold " + expired.id + " expired. Stock is available again.", "error");
-});
+}
 
 list.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-action]");
@@ -150,35 +152,59 @@ list.addEventListener("click", (event) => {
   handleAction(button.dataset.action, button.dataset.productId);
 });
 
-const timer = createDeadlineCountdown({
-  deadlineMs: saleEndsAtMs,
-  onTick(remainingMs) {
-    const totalSeconds = Math.ceil(remainingMs / 1000);
-    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
-    const seconds = String(totalSeconds % 60).padStart(2, "0");
-    const display = minutes + ":" + seconds;
-    if (countdown.textContent !== display) {
-      countdown.textContent = display;
-      if (controller.inventory.reservations.some((hold) =>
-        hold.status === "RESERVED" && hold.expiresAtMs <= Date.now())) controller.expireDue();
-      updateHoldCountdowns();
-    }
-    if (lastShownSeconds !== null && totalSeconds < lastShownSeconds &&
-        totalSeconds > 0 && (totalSeconds % 10 === 0 || totalSeconds <= 5)) {
-      saleAnnouncement.textContent = "Sale ends in " + totalSeconds + " seconds.";
-    }
-    lastShownSeconds = totalSeconds;
-    if (remainingMs === 0) {
-      renderProducts();
-      saleAnnouncement.textContent = "The sale has ended. Existing valid holds may still be checked out.";
-    }
-  },
-});
+function disposeSession() {
+  timer?.dispose();
+  unsubscribeInventory?.();
+  controller?.dispose();
+  timer = null;
+  unsubscribeInventory = null;
+  controller = null;
+}
 
-renderProducts();
-timer.start();
-window.addEventListener("pagehide", () => {
-  timer.dispose();
-  unsubscribeInventory();
-  controller.dispose();
-}, { once: true });
+function startSession() {
+  disposeSession();
+  saleEndsAtMs = Date.now() + SALE_DURATION_MS;
+  controller = createSaleController({
+    inventory: createInventoryState({ products: flashSaleProducts, saleEndsAtMs }),
+  });
+  nextRequest = 1;
+  lastShownSeconds = null;
+  unsubscribeInventory = controller.subscribeInventory(onInventoryChange);
+  timer = createDeadlineCountdown({
+    deadlineMs: saleEndsAtMs,
+    onTick(remainingMs) {
+      const totalSeconds = Math.ceil(remainingMs / 1000);
+      const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+      const seconds = String(totalSeconds % 60).padStart(2, "0");
+      const display = minutes + ":" + seconds;
+      if (countdown.textContent !== display) {
+        countdown.textContent = display;
+        if (controller.inventory.reservations.some((hold) =>
+          hold.status === "RESERVED" && hold.expiresAtMs <= Date.now())) controller.expireDue();
+        updateHoldCountdowns();
+      }
+      if (lastShownSeconds !== null && totalSeconds < lastShownSeconds &&
+          totalSeconds > 0 && (totalSeconds % 10 === 0 || totalSeconds <= 5)) {
+        saleAnnouncement.textContent = "Sale ends in " + totalSeconds + " seconds.";
+      }
+      lastShownSeconds = totalSeconds;
+      if (remainingMs === 0) {
+        renderProducts();
+        saleAnnouncement.textContent = "The sale has ended. Existing valid holds may still be checked out.";
+      }
+    },
+  });
+  renderProducts();
+  timer.start();
+}
+
+resetButton.addEventListener("click", () => {
+  startSession();
+  setFeedback("Sale reset. Stock and holds have returned to their starting state.");
+  saleAnnouncement.textContent = "A new five-minute sale has started.";
+});
+window.addEventListener("pagehide", disposeSession);
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) startSession();
+});
+startSession();
